@@ -13,6 +13,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Testing UI — College Board style test window
+app.get('/test', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'test.html'));
+});
+
 // Proxy: /api/questions → pinesat.duckdns.org
 app.get('/api/questions', (req, res) => {
   const params = new URLSearchParams();

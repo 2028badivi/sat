@@ -72,6 +72,7 @@ body {
   font-size: 13px;
   color: rgba(255,255,255,0.8);
 }
+#fullscreenBtn:hover { color: white !important; }
 
 /* ─── Container ─── */
 .container { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
@@ -531,6 +532,461 @@ body {
   .timer-overlay { bottom: 12px; right: 12px; padding: 10px 14px; }
 }
 .katex { font-size: 1.05em; }
+
+/* ─── College Board Style Blitz Testing UI ─── */
+#viewQuestionBlitz {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1.5;
+}
+#viewQuestionBlitz.active {
+  display: flex;
+}
+.cb-top-bar {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 100;
+}
+.cb-top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 160px;
+}
+.cb-directions-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.cb-directions-btn:hover { background: #f3f4f6; }
+.cb-directions-btn svg { width: 14px; height: 14px; }
+
+.cb-top-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.cb-timer-display {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  color: #111827;
+  transition: color 0.3s;
+}
+.cb-timer-display.warning { color: #d97706; }
+.cb-timer-display.danger { color: #dc2626; }
+
+.cb-hide-btn {
+  background: #fff;
+  border: 1.5px solid #9ca3af;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  padding: 3px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.cb-hide-btn:hover { border-color: #4b5563; background: #f9fafb; }
+
+.cb-top-bar-right {
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+.cb-annotate-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.cb-annotate-btn:hover { background: #f3f4f6; }
+.cb-annotate-btn svg { width: 16px; height: 16px; }
+
+.cb-dashed-sep {
+  height: 10px;
+  flex-shrink: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1e3a8a 0px, #1e3a8a 18px,
+    transparent 18px, transparent 22px,
+    #3b82f6 22px, #3b82f6 34px,
+    transparent 34px, transparent 38px,
+    #facc15 38px, #facc15 50px,
+    transparent 50px, transparent 54px,
+    #ef4444 54px, #ef4444 66px,
+    transparent 66px, transparent 70px
+  );
+  background-size: 70px 3px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.cb-main-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+.cb-passage-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 36px 32px 40px;
+  border-right: 1.5px solid #e5e7eb;
+}
+.cb-passage-text {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: 1.85;
+  color: #1f2937;
+  max-width: 540px;
+}
+.cb-passage-text p { margin-bottom: 16px; }
+.cb-passage-text p:last-child { margin-bottom: 0; }
+
+.cb-divider {
+  width: 5px;
+  background: #e5e7eb;
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.cb-divider:hover, .cb-divider.active { background: #3b82f6; }
+
+.cb-question-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cb-question-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+.cb-question-num-badge {
+  width: 28px;
+  height: 28px;
+  background: #111827;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cb-mark-review-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.15s;
+}
+.cb-mark-review-btn:hover { color: #1d4ed8; }
+.cb-mark-review-btn.marked { color: #1d4ed8; }
+.cb-mark-review-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.cb-question-text {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.65;
+}
+.cb-choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cb-choice-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  overflow: hidden;
+  background: #fff;
+}
+.cb-choice-item:hover { border-color: #6b7280; }
+.cb-choice-item.selected { border-color: #2563eb; background: #eff6ff; }
+.cb-choice-item.eliminated { opacity: 0.45; }
+.cb-choice-item.eliminated .cb-choice-text-inner { text-decoration: line-through; }
+.cb-choice-item.correct { border-color: #059669; background: #ecfdf5; }
+.cb-choice-item.incorrect { border-color: #dc2626; background: #fef2f2; }
+.cb-choice-item.correct .cb-choice-letter-area { background: #059669; color: #fff; border-color: #059669; }
+.cb-choice-item.incorrect .cb-choice-letter-area { background: #dc2626; color: #fff; border-color: #dc2626; }
+
+.cb-choice-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+.cb-choice-letter-area {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.15s;
+}
+.cb-choice-item.selected .cb-choice-letter-area {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+.cb-choice-text-inner {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.5;
+}
+.cb-choice-eliminate-btn {
+  flex-shrink: 0;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #9ca3af;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  transition: color 0.15s, background 0.15s;
+}
+.cb-choice-eliminate-btn:hover { color: #374151; background: #f3f4f6; }
+.cb-choice-item.eliminated .cb-choice-eliminate-btn { color: #ef4444; }
+
+.cb-bottom-bar {
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+}
+.cb-bottom-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cb-question-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1f2937;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.cb-question-nav-btn:hover { background: #111827; }
+.cb-question-nav-btn svg { width: 14px; height: 14px; }
+
+.cb-nav-btn {
+  padding: 9px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.cb-nav-btn.back {
+  background: #3b82f6;
+  color: #fff;
+}
+.cb-nav-btn.back:hover { background: #2563eb; }
+.cb-nav-btn.next {
+  background: #3b82f6;
+  color: #fff;
+}
+.cb-nav-btn.next:hover { background: #2563eb; }
+.cb-nav-btn:disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; }
+
+.cb-directions-modal {
+  position: fixed;
+  top: 70px;
+  left: 28px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 20px 24px;
+  width: 320px;
+  z-index: 300;
+  display: none;
+}
+.cb-directions-modal.open { display: block; }
+.cb-directions-modal h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.cb-directions-modal p { font-size: 13px; color: #4b5563; line-height: 1.6; }
+
+.cb-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 70px;
+}
+.cb-modal-backdrop.open { display: flex; }
+.cb-nav-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  padding: 24px;
+  width: 420px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.cb-nav-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cb-modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #6b7280;
+  line-height: 1;
+}
+.cb-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+.cb-nav-grid-btn {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cb-nav-grid-btn:hover { border-color: #3b82f6; color: #3b82f6; }
+.cb-nav-grid-btn.current { border-color: #1f2937; background: #1f2937; color: #fff; }
+.cb-nav-grid-btn.answered { border-color: #2563eb; color: #2563eb; }
+.cb-nav-grid-btn.marked::after {
+  content: '';
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 7px; height: 7px;
+  background: #f59e0b;
+  border-radius: 50%;
+}
+.cb-nav-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-wrap: wrap;
+}
+.cb-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cb-legend-dot {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1.5px solid;
+  flex-shrink: 0;
+}
+.cb-annotation-highlight {
+  background: #fef08a;
+  border-radius: 2px;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -545,6 +1001,7 @@ body {
   </div>
   <div class="header-right">
     <span id="headerStreak">—</span>
+    <button id="fullscreenBtn" onclick="toggleFullscreen()" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:16px;padding:4px;display:flex;align-items:center" title="Full screen">⛶</button>
   </div>
 </header>
 
@@ -656,6 +1113,140 @@ body {
     <div class="timer-overlay" id="timerOverlay" style="display:none">
       <div class="timer-ring" id="timerRing">⏱</div>
       <span id="timerDisplay">—</span>
+    </div>
+  </div>
+
+  <!-- VIEW: Blitz Question (College Board High-Fidelity UI) -->
+  <div id="viewQuestionBlitz" class="view">
+    <!-- Top Bar -->
+    <div class="cb-top-bar">
+      <div class="cb-top-bar-left">
+        <button class="cb-directions-btn" onclick="toggleCbDirections()">
+          Directions
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cb-top-bar-center">
+        <div class="cb-timer-display" id="cbTimerDisplay">—:—</div>
+        <button class="cb-hide-btn" id="cbHideTimerBtn" onclick="toggleCbTimer()">Hide</button>
+      </div>
+
+      <div class="cb-top-bar-right">
+        <button class="cb-annotate-btn" id="cbAnnotateBtn" onclick="toggleCbAnnotateMode()" title="Highlight text in the passage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Annotate
+        </button>
+        <button class="btn btn-ghost" onclick="exitSession()" style="font-size: 13px; color: #374151;">Exit</button>
+      </div>
+    </div>
+
+    <!-- Directions dropdown modal -->
+    <div class="cb-directions-modal" id="cbDirectionsModal">
+      <h3>Reading and Writing Directions</h3>
+      <p>The questions in this section address a number of important reading and writing skills. Each question includes one or more passages, which may include a table or graph. Read each passage and question carefully, and then choose the best answer to the question based on the passage(s).</p>
+      <p style="margin-top:10px">All questions in this section are multiple-choice with four answer choices. Each question has a single best answer.</p>
+    </div>
+
+    <!-- Color Dash Sep -->
+    <div class="cb-dashed-sep"></div>
+
+    <!-- Main Resizable Split panels -->
+    <div class="cb-main-content" id="cbMainContent">
+      <!-- Left Panel: Passage -->
+      <div class="cb-passage-panel" id="cbPassagePanel">
+        <div class="cb-passage-text" id="cbPassageText">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+
+      <!-- Drag Divider -->
+      <div class="cb-divider" id="cbDivider"></div>
+
+      <!-- Right Panel: Question & choices -->
+      <div class="cb-question-panel" id="cbQuestionPanel">
+        <div class="cb-question-header-row">
+          <div class="cb-question-num-badge" id="cbQuestionNumBadge">1</div>
+          <button class="cb-mark-review-btn" id="cbMarkReviewBtn" onclick="toggleCbMarkForReview()">
+            <svg id="cbBookmarkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+            </svg>
+            Mark for Review
+          </button>
+        </div>
+
+        <div class="cb-question-text" id="cbQuestionText">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <div class="cb-choices-list" id="cbChoicesList">
+          <!-- Choices loaded dynamically -->
+        </div>
+
+        <!-- Explanation Area -->
+        <div class="explanation-area" id="cbExplanationArea" style="display:none">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom sep -->
+    <div class="cb-dashed-sep"></div>
+
+    <!-- Bottom Nav bar -->
+    <div class="cb-bottom-bar">
+      <div></div>
+
+      <div class="cb-bottom-center">
+        <button class="cb-question-nav-btn" onclick="openCbNavModal()">
+          <span id="cbQuestionNavLabel">Question 1 of 10</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cb-bottom-right">
+        <button class="cb-nav-btn back" id="cbBackBtn" onclick="cbGoBack()">Back</button>
+        <button class="cb-nav-btn next" id="cbNextBtn" onclick="cbGoNext()">Next</button>
+      </div>
+    </div>
+
+    <!-- Question Navigator Modal -->
+    <div class="cb-modal-backdrop" id="cbNavModalBackdrop" onclick="handleCbBackdropClick(event)">
+      <div class="cb-nav-modal">
+        <div class="cb-nav-modal-title">
+          <span>Question Navigator</span>
+          <button class="cb-modal-close-btn" onclick="closeCbNavModal()">×</button>
+        </div>
+        <div class="cb-nav-grid" id="cbNavGrid"></div>
+        <div class="cb-nav-legend">
+          <div class="cb-legend-item">
+            <div class="cb-legend-dot" style="border-color:#d1d5db;background:#fff"></div>
+            Unanswered
+          </div>
+          <div class="cb-legend-item">
+            <div class="cb-legend-dot" style="border-color:#2563eb;background:#fff"></div>
+            Answered
+          </div>
+          <div class="cb-legend-item">
+            <div class="cb-legend-dot" style="border-color:#1f2937;background:#1f2937"></div>
+            Current
+          </div>
+          <div class="cb-legend-item" style="align-items:flex-start">
+            <div style="display:flex;align-items:center;gap:4px">
+              <div class="cb-legend-dot" style="border-color:#d1d5db;background:#fff;position:relative">
+                <div style="position:absolute;top:-3px;right:-3px;width:7px;height:7px;background:#f59e0b;border-radius:50%"></div>
+              </div>
+              Marked
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -881,8 +1472,10 @@ async function startDailySession() {
     if (!confirm('You already completed your daily session today. Start another one?')) return;
   }
 
-  showView('viewQuestion');
-  renderLoading('Preparing your daily session…');
+  showView('viewQuestionBlitz');
+  $('cbPassageText').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Preparing your daily session…</div></div>`;
+  $('cbQuestionText').innerHTML = '';
+  $('cbChoicesList').innerHTML = '';
 
   try {
     const engDomains = pickDomains('english', 9);
@@ -904,9 +1497,23 @@ async function startDailySession() {
     app.answers = [];
     app.sessionType = 'daily';
     app.sessionConfig = { pacing: 'normal' };
-    renderQuestion();
+
+    // Initialize College Board UI States
+    cbState = {
+      eliminated: app.questions.map(() => new Set()),
+      marked: app.questions.map(() => false),
+      timerHidden: false,
+      annotateMode: false,
+      directionsOpen: false,
+      navModalOpen: false
+    };
+
+    renderQuestionBlitz();
+    startCbTimer();
+    initCbResize();
   } catch (e) {
-    showError('Could not load questions. Check your connection and try again.');
+    console.error(e);
+    $('cbPassageText').innerHTML = `<div class="error-state">Could not load questions. Check your connection and try again. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
   }
 }
 
@@ -953,27 +1560,517 @@ function toggleBlitzTopic(el) {
   }
 }
 
+let cbState = {
+  eliminated: [],
+  marked: [],
+  timerHidden: false,
+  annotateMode: false,
+  directionsOpen: false,
+  navModalOpen: false
+};
+
 async function launchBlitz() {
   const cfg = app.blitzConfig;
   const count = parseInt(cfg.count);
   const topics = cfg.topics.length ? cfg.topics : null;
 
-  showView('viewQuestion');
-  renderLoading('Preparing blitz session…');
+  showView('viewQuestionBlitz');
+  $('cbPassageText').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Preparing blitz session…</div></div>`;
+  $('cbQuestionText').innerHTML = '';
+  $('cbChoicesList').innerHTML = '';
 
   try {
     const qs = await getQuestions(cfg.subject, count, topics);
-    if (!qs.length) { showError('No questions available for these topics. Try different ones.'); return; }
+    if (!qs.length) {
+      $('cbPassageText').innerHTML = `<div class="error-state">No questions available. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
+      return;
+    }
     app.questions = qs.slice(0, count);
     app.qIndex = 0;
     app.answers = [];
     app.sessionType = 'blitz';
     app.sessionConfig = { ...cfg };
-    renderQuestion();
+
+    // Initialize College Board UI States
+    cbState = {
+      eliminated: app.questions.map(() => new Set()),
+      marked: app.questions.map(() => false),
+      timerHidden: false,
+      annotateMode: false,
+      directionsOpen: false,
+      navModalOpen: false
+    };
+
+    renderQuestionBlitz();
+    startCbTimer();
+    initCbResize();
   } catch (e) {
-    showError('Could not load questions. Check your connection and try again.');
+    console.error(e);
+    $('cbPassageText').innerHTML = `<div class="error-state">Could not load questions. Check your connection and try again. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
   }
 }
+
+// ─── College Board Style Blitz Rendering & Logic ───
+function renderQuestionBlitz() {
+  if (app.qIndex >= app.questions.length) { endSession(); return; }
+
+  const q = app.questions[app.qIndex];
+  const total = app.questions.length;
+  const idx = app.qIndex;
+
+  // Header & navigator info
+  $('cbQuestionNumBadge').textContent = idx + 1;
+  $('cbQuestionNavLabel').textContent = `Question ${idx + 1} of ${total}`;
+
+  // Mark for review button state
+  const markBtn = $('cbMarkReviewBtn');
+  if (cbState.marked[idx]) {
+    markBtn.classList.add('marked');
+    markBtn.setAttribute('aria-pressed', 'true');
+    $('cbBookmarkIcon').setAttribute('fill', '#1d4ed8');
+    $('cbBookmarkIcon').setAttribute('stroke', '#1d4ed8');
+  } else {
+    markBtn.classList.remove('marked');
+    markBtn.setAttribute('aria-pressed', 'false');
+    $('cbBookmarkIcon').setAttribute('fill', 'none');
+    $('cbBookmarkIcon').setAttribute('stroke', 'currentColor');
+  }
+
+  // Passage (paragraph) content
+  const para = q.question.paragraph;
+  if (para && para !== 'null' && para.trim()) {
+    $('cbPassageText').innerHTML = `<p>${esc(para).replace(/\n\n/g, '</p><p>')}</p>`;
+  } else {
+    $('cbPassageText').innerHTML = `<p style="color:var(--text-secondary);font-style:italic">No passage for this question.</p>`;
+  }
+
+  // Question content
+  $('cbQuestionText').innerHTML = `<p>${esc(q.question.question)}</p>`;
+
+  // Render choices
+  const letters = ['A', 'B', 'C', 'D'];
+  const isSubmitted = app.awaitingNext;
+  const selectedAnswer = app.answers[idx]?.selected;
+
+  let choicesHtml = '';
+  for (const letter of letters) {
+    const text = q.question.choices[letter];
+    if (!text) continue;
+
+    const letterIdx = letter.charCodeAt(0) - 65; // A=0, B=1...
+    const isSelected = selectedAnswer === letter;
+    const isEliminated = cbState.eliminated[idx].has(letterIdx);
+
+    let classes = 'cb-choice-item';
+    if (isSelected) classes += ' selected';
+    if (isEliminated) classes += ' eliminated';
+    if (isSubmitted) {
+      if (letter === q.question.correct_answer) classes += ' correct';
+      else if (isSelected && letter !== q.question.correct_answer) classes += ' incorrect';
+    }
+
+    choicesHtml += `
+      <div class="${classes}" onclick="selectChoiceBlitz('${letter}')">
+        <div class="cb-choice-main">
+          <div class="cb-choice-letter-area">${letter}</div>
+          <div class="cb-choice-text-inner">${esc(text)}</div>
+        </div>
+        <button class="cb-choice-eliminate-btn" onclick="eliminateChoiceBlitz(event, ${letterIdx})" title="Cross out answer">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            ${isEliminated
+              ? '<line x1="5" y1="12" x2="19" y2="12"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 2"/>'
+              : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'}
+          </svg>
+        </button>
+      </div>
+    `;
+  }
+  $('cbChoicesList').innerHTML = choicesHtml;
+
+  // Explanation / feedback area
+  const explanationArea = $('cbExplanationArea');
+  if (isSubmitted) {
+    const correct = selectedAnswer === q.question.correct_answer;
+    explanationArea.className = correct ? 'explanation-area success-bg' : 'explanation-area error-bg';
+    explanationArea.style.display = 'block';
+    explanationArea.innerHTML = `
+      <div class="explanation-content" style="border:1px solid ${correct?'#6ee7b7':'#fca5a5'}; padding:14px; border-radius:8px">
+        <div class="explanation-header" style="background:transparent; cursor:default; font-weight:700; padding:0; margin-bottom:6px; color:${correct?'#065f46':'#7f1d1d'}">
+          ${correct ? '✅ Correct!' : '❌ Incorrect.'} Correct answer is ${q.question.correct_answer}.
+        </div>
+        <div class="explanation-body" style="padding:0; color:#374151">${esc(q.question.explanation || 'No explanation available.')}</div>
+      </div>
+    `;
+  } else {
+    explanationArea.style.display = 'none';
+    explanationArea.innerHTML = '';
+  }
+
+  // Footer nav buttons
+  if (app.sessionType === 'daily') {
+    $('cbBackBtn').style.display = '';
+    $('cbBackBtn').disabled = idx === 0;
+    $('cbQuestionNavLabel').parentElement.style.display = '';
+
+    const nextBtn = $('cbNextBtn');
+    nextBtn.textContent = idx === total - 1 ? 'Submit' : 'Next';
+    nextBtn.disabled = false;
+  } else {
+    $('cbBackBtn').style.display = 'none';
+    $('cbQuestionNavLabel').parentElement.style.display = 'none';
+
+    const nextBtn = $('cbNextBtn');
+    if (isSubmitted) {
+      nextBtn.textContent = idx === total - 1 ? 'See Results' : 'Continue →';
+      nextBtn.disabled = false;
+    } else {
+      nextBtn.textContent = 'Submit';
+      nextBtn.disabled = !selectedAnswer;
+    }
+  }
+
+  // Reset scroll
+  $('cbPassagePanel').scrollTop = 0;
+  $('cbQuestionPanel').scrollTop = 0;
+
+  // Render Math equations
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement($('cbMainContent'), {
+        delimiters: [
+          {left:'$$',right:'$$',display:true},
+          {left:'\\\\[',right:'\\\\]',display:true},
+          {left:'$',right:'$',display:false},
+          {left:'\\(',right:'\\)',display:false},
+        ],
+        throwOnError: false,
+      });
+    } catch (_) {}
+  }
+}
+
+function selectChoiceBlitz(letter) {
+  if (app.sessionType === 'blitz' && app.awaitingNext) return;
+  const idx = app.qIndex;
+  const letterIdx = letter.charCodeAt(0) - 65;
+
+  if (app.answers[idx]?.selected === letter) {
+    app.answers[idx] = null;
+  } else {
+    app.answers[idx] = { selected: letter };
+    cbState.eliminated[idx].delete(letterIdx);
+  }
+  renderQuestionBlitz();
+}
+
+function eliminateChoiceBlitz(e, letterIdx) {
+  e.stopPropagation();
+  if (app.sessionType === 'blitz' && app.awaitingNext) return;
+  const idx = app.qIndex;
+
+  if (cbState.eliminated[idx].has(letterIdx)) {
+    cbState.eliminated[idx].delete(letterIdx);
+  } else {
+    cbState.eliminated[idx].add(letterIdx);
+    // Deselect if active
+    const letter = String.fromCharCode(65 + letterIdx);
+    if (app.answers[idx]?.selected === letter) {
+      app.answers[idx] = null;
+    }
+  }
+  renderQuestionBlitz();
+}
+
+function toggleCbMarkForReview() {
+  const idx = app.qIndex;
+  cbState.marked[idx] = !cbState.marked[idx];
+  renderQuestionBlitz();
+}
+
+function cbGoBack() {
+  if (app.sessionType === 'daily') {
+    if (app.qIndex > 0) {
+      app.qIndex--;
+      renderQuestionBlitz();
+    }
+  } else {
+    if (app.qIndex > 0 && !app.awaitingNext) {
+      app.qIndex--;
+      renderQuestionBlitz();
+    }
+  }
+}
+
+function cbGoNext() {
+  const idx = app.qIndex;
+  const total = app.questions.length;
+
+  if (app.sessionType === 'daily') {
+    const q = app.questions[idx];
+    const selected = app.answers[idx]?.selected || null;
+    const correct = selected === q.question.correct_answer;
+
+    app.answers[idx] = {
+      questionIdx: idx,
+      questionId: q.id,
+      domain: q.domain,
+      difficulty: q.difficulty,
+      selected,
+      correct,
+      correctAnswer: q.question.correct_answer,
+      explanation: q.question.explanation,
+      questionText: q.question.question,
+      choices: q.question.choices,
+      paragraph: q.question.paragraph,
+    };
+
+    if (idx === total - 1) {
+      const unanswered = app.questions.filter((_, i) => !app.answers[i] || app.answers[i].selected === null).length;
+      if (unanswered > 0) {
+        if (!confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit session?`)) return;
+      }
+      endSession();
+    } else {
+      app.qIndex++;
+      renderQuestionBlitz();
+    }
+  } else {
+    if (!app.awaitingNext) {
+      // Treat as "Submit"
+      app.awaitingNext = true;
+      stopTimer();
+      const q = app.questions[idx];
+      const selected = app.answers[idx]?.selected;
+      const correct = selected === q.question.correct_answer;
+
+      app.answers[idx] = {
+        questionIdx: idx,
+        questionId: q.id,
+        domain: q.domain,
+        difficulty: q.difficulty,
+        selected,
+        correct,
+        correctAnswer: q.question.correct_answer,
+        explanation: q.question.explanation,
+        questionText: q.question.question,
+        choices: q.question.choices,
+        paragraph: q.question.paragraph,
+      };
+
+      renderQuestionBlitz();
+    } else {
+      app.awaitingNext = false;
+      if (idx === total - 1) {
+        endSession();
+      } else {
+        app.qIndex++;
+        renderQuestionBlitz();
+        startCbTimer();
+      }
+    }
+  }
+}
+
+// ─── College Board Timer ───
+function startCbTimer() {
+  const pacing = app.sessionConfig.pacing || 'normal';
+  const timeLimit = PACING_LIMITS[pacing] || 0;
+  app.isTimed = timeLimit > 0;
+
+  stopTimer();
+  if (app.isTimed) {
+    app.timerRemaining = timeLimit;
+    updateCbTimerDisplay();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining--;
+      updateCbTimerDisplay();
+      if (app.timerRemaining <= 0) {
+        clearInterval(app.timerInterval);
+        app.timerInterval = null;
+        app.timerRemaining = 0;
+        updateCbTimerDisplay();
+        if (!app.awaitingNext) handleCbTimeout();
+      }
+    }, 1000);
+  } else {
+    app.timerRemaining = 0;
+    updateCbTimerDisplay();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining++;
+      updateCbTimerDisplay();
+    }, 1000);
+  }
+}
+
+function updateCbTimerDisplay() {
+  const display = $('cbTimerDisplay');
+  const s = Math.max(0, Math.ceil(app.timerRemaining));
+
+  if (cbState.timerHidden) {
+    display.textContent = 'Hidden';
+    display.className = 'cb-timer-display';
+  } else {
+    display.textContent = formatTime(s);
+    if (app.isTimed) {
+      const pacing = app.sessionConfig.pacing;
+      const total = PACING_LIMITS[pacing] || 60;
+      const pct = total > 0 ? app.timerRemaining / total : 1;
+      display.className = 'cb-timer-display';
+      if (pct < 0.2) display.classList.add('danger');
+      else if (pct < 0.4) display.classList.add('warning');
+    } else {
+      display.className = 'cb-timer-display';
+    }
+  }
+}
+
+function toggleCbTimer() {
+  cbState.timerHidden = !cbState.timerHidden;
+  $('cbHideTimerBtn').textContent = cbState.timerHidden ? 'Show' : 'Hide';
+  updateCbTimerDisplay();
+}
+
+function handleCbTimeout() {
+  // Skipping active choice selection
+  const idx = app.qIndex;
+  const q = app.questions[idx];
+  app.awaitingNext = true;
+
+  app.answers[idx] = {
+    questionIdx: idx,
+    questionId: q.id,
+    domain: q.domain,
+    difficulty: q.difficulty,
+    selected: null,
+    correct: false,
+    correctAnswer: q.question.correct_answer,
+    explanation: q.question.explanation,
+    questionText: q.question.question,
+    choices: q.question.choices,
+    paragraph: q.question.paragraph,
+  };
+
+  renderQuestionBlitz();
+}
+
+// ─── DirectionsDropdown ───
+function toggleCbDirections() {
+  cbState.directionsOpen = !cbState.directionsOpen;
+  $('cbDirectionsModal').classList.toggle('open', cbState.directionsOpen);
+}
+
+// ─── Annotate Mode ───
+function toggleCbAnnotateMode() {
+  cbState.annotateMode = !cbState.annotateMode;
+  const btn = $('cbAnnotateBtn');
+  const panel = $('cbPassagePanel');
+  if (cbState.annotateMode) {
+    btn.style.background = '#dbeafe';
+    btn.style.color = '#1d4ed8';
+    panel.style.cursor = 'text';
+  } else {
+    btn.style.background = '';
+    btn.style.color = '';
+    panel.style.cursor = '';
+  }
+}
+
+// Text selection listener for high-fidelity annotate tool
+document.addEventListener('mouseup', () => {
+  if (app.view !== 'viewQuestionBlitz' || !cbState.annotateMode) return;
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  const range = sel.getRangeAt(0);
+  if (!$('cbPassagePanel').contains(range.commonAncestorContainer)) return;
+
+  try {
+    const mark = document.createElement('mark');
+    mark.className = 'cb-annotation-highlight';
+    mark.title = 'Click to remove highlight';
+    mark.onclick = (e) => { e.stopPropagation(); unwrapCbHighlight(mark); };
+    range.surroundContents(mark);
+    sel.removeAllRanges();
+  } catch (_) {
+    sel.removeAllRanges();
+  }
+});
+
+function unwrapCbHighlight(mark) {
+  const parent = mark.parentNode;
+  while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+  parent.removeChild(mark);
+}
+
+// ─── Panels Resizing ───
+function initCbResize() {
+  const divider = $('cbDivider');
+  const left = $('cbPassagePanel');
+  const right = $('cbQuestionPanel');
+  const main = $('cbMainContent');
+  let dragging = false;
+
+  divider.addEventListener('mousedown', (e) => {
+    dragging = true;
+    divider.classList.add('active');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = main.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const total = rect.width - 5;
+    const pct = Math.min(Math.max(x / total, 0.25), 0.75);
+    left.style.flex = 'none';
+    left.style.width = (pct * total) + 'px';
+    right.style.flex = '1';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    divider.classList.remove('active');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  });
+}
+
+// ─── Navigator Modal ───
+function openCbNavModal() {
+  cbState.navModalOpen = true;
+  $('cbNavModalBackdrop').classList.add('open');
+  buildCbNavGrid();
+}
+
+function closeCbNavModal() {
+  cbState.navModalOpen = false;
+  $('cbNavModalBackdrop').classList.remove('open');
+}
+
+function handleCbBackdropClick(e) {
+  if (e.target === $('cbNavModalBackdrop')) closeCbNavModal();
+}
+
+function buildCbNavGrid() {
+  const grid = $('cbNavGrid');
+  grid.innerHTML = app.questions.map((_, i) => {
+    let cls = 'cb-nav-grid-btn';
+    if (i === app.qIndex) cls += ' current';
+    else if (app.answers[i]?.selected !== undefined) cls += ' answered';
+    if (cbState.marked[i]) cls += ' marked';
+    return `<button class="${cls}" onclick="cbJumpTo(${i})">${i + 1}</button>`;
+  }).join('');
+}
+
+function cbJumpTo(idx) {
+  if (app.awaitingNext) return;
+  app.qIndex = idx;
+  renderQuestionBlitz();
+  closeCbNavModal();
+}
+
 
 // ─── Question Rendering ───
 function renderLoading(msg) {
@@ -1204,6 +2301,14 @@ function advanceQuestion() {
   app.awaitingNext = false;
   app.qIndex++;
   renderQuestion();
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.() || document.documentElement.webkitRequestFullscreen?.();
+  } else {
+    document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+  }
 }
 
 function exitSession() {

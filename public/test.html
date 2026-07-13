@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Practice Test — College Board Style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════
+   CSS RESET + BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════
+   TOP HEADER BAR
+═══════════════════════════════════════════ */
+.top-bar {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 100;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 160px;
+}
+
+.directions-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.directions-btn:hover { background: #f3f4f6; }
+.directions-btn svg { width: 14px; height: 14px; }
+
+.top-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.timer-display {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  color: #111827;
+  transition: color 0.3s;
+}
+.timer-display.warning { color: #d97706; }
+.timer-display.danger  { color: #dc2626; }
+
+.hide-btn {
+  background: #fff;
+  border: 1.5px solid #9ca3af;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  padding: 3px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.hide-btn:hover { border-color: #4b5563; background: #f9fafb; }
+
+.top-bar-right {
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.annotate-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.annotate-btn:hover { background: #f3f4f6; }
+.annotate-btn svg { width: 16px; height: 16px; }
+
+.more-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.more-btn:hover { background: #f3f4f6; }
+
+/* ═══════════════════════════════════════════
+   COLORFUL DASHED SEPARATOR
+═══════════════════════════════════════════ */
+.dashed-sep {
+  height: 10px;
+  flex-shrink: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1e3a8a 0px, #1e3a8a 18px,
+    transparent 18px, transparent 22px,
+    #3b82f6 22px, #3b82f6 34px,
+    transparent 34px, transparent 38px,
+    #facc15 38px, #facc15 50px,
+    transparent 50px, transparent 54px,
+    #ef4444 54px, #ef4444 66px,
+    transparent 66px, transparent 70px
+  );
+  background-size: 70px 3px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN SPLIT LAYOUT
+═══════════════════════════════════════════ */
+.main-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ─── LEFT PANEL: Passage ─── */
+.passage-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 36px 32px 40px;
+  border-right: 1.5px solid #e5e7eb;
+}
+
+.passage-panel::-webkit-scrollbar { width: 6px; }
+.passage-panel::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+.passage-text {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: 1.85;
+  color: #1f2937;
+  max-width: 540px;
+}
+.passage-text p { margin-bottom: 16px; }
+.passage-text p:last-child { margin-bottom: 0; }
+
+.blank {
+  display: inline-block;
+  border-bottom: 1.5px solid #1f2937;
+  min-width: 80px;
+  margin: 0 2px;
+}
+
+/* ─── DIVIDER (resizable) ─── */
+.divider {
+  width: 5px;
+  background: #e5e7eb;
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  position: relative;
+}
+.divider:hover, .divider.active { background: #3b82f6; }
+
+/* ─── RIGHT PANEL: Question ─── */
+.question-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 36px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.question-panel::-webkit-scrollbar { width: 6px; }
+.question-panel::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+/* Question number + mark for review */
+.question-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.question-num-badge {
+  width: 28px;
+  height: 28px;
+  background: #111827;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mark-review-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.15s;
+}
+.mark-review-btn:hover { color: #1d4ed8; }
+.mark-review-btn.marked { color: #1d4ed8; }
+.mark-review-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Question text */
+.question-text {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.65;
+}
+
+/* ─── Answer Choices ─── */
+.choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  overflow: hidden;
+  background: #fff;
+}
+.choice-item:hover { border-color: #6b7280; }
+.choice-item.selected { border-color: #2563eb; background: #eff6ff; }
+.choice-item.eliminated { opacity: 0.45; }
+.choice-item.eliminated .choice-text-inner { text-decoration: line-through; }
+.choice-item.correct { border-color: #059669; background: #ecfdf5; }
+.choice-item.incorrect { border-color: #dc2626; background: #fef2f2; }
+.choice-item.correct .choice-letter-area { background: #059669; color: #fff; border-color: #059669; }
+.choice-item.incorrect .choice-letter-area { background: #dc2626; color: #fff; border-color: #dc2626; }
+
+.choice-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.choice-letter-area {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.15s;
+}
+.choice-item.selected .choice-letter-area {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.choice-text-inner {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.choice-eliminate-btn {
+  flex-shrink: 0;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #9ca3af;
+  background: transparent;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  font-family: inherit;
+  transition: color 0.15s, background 0.15s;
+}
+.choice-eliminate-btn:hover { color: #374151; background: #f3f4f6; }
+.choice-item.eliminated .choice-eliminate-btn { color: #ef4444; }
+
+/* Tooltip */
+.elim-tooltip {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #111827;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+.choice-eliminate-btn:hover + .elim-tooltip { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   BOTTOM SEPARATOR
+═══════════════════════════════════════════ */
+.bottom-sep {
+  height: 10px;
+  flex-shrink: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1e3a8a 0px, #1e3a8a 18px,
+    transparent 18px, transparent 22px,
+    #3b82f6 22px, #3b82f6 34px,
+    transparent 34px, transparent 38px,
+    #facc15 38px, #facc15 50px,
+    transparent 50px, transparent 54px,
+    #ef4444 54px, #ef4444 66px,
+    transparent 66px, transparent 70px
+  );
+  background-size: 70px 3px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+/* ═══════════════════════════════════════════
+   BOTTOM NAV BAR
+═══════════════════════════════════════════ */
+.bottom-bar {
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.bottom-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.question-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1f2937;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.question-nav-btn:hover { background: #111827; }
+.question-nav-btn svg { width: 14px; height: 14px; }
+
+.bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  padding: 9px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.nav-btn.back {
+  background: #3b82f6;
+  color: #fff;
+}
+.nav-btn.back:hover { background: #2563eb; }
+.nav-btn.next {
+  background: #3b82f6;
+  color: #fff;
+}
+.nav-btn.next:hover { background: #2563eb; }
+.nav-btn:disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; }
+
+/* ═══════════════════════════════════════════
+   QUESTION NAVIGATOR MODAL
+═══════════════════════════════════════════ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 70px;
+}
+.modal-backdrop.open { display: flex; }
+
+.nav-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  padding: 24px;
+  width: 420px;
+  max-height: 60vh;
+  overflow-y: auto;
+  animation: slideUp 0.2s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.nav-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #6b7280;
+  line-height: 1;
+  padding: 0 4px;
+}
+.modal-close-btn:hover { color: #111827; }
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.nav-grid-btn {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-grid-btn:hover { border-color: #3b82f6; color: #3b82f6; }
+.nav-grid-btn.current { border-color: #1f2937; background: #1f2937; color: #fff; }
+.nav-grid-btn.answered { border-color: #2563eb; color: #2563eb; }
+.nav-grid-btn.marked::after {
+  content: '';
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 7px; height: 7px;
+  background: #f59e0b;
+  border-radius: 50%;
+}
+
+.nav-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend-dot {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1.5px solid;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   DIRECTIONS MODAL
+═══════════════════════════════════════════ */
+.directions-modal {
+  position: fixed;
+  top: 70px;
+  left: 28px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 20px 24px;
+  width: 320px;
+  z-index: 300;
+  display: none;
+  animation: fadeIn 0.15s ease;
+}
+.directions-modal.open { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.directions-modal h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.directions-modal p { font-size: 13px; color: #4b5563; line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   LOADING STATE
+═══════════════════════════════════════════ */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.92);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.loading-overlay.hidden { display: none; }
+.spinner {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 15px; color: #6b7280; font-weight: 500; }
+
+/* ═══════════════════════════════════════════
+   FEEDBACK TOAST
+═══════════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1f2937;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 1000;
+  white-space: nowrap;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   ANNOTATIONS BAR
+═══════════════════════════════════════════ */
+.annotation-highlight {
+  background: #fef08a;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR STYLING
+═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* ═══════════════════════════════════════════
+   RESULT STATES
+═══════════════════════════════════════════ */
+.answer-feedback {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  display: none;
+}
+.answer-feedback.correct-fb {
+  background: #ecfdf5;
+  border: 1px solid #6ee7b7;
+  color: #065f46;
+  display: block;
+}
+.answer-feedback.incorrect-fb {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #7f1d1d;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .main-content { flex-direction: column; }
+  .passage-panel { border-right: none; border-bottom: 1px solid #e5e7eb; padding: 20px; flex: none; max-height: 40vh; }
+  .divider { display: none; }
+  .question-panel { padding: 20px; }
+  .top-bar { padding: 0 16px; }
+  .bottom-bar { padding: 0 16px; }
+  .nav-modal { width: 94vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LOADING OVERLAY ═══════════ -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading questions…</div>
+</div>
+
+<!-- ═══════════ TOP BAR ═══════════ -->
+<div class="top-bar">
+  <!-- Left -->
+  <div class="top-bar-left">
+    <button class="directions-btn" id="directionsBtn" onclick="toggleDirections()" aria-expanded="false" aria-controls="directionsModal">
+      Directions
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Center: Timer -->
+  <div class="top-bar-center">
+    <div class="timer-display" id="timerDisplay">32:00</div>
+    <button class="hide-btn" id="hideTimerBtn" onclick="toggleTimer()">Hide</button>
+  </div>
+
+  <!-- Right -->
+  <div class="top-bar-right">
+    <button class="annotate-btn" id="annotateBtn" onclick="toggleAnnotateMode()" title="Highlight text in the passage">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+      </svg>
+      Annotate
+    </button>
+    <button class="more-btn" title="More options">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
+        <circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>
+      </svg>
+      More
+    </button>
+  </div>
+</div>
+
+<!-- Directions dropdown -->
+<div class="directions-modal" id="directionsModal" role="dialog" aria-label="Test directions" aria-modal="true">
+  <h3>Reading and Writing Directions</h3>
+  <p>The questions in this section address a number of important reading and writing skills. Each question includes one or more passages, which may include a table or graph. Read each passage and question carefully, and then choose the best answer to the question based on the passage(s).</p>
+  <p style="margin-top:10px">All questions in this section are multiple-choice with four answer choices. Each question has a single best answer.</p>
+</div>
+
+<!-- ═══════════ TOP DASHED SEPARATOR ═══════════ -->
+<div class="dashed-sep" role="separator" aria-hidden="true"></div>
+
+<!-- ═══════════ MAIN SPLIT CONTENT ═══════════ -->
+<main class="main-content" id="mainContent">
+
+  <!-- LEFT: Passage -->
+  <div class="passage-panel" id="passagePanel" role="region" aria-label="Reading passage">
+    <div class="passage-text" id="passageText">
+      <!-- Passage content loaded by JS -->
+    </div>
+  </div>
+
+  <!-- Drag divider -->
+  <div class="divider" id="divider" role="separator" aria-label="Resize panels" tabindex="0"></div>
+
+  <!-- RIGHT: Question -->
+  <div class="question-panel" id="questionPanel" role="region" aria-label="Question and answer choices">
+
+    <!-- Question # + Mark for Review -->
+    <div class="question-header-row">
+      <div class="question-num-badge" id="questionNumBadge">1</div>
+      <button class="mark-review-btn" id="markReviewBtn" onclick="toggleMarkForReview()" aria-pressed="false">
+        <!-- Bookmark icon -->
+        <svg id="bookmarkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+        </svg>
+        Mark for Review
+      </button>
+    </div>
+
+    <!-- Question text -->
+    <div class="question-text" id="questionText">
+      <!-- Loaded by JS -->
+    </div>
+
+    <!-- Answer Choices -->
+    <div class="choices-list" id="choicesList" role="group" aria-label="Answer choices">
+      <!-- Loaded by JS -->
+    </div>
+
+    <!-- Answer feedback (shown after Submit) -->
+    <div class="answer-feedback" id="answerFeedback"></div>
+
+  </div>
+</main>
+
+<!-- ═══════════ BOTTOM DASHED SEPARATOR ═══════════ -->
+<div class="bottom-sep" role="separator" aria-hidden="true"></div>
+
+<!-- ═══════════ BOTTOM NAV BAR ═══════════ -->
+<nav class="bottom-bar" aria-label="Question navigation">
+  <div></div>
+
+  <div class="bottom-center">
+    <button class="question-nav-btn" id="questionNavBtn" onclick="openNavModal()" aria-haspopup="dialog" aria-expanded="false">
+      <span id="questionNavLabel">Question 1 of 27</span>
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="bottom-right">
+    <button class="nav-btn back" id="backBtn" onclick="goBack()" aria-label="Go to previous question">Back</button>
+    <button class="nav-btn next" id="nextBtn" onclick="goNext()" aria-label="Go to next question">Next</button>
+  </div>
+</nav>
+
+<!-- ═══════════ QUESTION NAVIGATOR MODAL ═══════════ -->
+<div class="modal-backdrop" id="navModalBackdrop" role="dialog" aria-modal="true" aria-label="Question navigator" onclick="handleBackdropClick(event)">
+  <div class="nav-modal">
+    <div class="nav-modal-title">
+      Question Navigator
+      <button class="modal-close-btn" onclick="closeNavModal()" aria-label="Close navigator">×</button>
+    </div>
+    <div class="nav-grid" id="navGrid"></div>
+    <div class="nav-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="border-color:#d1d5db;background:#fff"></div>
+        Unanswered
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="border-color:#2563eb;background:#fff"></div>
+        Answered
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="border-color:#1f2937;background:#1f2937"></div>
+        Current
+      </div>
+      <div class="legend-item" style="align-items:flex-start">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="legend-dot" style="border-color:#d1d5db;background:#fff;position:relative">
+            <div style="position:absolute;top:-3px;right:-3px;width:7px;height:7px;background:#f59e0b;border-radius:50%"></div>
+          </div>
+          Marked
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TOAST NOTIFICATION ═══════════ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   SAT DIGITAL TEST — College Board Style UI
+   Author: Antigravity for SAT Prep Suite
+═══════════════════════════════════════════════════ */
+
+// ─── QUESTION BANK (sample questions) ───
+// Will be augmented by API fetch; fallback data below
+const FALLBACK_QUESTIONS = [
+  {
+    id: 'q001',
+    passage: `Notre Dame Cathedral, a marvel of Gothic architecture, stands as a testament to the grandeur of France's ecclesiastical past. Its construction began in the 12th century, and it has since witnessed numerous historical events and transformations. Despite the ravages of time and the catastrophic fire in 2019, the cathedral's resilience is <span class="blank">________</span>. Restoration works are in progress to bring back its past glory, while maintaining the original architectural integrity. The cathedral's importance extends beyond its religious significance, serving as a symbol of French heritage and a beacon of hope and resilience for the people of France.`,
+    question: `Which choice completes the text with the most logical and precise word or phrase?`,
+    choices: ['unimaginable', 'unfathomable', 'undeniable', 'unbelievable'],
+    answer: 2,
+    explanation: `"Undeniable" is the most precise choice because the passage clearly describes the cathedral's resilience through concrete examples—surviving centuries of history and a catastrophic fire while still standing. The word "undeniable" means something that cannot be denied or disputed, which fits the factual, evidence-based tone of the passage. "Unimaginable" and "unbelievable" suggest impossibility rather than proven fact, while "unfathomable" implies something too deep to understand rather than something proven true.`,
+    domain: 'Craft and Structure',
+    difficulty: 'Medium',
+    type: 'reading'
+  },
+  {
+    id: 'q002',
+    passage: `In a 2021 study published in <em>Nature Ecology & Evolution</em>, researchers analyzed data from 538 bird species across North America. They found that birds migrating at night navigate primarily by the stars, using the night sky as a celestial compass. However, increased light pollution in urban areas has begun to disorient these birds, causing some species to arrive at their destinations up to two weeks late. The researchers concluded that if light pollution continues at its current rate, the migratory patterns of many species could be severely disrupted within the next 50 years, potentially causing significant ecological consequences.`,
+    question: `According to the passage, what is the primary way birds navigate during nighttime migration?`,
+    choices: [
+      'By following magnetic fields in the Earth\'s crust',
+      'By using the stars as a celestial compass',
+      'By tracking the position of the moon',
+      'By memorizing geographic landmarks from previous trips'
+    ],
+    answer: 1,
+    explanation: `The passage directly states that "birds migrating at night navigate primarily by the stars, using the night sky as a celestial compass." This is explicitly mentioned as the primary navigation method, making choice B the correct answer. The other options are not supported by the passage.`,
+    domain: 'Information and Ideas',
+    difficulty: 'Easy',
+    type: 'reading'
+  },
+  {
+    id: 'q003',
+    passage: `The following is an excerpt from a letter written by scientist Marie Curie to her sister Bronya in 1894:\n\n"Life is not easy for any of us. But what of that? We must have perseverance and above all confidence in ourselves. We must believe that we are gifted for something and that this thing must be attained. Perhaps everything terrible is in its deepest being something helpless that wants help from us."`,
+    question: `Which of the following best describes Curie's perspective on facing difficulties in life?`,
+    choices: [
+      'Difficulties are inevitable and should be accepted passively',
+      'Self-confidence and persistence are essential for overcoming challenges',
+      'External support from others is the key to achieving success',
+      'One should focus primarily on minimizing obstacles rather than pursuing goals'
+    ],
+    answer: 1,
+    explanation: `Curie explicitly states that "we must have perseverance and above all confidence in ourselves," indicating that self-confidence and persistence (perseverance) are what she sees as essential. She does not suggest passive acceptance, rely on external support, or advocate minimizing obstacles—rather she emphasizes believing in oneself and pressing forward.`,
+    domain: 'Craft and Structure',
+    difficulty: 'Medium',
+    type: 'reading'
+  },
+  {
+    id: 'q004',
+    passage: `Researchers studying the African savanna have documented a fascinating cooperative relationship between oxpecker birds and large mammals like rhinoceroses and zebras. Oxpeckers perch on these mammals and feed on ticks, flies, and other parasites found in their skin. In return, the mammals benefit from parasite removal and from the oxpeckers' warning calls when predators approach. This relationship, where both species benefit, is known as <span class="blank">________</span>.`,
+    question: `Which choice most accurately completes the passage with the correct scientific term for the described ecological relationship?`,
+    choices: [
+      'parasitism, because the oxpecker benefits at the expense of the mammal',
+      'commensalism, because only the oxpecker benefits from the interaction',
+      'mutualism, because both the oxpecker and the mammal benefit from the relationship',
+      'competition, because both species are competing for the same resources'
+    ],
+    answer: 2,
+    explanation: `The passage describes a relationship where both species benefit: oxpeckers get food (parasites) while the mammals get parasite removal and predator warnings. This mutual benefit defines "mutualism." Parasitism involves one species harming the other; commensalism involves only one species benefiting; and competition involves species vying for the same resources—none of which match the described relationship.`,
+    domain: 'Information and Ideas',
+    difficulty: 'Easy',
+    type: 'reading'
+  },
+  {
+    id: 'q005',
+    passage: `The following text is from a 19th-century novel.\n\nEleanor had always been practical—a trait her mother called a "gift" and her father a "curse." When the news of the estate's debt reached her, she did not weep as her sisters did. Instead, she sat at the old oak desk, spread the ledger before her, and began to calculate precisely what could be saved and what would have to go. The chandeliers, she decided, would go first.`,
+    question: `What does the author's description of Eleanor's reaction to the news primarily reveal about her character?`,
+    choices: [
+      'She is emotionally cold and lacks compassion for her family',
+      'She is methodical and pragmatic when confronted with problems',
+      'She values material possessions more than familial relationships',
+      'She is secretly pleased by the misfortune that has befallen her family'
+    ],
+    answer: 1,
+    explanation: `Eleanor's reaction—sitting at the desk, opening a ledger, and calmly deciding what to sell—demonstrates a methodical, pragmatic approach to problem-solving. The passage does not indicate emotional coldness toward family (she simply responds differently than her sisters), nor does it suggest she values possessions or is pleased by misfortune. Her practicality, as explicitly noted in the opening line, is the dominant characterization.`,
+    domain: 'Craft and Structure',
+    difficulty: 'Medium',
+    type: 'reading'
+  },
+  {
+    id: 'q006',
+    passage: `Urban heat islands (UHIs) occur when cities experience significantly higher temperatures than surrounding rural areas, primarily due to human activities and modifications to land surfaces. Dark surfaces like asphalt absorb more solar radiation, buildings trap heat, and the lack of vegetation reduces evaporative cooling. Studies show that UHI effects can raise urban temperatures by 1–7°C compared to nearby rural regions. City planners have begun addressing this phenomenon through strategies such as green roofs, increased tree canopy coverage, and the use of reflective "cool" pavements.`,
+    question: `Based on the passage, which factor most directly contributes to the urban heat island effect?`,
+    choices: [
+      'Increased rainfall in urban areas due to pollution',
+      'The higher population density of city centers',
+      'Dark surfaces that absorb more solar radiation',
+      'The noise pollution created by urban traffic'
+    ],
+    answer: 2,
+    explanation: `The passage explicitly identifies dark surfaces like asphalt that "absorb more solar radiation" as a primary contributor to the UHI effect—mentioned first among the listed causes. While population density and traffic exist in cities, the passage does not identify them as direct contributors to UHIs. Rainfall and noise pollution are not mentioned at all in connection to UHIs.`,
+    domain: 'Information and Ideas',
+    difficulty: 'Easy',
+    type: 'reading'
+  },
+  {
+    id: 'q007',
+    passage: `The following sentences present a claim and supporting evidence.\n\nClaim: Social media use negatively impacts the mental health of teenagers.\n\nEvidence: A longitudinal study tracked 10,000 teenagers over five years and found that those who used social media for more than three hours per day were 35% more likely to report symptoms of depression and anxiety than those who used it for less than one hour per day.`,
+    question: `How does the evidence most effectively support the claim?`,
+    choices: [
+      'It provides anecdotal examples of teenagers experiencing mental health issues',
+      'It uses quantitative data from a long-term study to establish a correlation between heavy social media use and mental health symptoms',
+      'It proves that social media is the sole cause of teenage depression and anxiety',
+      'It shows that all teenagers who use social media will develop mental health problems'
+    ],
+    answer: 1,
+    explanation: `The evidence presents quantitative data (35% more likely, 10,000 participants, 5 years) from a longitudinal study showing a correlation between heavy social media use and depression/anxiety symptoms. This supports the claim with measurable, systematic data—not anecdotes. The evidence establishes correlation, not causation, so it doesn't "prove" causality (choice C), and it doesn't claim all users will be affected (choice D).`,
+    domain: 'Expression of Ideas',
+    difficulty: 'Medium',
+    type: 'reading'
+  },
+  {
+    id: 'q008',
+    passage: `Solar panels convert sunlight into electricity through the photovoltaic effect. When photons from sunlight strike a solar cell, they knock electrons loose from their atoms, generating a flow of electricity. Modern solar panels have an efficiency rate of approximately 15–22%, meaning only that percentage of sunlight hitting the panel is converted to usable electricity. Researchers are developing next-generation panels using perovskite materials that could potentially achieve efficiencies of over 30%.`,
+    question: `According to the passage, what is the current limitation of modern solar panels?`,
+    choices: [
+      'They require rare materials that are difficult to obtain',
+      'They cannot function in cloudy or overcast conditions',
+      'They convert only 15–22% of sunlight into usable electricity',
+      'They are too expensive for widespread residential use'
+    ],
+    answer: 2,
+    explanation: `The passage directly states that modern solar panels have "an efficiency rate of approximately 15–22%, meaning only that percentage of sunlight hitting the panel is converted to usable electricity." This is the clear limitation described. The passage does not mention rare materials, weather limitations, or cost issues.`,
+    domain: 'Information and Ideas',
+    difficulty: 'Easy',
+    type: 'reading'
+  },
+  {
+    id: 'q009',
+    passage: `Throughout history, the concept of childhood has evolved dramatically. In medieval Europe, children were often treated as small adults and were expected to work alongside adults from a very young age. It was not until the 17th and 18th centuries that philosophers like John Locke and Jean-Jacques Rousseau began to argue that childhood was a distinct and important phase of development requiring special treatment and education. These ideas eventually influenced the formation of public education systems and child labor laws in the 19th and 20th centuries.`,
+    question: `The passage suggests that the modern concept of childhood as a distinct developmental phase was primarily shaped by:`,
+    choices: [
+      'Economic changes that reduced the need for child labor in agriculture',
+      'Philosophical arguments that emphasized childhood\'s unique importance',
+      'Religious movements that prioritized the moral education of children',
+      'Scientific discoveries about child brain development in the 17th century'
+    ],
+    answer: 1,
+    explanation: `The passage explicitly credits philosophers like John Locke and Rousseau with arguing that "childhood was a distinct and important phase of development requiring special treatment and education," and notes these ideas influenced later education and child labor laws. The passage does not credit economic changes, religious movements, or scientific discoveries for this shift in thinking.`,
+    domain: 'Information and Ideas',
+    difficulty: 'Medium',
+    type: 'reading'
+  },
+  {
+    id: 'q010',
+    passage: `The following text is adapted from a scientific paper.\n\nResearchers at the University of Tokyo have developed a new biodegradable plastic derived from seaweed. Unlike conventional plastics, which can persist in the environment for hundreds of years, the seaweed-based material decomposes within weeks under normal environmental conditions. Initial tests show that the material maintains comparable strength and flexibility to conventional plastics for everyday use. However, the researchers note that scaling up production remains a significant challenge, as current yields from seaweed cultivation are insufficient to meet global plastic demand.`,
+    question: `Which sentence, if added to the end of the passage, would best conclude the author's discussion?`,
+    choices: [
+      'Seaweed is also used in the food and cosmetics industries.',
+      'Conventional plastics were first developed in the early 20th century.',
+      'Despite these challenges, the seaweed-based plastic represents a promising step toward more sustainable materials.',
+      'The researchers plan to publish their full findings in an upcoming issue of the journal.'
+    ],
+    answer: 2,
+    explanation: `The passage describes both the promise (biodegradable, comparable performance) and limitations (scaling challenges) of seaweed-based plastic. A concluding sentence should synthesize these points. Choice C does this by acknowledging the challenges while affirming the material's promise as a step toward sustainability. The other choices introduce tangential or irrelevant information that doesn't conclude the discussion logically.`,
+    domain: 'Expression of Ideas',
+    difficulty: 'Hard',
+    type: 'reading'
+  }
+];
+
+// ─── FILL REMAINING TO 27 QUESTIONS ───
+function generateFillerQuestions() {
+  const topics = ['Standard English Conventions', 'Craft and Structure', 'Expression of Ideas'];
+  const difficulties = ['Easy', 'Medium', 'Hard'];
+  const fillers = [];
+  for (let i = 11; i <= 27; i++) {
+    fillers.push({
+      id: `q0${i}`,
+      passage: `The following passage discusses an important topic in academic writing and critical thinking.\n\nAcademic researchers often must evaluate the quality and relevance of sources when constructing arguments. Primary sources—original research, firsthand accounts, and original documents—are generally considered more authoritative than secondary sources, which interpret or summarize primary material. However, high-quality secondary sources can provide valuable context, synthesis, and analysis that makes primary data more accessible and meaningful. The key is to use a balanced combination of both types, ensuring that each source directly supports the specific claim being made.`,
+      question: `Which of the following best describes the main purpose of this passage?`,
+      choices: [
+        'To argue that primary sources are always superior to secondary sources',
+        'To explain how different types of sources serve complementary roles in academic research',
+        'To discourage researchers from using secondary sources entirely',
+        'To provide a historical overview of academic publishing practices'
+      ],
+      answer: 1,
+      explanation: `The passage argues for using "a balanced combination of both types" of sources, explaining that primary sources offer authority while secondary sources provide context and synthesis. This reflects option B's characterization of the passage's purpose.`,
+      domain: topics[(i % 3)],
+      difficulty: difficulties[(i % 3)],
+      type: 'reading'
+    });
+  }
+  return fillers;
+}
+
+const ALL_QUESTIONS = [...FALLBACK_QUESTIONS, ...generateFillerQuestions()];
+
+// ─── STATE ───
+const state = {
+  questions: ALL_QUESTIONS,
+  currentIndex: 0,
+  answers: new Array(ALL_QUESTIONS.length).fill(null),      // selected choice index
+  eliminated: ALL_QUESTIONS.map(() => new Set()),            // eliminated choice indices
+  marked: new Array(ALL_QUESTIONS.length).fill(false),      // marked for review
+  submitted: new Array(ALL_QUESTIONS.length).fill(false),   // answer submitted/locked
+  timerSeconds: 32 * 60,
+  timerHidden: false,
+  timerInterval: null,
+  annotateMode: false,
+  directionsOpen: false,
+  navModalOpen: false,
+};
+
+// ─── HELPERS ───
+function formatTime(s) {
+  const m = Math.floor(s / 60).toString().padStart(2, '0');
+  const sec = (s % 60).toString().padStart(2, '0');
+  return `${m}:${sec}`;
+}
+
+function showToast(msg, duration = 2000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ─── TIMER ───
+function startTimer() {
+  state.timerInterval = setInterval(() => {
+    if (state.timerSeconds <= 0) {
+      clearInterval(state.timerInterval);
+      handleTimeUp();
+      return;
+    }
+    state.timerSeconds--;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  if (state.timerHidden) {
+    el.textContent = 'Hidden';
+    el.className = 'timer-display';
+  } else {
+    el.textContent = formatTime(state.timerSeconds);
+    if (state.timerSeconds <= 60) {
+      el.className = 'timer-display danger';
+    } else if (state.timerSeconds <= 5 * 60) {
+      el.className = 'timer-display warning';
+    } else {
+      el.className = 'timer-display';
+    }
+  }
+}
+
+function toggleTimer() {
+  state.timerHidden = !state.timerHidden;
+  const btn = document.getElementById('hideTimerBtn');
+  btn.textContent = state.timerHidden ? 'Show' : 'Hide';
+  updateTimerDisplay();
+}
+
+function handleTimeUp() {
+  showToast("⏰ Time's up! Submitting your answers.", 3000);
+}
+
+// ─── RENDER QUESTION ───
+function renderQuestion(index) {
+  const q = state.questions[index];
+  if (!q) return;
+
+  // Badge
+  document.getElementById('questionNumBadge').textContent = index + 1;
+
+  // Mark for review button state
+  const markBtn = document.getElementById('markReviewBtn');
+  if (state.marked[index]) {
+    markBtn.classList.add('marked');
+    markBtn.setAttribute('aria-pressed', 'true');
+    document.getElementById('bookmarkIcon').setAttribute('fill', '#1d4ed8');
+    document.getElementById('bookmarkIcon').setAttribute('stroke', '#1d4ed8');
+  } else {
+    markBtn.classList.remove('marked');
+    markBtn.setAttribute('aria-pressed', 'false');
+    document.getElementById('bookmarkIcon').setAttribute('fill', 'none');
+    document.getElementById('bookmarkIcon').setAttribute('stroke', 'currentColor');
+  }
+
+  // Passage
+  document.getElementById('passageText').innerHTML = `<p>${q.passage.replace(/\n\n/g, '</p><p>')}</p>`;
+
+  // Question text
+  document.getElementById('questionText').textContent = q.question;
+
+  // Answer choices
+  const choicesList = document.getElementById('choicesList');
+  const letters = ['A', 'B', 'C', 'D'];
+  choicesList.innerHTML = q.choices.map((text, i) => {
+    const isSelected = state.answers[index] === i;
+    const isEliminated = state.eliminated[index].has(i);
+    const isSubmitted = state.submitted[index];
+    let classes = 'choice-item';
+    if (isSelected) classes += ' selected';
+    if (isEliminated) classes += ' eliminated';
+    if (isSubmitted) {
+      if (i === q.answer) classes += ' correct';
+      else if (isSelected && i !== q.answer) classes += ' incorrect';
+    }
+    return `
+      <div class="${classes}" id="choice-${i}" role="radio" aria-checked="${isSelected}" tabindex="0"
+           onclick="selectChoice(${i})" onkeydown="handleChoiceKey(event, ${i})">
+        <div class="choice-main">
+          <div class="choice-letter-area">${letters[i]}</div>
+          <div class="choice-text-inner">${text}</div>
+        </div>
+        <button class="choice-eliminate-btn" onclick="eliminateChoice(event, ${i})"
+                aria-label="${isEliminated ? 'Un-eliminate' : 'Eliminate'} choice ${letters[i]}"
+                title="Cross out answer">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            ${isEliminated
+              ? '<line x1="5" y1="12" x2="19" y2="12"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 2"/>'
+              : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'}
+          </svg>
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  // Feedback
+  const feedbackEl = document.getElementById('answerFeedback');
+  if (state.submitted[index]) {
+    const correct = state.answers[index] === q.answer;
+    feedbackEl.className = correct ? 'answer-feedback correct-fb' : 'answer-feedback incorrect-fb';
+    feedbackEl.innerHTML = `<strong>${correct ? '✓ Correct!' : '✗ Incorrect.'}</strong> ${q.explanation}`;
+  } else {
+    feedbackEl.className = 'answer-feedback';
+    feedbackEl.textContent = '';
+  }
+
+  // Bottom nav label
+  document.getElementById('questionNavLabel').textContent =
+    `Question ${index + 1} of ${state.questions.length}`;
+
+  // Back/Next buttons
+  document.getElementById('backBtn').disabled = index === 0;
+  document.getElementById('nextBtn').textContent =
+    index === state.questions.length - 1 ? 'Submit' : 'Next';
+
+  // Scroll panels to top
+  document.getElementById('passagePanel').scrollTop = 0;
+  document.getElementById('questionPanel').scrollTop = 0;
+
+  // Re-render math
+  if (window.renderMathInElement) {
+    renderMathInElement(document.getElementById('passageText'), { throwOnError: false });
+    renderMathInElement(document.getElementById('questionText'), { throwOnError: false });
+    renderMathInElement(document.getElementById('choicesList'), { throwOnError: false });
+  }
+}
+
+// ─── SELECT CHOICE ───
+function selectChoice(i) {
+  const index = state.currentIndex;
+  if (state.submitted[index]) return; // locked after submit
+
+  if (state.answers[index] === i) {
+    state.answers[index] = null; // deselect
+  } else {
+    state.answers[index] = i;
+    // Auto-remove elimination on selection
+    state.eliminated[index].delete(i);
+  }
+  renderQuestion(index);
+}
+
+function handleChoiceKey(e, i) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    selectChoice(i);
+  }
+}
+
+// ─── ELIMINATE CHOICE ───
+function eliminateChoice(e, i) {
+  e.stopPropagation();
+  const index = state.currentIndex;
+  if (state.submitted[index]) return;
+
+  if (state.eliminated[index].has(i)) {
+    state.eliminated[index].delete(i);
+  } else {
+    state.eliminated[index].add(i);
+    // Deselect if was selected
+    if (state.answers[index] === i) state.answers[index] = null;
+  }
+  renderQuestion(index);
+}
+
+// ─── MARK FOR REVIEW ───
+function toggleMarkForReview() {
+  const index = state.currentIndex;
+  state.marked[index] = !state.marked[index];
+  renderQuestion(index);
+  showToast(state.marked[index] ? '🔖 Marked for review' : 'Review mark removed');
+}
+
+// ─── NAVIGATION ───
+function goTo(index) {
+  if (index < 0 || index >= state.questions.length) return;
+  state.currentIndex = index;
+  renderQuestion(index);
+  closeNavModal();
+}
+
+function goBack() {
+  if (state.currentIndex > 0) goTo(state.currentIndex - 1);
+}
+
+function goNext() {
+  const index = state.currentIndex;
+  if (index === state.questions.length - 1) {
+    handleFinalSubmit();
+    return;
+  }
+  // Auto-submit if answered and not yet submitted
+  if (state.answers[index] !== null && !state.submitted[index]) {
+    state.submitted[index] = true;
+  }
+  goTo(index + 1);
+}
+
+function handleFinalSubmit() {
+  const unanswered = state.answers.filter(a => a === null).length;
+  if (unanswered > 0) {
+    const confirmed = confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit anyway?`);
+    if (!confirmed) return;
+  }
+  // Submit all answered
+  state.submitted = state.submitted.map((s, i) => s || state.answers[i] !== null);
+  renderQuestion(state.currentIndex);
+
+  const correct = state.answers.filter((a, i) => a === state.questions[i].answer).length;
+  const total = state.questions.filter((_, i) => state.submitted[i]).length;
+  showToast(`✅ Submitted! ${correct}/${total} correct`, 4000);
+}
+
+// ─── QUESTION NAVIGATOR MODAL ───
+function openNavModal() {
+  state.navModalOpen = true;
+  const backdrop = document.getElementById('navModalBackdrop');
+  backdrop.classList.add('open');
+  document.getElementById('questionNavBtn').setAttribute('aria-expanded', 'true');
+  buildNavGrid();
+}
+
+function closeNavModal() {
+  state.navModalOpen = false;
+  document.getElementById('navModalBackdrop').classList.remove('open');
+  document.getElementById('questionNavBtn').setAttribute('aria-expanded', 'false');
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('navModalBackdrop')) closeNavModal();
+}
+
+function buildNavGrid() {
+  const grid = document.getElementById('navGrid');
+  grid.innerHTML = state.questions.map((_, i) => {
+    let cls = 'nav-grid-btn';
+    if (i === state.currentIndex) cls += ' current';
+    else if (state.answers[i] !== null) cls += ' answered';
+    if (state.marked[i]) cls += ' marked';
+    return `<button class="${cls}" onclick="goTo(${i})" aria-label="Go to question ${i+1}">${i + 1}</button>`;
+  }).join('');
+}
+
+// ─── DIRECTIONS ───
+function toggleDirections() {
+  state.directionsOpen = !state.directionsOpen;
+  const modal = document.getElementById('directionsModal');
+  const btn = document.getElementById('directionsBtn');
+  modal.classList.toggle('open', state.directionsOpen);
+  btn.setAttribute('aria-expanded', state.directionsOpen.toString());
+}
+
+// Close directions on outside click
+document.addEventListener('click', (e) => {
+  if (state.directionsOpen &&
+      !e.target.closest('#directionsBtn') &&
+      !e.target.closest('#directionsModal')) {
+    state.directionsOpen = false;
+    document.getElementById('directionsModal').classList.remove('open');
+    document.getElementById('directionsBtn').setAttribute('aria-expanded', 'false');
+  }
+});
+
+// ─── ANNOTATE MODE ───
+function toggleAnnotateMode() {
+  state.annotateMode = !state.annotateMode;
+  const btn = document.getElementById('annotateBtn');
+  const passagePanel = document.getElementById('passagePanel');
+  if (state.annotateMode) {
+    btn.style.background = '#dbeafe';
+    btn.style.color = '#1d4ed8';
+    passagePanel.style.cursor = 'text';
+    showToast('✏️ Annotate mode on — select text to highlight');
+  } else {
+    btn.style.background = '';
+    btn.style.color = '';
+    passagePanel.style.cursor = '';
+    showToast('Annotate mode off');
+  }
+}
+
+// Text selection highlighting
+document.addEventListener('mouseup', () => {
+  if (!state.annotateMode) return;
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  const range = sel.getRangeAt(0);
+  const passagePanel = document.getElementById('passagePanel');
+  if (!passagePanel.contains(range.commonAncestorContainer)) return;
+
+  try {
+    const mark = document.createElement('mark');
+    mark.className = 'annotation-highlight';
+    mark.title = 'Click to remove highlight';
+    mark.onclick = (e) => { e.stopPropagation(); unwrapHighlight(mark); };
+    range.surroundContents(mark);
+    sel.removeAllRanges();
+  } catch (_) {
+    // Multi-element selections can fail; just clear
+    sel.removeAllRanges();
+  }
+});
+
+function unwrapHighlight(mark) {
+  const parent = mark.parentNode;
+  while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+  parent.removeChild(mark);
+}
+
+// ─── PANEL RESIZE ───
+(function initResize() {
+  const divider = document.getElementById('divider');
+  const left = document.getElementById('passagePanel');
+  const right = document.getElementById('questionPanel');
+  const main = document.getElementById('mainContent');
+  let dragging = false;
+
+  divider.addEventListener('mousedown', (e) => {
+    dragging = true;
+    divider.classList.add('active');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = main.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const total = rect.width - 5; // divider width
+    const pct = Math.min(Math.max(x / total, 0.25), 0.75);
+    left.style.flex = 'none';
+    left.style.width = (pct * total) + 'px';
+    right.style.flex = '1';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    divider.classList.remove('active');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  });
+
+  // Keyboard resize
+  divider.addEventListener('keydown', (e) => {
+    const rect = main.getBoundingClientRect();
+    const curWidth = left.offsetWidth || rect.width / 2;
+    let newWidth = curWidth;
+    if (e.key === 'ArrowLeft') newWidth -= 20;
+    if (e.key === 'ArrowRight') newWidth += 20;
+    const total = rect.width - 5;
+    newWidth = Math.min(Math.max(newWidth, total * 0.25), total * 0.75);
+    left.style.flex = 'none';
+    left.style.width = newWidth + 'px';
+    e.preventDefault();
+  });
+})();
+
+// ─── KEYBOARD SHORTCUTS ───
+document.addEventListener('keydown', (e) => {
+  // Arrow keys for navigation (when not focused on input/button)
+  if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    if (!state.navModalOpen) goNext();
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    if (!state.navModalOpen) goBack();
+  }
+  if (e.key === 'Escape') {
+    if (state.navModalOpen) closeNavModal();
+    if (state.directionsOpen) {
+      state.directionsOpen = false;
+      document.getElementById('directionsModal').classList.remove('open');
+    }
+  }
+  // Quick choice selection 1-4
+  if (['1','2','3','4'].includes(e.key) && !e.metaKey && !e.ctrlKey) {
+    selectChoice(parseInt(e.key) - 1);
+  }
+});
+
+// ─── INIT ───
+(function init() {
+  // Try to load from API, fall back to local data
+  document.getElementById('loadingOverlay').classList.remove('hidden');
+
+  // Attempt API fetch (optional enhancement)
+  fetch('/api/questions?section=reading&limit=27')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data && Array.isArray(data) && data.length > 0) {
+        // API returned questions — map to our format if needed
+        // For now just use fallback since API format may differ
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      document.getElementById('loadingOverlay').classList.add('hidden');
+      renderQuestion(0);
+      startTimer();
+    });
+})();
+</script>
+</body>
+</html>
