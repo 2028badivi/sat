@@ -214,13 +214,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  gap: 8px;
+  padding: 10px 16px;
   background: var(--card);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 56px;
   z-index: 50;
 }
+.question-header .question-progress { flex: 1; text-align: center; }
+.question-header .btn-ghost { flex-shrink: 0; }
 .question-progress { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
 .question-domain-badge {
   font-size: 11px;
@@ -244,7 +247,7 @@ body {
   height: 3px;
   background: var(--border);
   position: sticky;
-  top: 108px;
+  top: 100px;
   z-index: 49;
 }
 .progress-strip-fill {
@@ -584,6 +587,11 @@ body {
       <div id="missedCountText" style="font-size:14px;color:var(--text-secondary)"></div>
     </div>
 
+    <div class="card" id="sessionHistoryCard" style="display:none;cursor:pointer" onclick="showSessionHistory()">
+      <div class="section-title">📋 Past Sessions</div>
+      <div id="sessionHistoryPreview" style="font-size:14px;color:var(--text-secondary)"></div>
+    </div>
+
     <div class="card">
       <div class="section-title">📊 Performance by Domain</div>
       <div id="performanceList"></div>
@@ -607,9 +615,21 @@ body {
     </div>
   </div>
 
+  <!-- VIEW: Session History -->
+  <div id="viewSessionHistory" class="view">
+    <div class="card">
+      <div class="card-header" style="justify-content:space-between">
+        <span>📋 Session History</span>
+        <button class="btn btn-ghost" onclick="goToDashboard()" style="font-size:13px">← Back</button>
+      </div>
+      <div id="sessionHistoryList"></div>
+    </div>
+  </div>
+
   <!-- VIEW: Question -->
   <div id="viewQuestion" class="view">
     <div class="question-header">
+      <button class="btn btn-ghost" onclick="exitSession()" style="font-size:13px;padding:4px 8px;color:rgba(255,255,255,0.7);background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:4px">← Exit</button>
       <span class="question-progress" id="qProgress">Question 1 of 10</span>
       <span class="question-domain-badge" id="qDomain">Domain</span>
       <span class="question-timer" id="qTimer" style="display:none">—</span>
@@ -967,15 +987,18 @@ function renderQuestion() {
   $('qDomain').textContent = q.domain;
   $('progressFill').style.width = `${(idx/total)*100}%`;
 
-  // Timer setup
+  // Timer setup — per-question timer for ALL session types
   const pacing = app.sessionConfig.pacing || 'normal';
   const timeLimit = PACING_LIMITS[pacing] || 0;
   app.isTimed = timeLimit > 0;
+  app.timerElapsed = 0; // for untimed daily sessions
+
+  $('qTimer').style.display = '';
+  $('timerOverlay').style.display = app.isTimed ? '' : 'none';
+  $('timerRing').textContent = app.isTimed ? '⏱' : '⏱';
 
   if (app.isTimed) {
-    $('qTimer').style.display = '';
-    $('qTimer').textContent = formatTime(timeLimit);
-    $('timerOverlay').style.display = '';
+    // Countdown per question
     app.timerRemaining = timeLimit;
     updateTimerDisplay();
     stopTimer();
@@ -991,9 +1014,18 @@ function renderQuestion() {
       }
     }, 1000);
   } else {
-    $('qTimer').style.display = 'none';
-    $('timerOverlay').style.display = 'none';
+    // Elapsed per question (daily session pacing)
+    app.timerRemaining = 0;
+    $('qTimer').textContent = formatTime(0);
+    $('timerDisplay').textContent = formatTime(0);
+    $('qTimer').className = 'question-timer';
+    $('timerRing').className = 'timer-ring';
     stopTimer();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining++;
+      $('qTimer').textContent = formatTime(Math.ceil(app.timerRemaining));
+      $('timerDisplay').textContent = formatTime(Math.ceil(app.timerRemaining));
+    }, 1000);
   }
 
   app.awaitingNext = false;
@@ -1164,6 +1196,13 @@ function advanceQuestion() {
   app.awaitingNext = false;
   app.qIndex++;
   renderQuestion();
+}
+
+function exitSession() {
+  if (confirm('End this session and return to dashboard?')) {
+    stopTimer();
+    goToDashboard();
+  }
 }
 
 function stopTimer() {
@@ -1340,6 +1379,22 @@ function renderDashboard() {
     targetCard.style.display = 'none';
   }
 
+  // ── Session History Preview ──
+  const histCard = $('sessionHistoryCard');
+  const histPreview = $('sessionHistoryPreview');
+  const sessions = DATA.history || [];
+  if (sessions.length > 0) {
+    histCard.style.display = 'block';
+    const recent = sessions.slice(-3).reverse();
+    histPreview.innerHTML = recent.map(s => {
+      const date = s.date || 'unknown';
+      const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
+      return `<span style="display:inline-block;margin-right:16px;font-size:13px">📅 ${date} · ${s.score}/${s.total} (${pct}%) · ${s.type}</span>`;
+    }).join('<br>') + `<div style="margin-top:8px;font-size:12px;color:var(--blue)">View all ${sessions.length} sessions →</div>`;
+  } else {
+    histCard.style.display = 'none';
+  }
+
   // ── Performance ──
   const container = $('performanceList');
   const all = allDomains.map(dm => {
@@ -1418,6 +1473,62 @@ function filterMissed(el) {
   bar.querySelectorAll('.setup-option').forEach(o => o.classList.remove('active'));
   el.classList.add('active');
   renderMissedQuestions(el.dataset.value);
+}
+
+// ─── Session History ───
+function showSessionHistory() {
+  showView('viewSessionHistory');
+  renderSessionHistory();
+}
+
+function renderSessionHistory() {
+  const container = $('sessionHistoryList');
+  const sessions = DATA.history || [];
+
+  if (sessions.length === 0) {
+    container.innerHTML = '<div class="performance-empty">No sessions yet. Complete a session to see it here.</div>';
+    return;
+  }
+
+  // Group by date, show newest first
+  const sorted = [...sessions].reverse();
+
+  container.innerHTML = sorted.map((s, i) => {
+    const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
+    const barColor = pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+    const label = s.type === 'daily' ? '📅 Daily Session' : '⚡ Blitz';
+    const detail = s.answers || [];
+
+    // Mini per-question breakdown
+    let detailHtml = '';
+    if (detail.length > 0) {
+      detailHtml = '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-light)">';
+      detail.forEach((a, qi) => {
+        const icon = a.correct ? '✅' : '❌';
+        detailHtml += `<span style="display:inline-block;margin-right:8px;font-size:12px;color:var(--text-secondary)">${icon} Q${qi+1}</span>`;
+      });
+      detailHtml += '</div>';
+    }
+
+    return `<div class="result-item" style="cursor:pointer" onclick="toggleSessionDetail(${i})">
+      <div class="result-question">
+        ${label}
+        <span style="font-size:12px;color:var(--text-muted);font-weight:400">${s.date || 'unknown'}</span>
+        <span class="result-badge" style="background:${barColor};color:white">${s.score}/${s.total}</span>
+      </div>
+      <div class="performance-bar-wrap" style="flex:1;margin-top:6px">
+        <div class="performance-bar" style="width:${pct}%;background:${barColor}"></div>
+      </div>
+      <div id="sessionDetail_${i}" style="display:none">
+        ${detailHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSessionDetail(idx) {
+  const el = $(`sessionDetail_${idx}`);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
 // ─── Math Rendering ───
