@@ -577,19 +577,27 @@ body {
       </div>
     </div>
 
+    <div class="card" id="scoreProjectionCard">
+      <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+        <span>🏆 Projected SAT Score</span>
+        <span id="scoreProjectionValue" style="font-size:24px;font-weight:800;color:var(--navy)">—</span>
+      </div>
+      <div id="scoreProjectionBreakdown" style="font-size:13px;color:var(--text-secondary)">Complete some sessions to see your projected score.</div>
+    </div>
+
     <div class="card" id="targetPrepCard" style="display:none">
       <div class="section-title">🎯 Target Prep — Focus Areas</div>
       <div id="targetPrepList"></div>
     </div>
 
-    <div class="card" id="missedCountCard" style="display:none;cursor:pointer" onclick="showMissedQuestions()">
+    <div class="card" id="missedCountCard" style="cursor:pointer" onclick="showMissedQuestions()">
       <div class="section-title">📕 Review Missed Questions</div>
       <div id="missedCountText" style="font-size:14px;color:var(--text-secondary)"></div>
     </div>
 
-    <div class="card" id="sessionHistoryCard" style="display:none;cursor:pointer" onclick="showSessionHistory()">
+    <div class="card" id="sessionHistoryCard" style="cursor:pointer" onclick="showSessionHistory()">
       <div class="section-title">📋 Past Sessions</div>
-      <div id="sessionHistoryPreview" style="font-size:14px;color:var(--text-secondary)"></div>
+      <div id="sessionHistoryPreview" style="font-size:14px;color:var(--text-secondary)">No sessions yet. Complete a daily or blitz session to track progress.</div>
     </div>
 
     <div class="card">
@@ -1331,6 +1339,35 @@ function renderDashboard() {
 
   $('headerStreak').textContent = DATA.streak > 0 ? `🔥 ${DATA.streak} day streak` : 'Start your streak!';
 
+  // ── Projected SAT Score ──
+  const scoreEl = $('scoreProjectionValue');
+  const scoreBreak = $('scoreProjectionBreakdown');
+  const rwAcc = ENGLISH_DOMAINS.map(d => {
+    const p = DATA.performance[d];
+    return p?.total > 0 ? p.correct / p.total : null;
+  }).filter(x => x !== null);
+  const mathAcc = MATH_DOMAINS.map(d => {
+    const p = DATA.performance[d];
+    return p?.total > 0 ? p.correct / p.total : null;
+  }).filter(x => x !== null);
+
+  if (rwAcc.length > 0 || mathAcc.length > 0) {
+    const avgRW = rwAcc.length > 0 ? rwAcc.reduce((a,b)=>a+b,0) / rwAcc.length : 0;
+    const avgMath = mathAcc.length > 0 ? mathAcc.reduce((a,b)=>a+b,0) / mathAcc.length : 0;
+    const rwScore = Math.round(avgRW * 800);
+    const mathScore = Math.round(avgMath * 800);
+    const totalScore = rwScore + mathScore;
+
+    scoreEl.textContent = totalScore;
+    scoreBreak.innerHTML = `
+      <span style="display:inline-block;margin-right:20px">📖 Reading &amp; Writing: <strong>${rwScore}</strong>/800 ${rwAcc.length > 0 ? `(${Math.round(avgRW*100)}%)` : '(no data)'}</span>
+      <span>🔢 Math: <strong>${mathScore}</strong>/800 ${mathAcc.length > 0 ? `(${Math.round(avgMath*100)}%)` : '(no data)'}</span>
+    `;
+  } else {
+    scoreEl.textContent = '—';
+    scoreBreak.textContent = 'Complete some sessions to see your projected score.';
+  }
+
   // ── Target Prep: weakest domains ──
   const missed = DATA.missedQuestions || {};
   const missedCount = Object.keys(missed).length;
@@ -1338,10 +1375,9 @@ function renderDashboard() {
   const targetCard = $('targetPrepCard');
 
   if (missedCount > 0) {
-    missedCard.style.display = 'block';
     $('missedCountText').textContent = `You have ${missedCount} question${missedCount>1?'s':''} to review. Click to see explanations and re-learn.`;
   } else {
-    missedCard.style.display = 'none';
+    $('missedCountText').textContent = 'No missed questions yet! Keep up the good work.';
   }
 
   // Target prep: show top 3 weakest domains (by accuracy)
@@ -1380,20 +1416,17 @@ function renderDashboard() {
   }
 
   // ── Session History Preview ──
-  const histCard = $('sessionHistoryCard');
   const histPreview = $('sessionHistoryPreview');
   const sessions = DATA.history || [];
   if (sessions.length > 0) {
-    histCard.style.display = 'block';
     const recent = sessions.slice(-3).reverse();
     histPreview.innerHTML = recent.map(s => {
       const date = s.date || 'unknown';
       const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
       return `<span style="display:inline-block;margin-right:16px;font-size:13px">📅 ${date} · ${s.score}/${s.total} (${pct}%) · ${s.type}</span>`;
     }).join('<br>') + `<div style="margin-top:8px;font-size:12px;color:var(--blue)">View all ${sessions.length} sessions →</div>`;
-  } else {
-    histCard.style.display = 'none';
   }
+  // Else: the HTML default text stays ("No sessions yet...")
 
   // ── Performance ──
   const container = $('performanceList');
