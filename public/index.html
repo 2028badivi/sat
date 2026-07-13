@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Prep</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root {
+  --navy: #1b3a5c;
+  --blue: #2563eb;
+  --blue-hover: #1d4ed8;
+  --blue-light: #dbeafe;
+  --bg: #f8f9fa;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --success: #059669;
+  --success-bg: #d1fae5;
+  --error: #dc2626;
+  --error-bg: #fee2e2;
+  --warning: #d97706;
+  --warning-bg: #fef3c7;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Header ─── */
+.header {
+  background: var(--navy);
+  color: white;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.header-logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-logo svg { width: 22px; height: 22px; }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ─── Container ─── */
+.container { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* ─── Views ─── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card-header {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Dashboard ─── */
+.dashboard-greeting {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.dashboard-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.study-plan-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.study-plan-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.study-plan-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.action-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+}
+.action-card:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.action-card:active { transform: translateY(0); }
+.action-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+.action-icon.daily { background: var(--blue-light); }
+.action-icon.blitz { background: #fef3c7; }
+.action-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.action-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.performance-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.performance-item:last-child { border-bottom: none; }
+.performance-domain { flex: 1; font-size: 13px; font-weight: 500; }
+.performance-bar-wrap {
+  flex: 0 0 140px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.performance-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.performance-pct {
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+.performance-empty {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ─── Question Screen ─── */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 56px;
+  z-index: 50;
+}
+.question-progress { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+.question-domain-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: 2px 10px;
+  border-radius: 100px;
+}
+.question-timer {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+.question-timer.warning { color: var(--warning); }
+.question-timer.danger { color: var(--error); }
+.progress-strip {
+  height: 3px;
+  background: var(--border);
+  position: sticky;
+  top: 108px;
+  z-index: 49;
+}
+.progress-strip-fill {
+  height: 100%;
+  background: var(--blue);
+  transition: width 0.3s ease;
+}
+
+.question-content { padding: 28px 24px; max-width: 720px; margin: 0 auto; }
+
+.passage {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #334155;
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  background: #fafbfc;
+  border-left: 3px solid var(--border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.passage p { margin-bottom: 14px; }
+.passage p:last-child { margin-bottom: 0; }
+
+.question-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.choices { display: flex; flex-direction: column; gap: 10px; }
+
+.choice {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  background: var(--card);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.choice:hover { border-color: var(--blue); background: #f8faff; }
+.choice.selected { border-color: var(--blue); background: var(--blue-light); }
+.choice.correct { border-color: var(--success); background: var(--success-bg); }
+.choice.incorrect { border-color: var(--error); background: var(--error-bg); }
+
+.choice-letter {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  transition: all 0.12s ease;
+}
+.choice.selected .choice-letter { background: var(--blue); color: white; border-color: var(--blue); }
+.choice.correct .choice-letter { background: var(--success); color: white; border-color: var(--success); }
+.choice.incorrect .choice-letter { background: var(--error); color: white; border-color: var(--error); }
+.choice-text { flex: 1; padding-top: 2px; }
+
+.question-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.12s ease;
+  text-decoration: none;
+  line-height: 1;
+}
+.btn-primary { background: var(--blue); color: white; }
+.btn-primary:hover { background: var(--blue-hover); }
+.btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
+.btn-outline { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ─── Results ─── */
+.results-summary { text-align: center; padding: 32px 24px; }
+.results-score { font-size: 48px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+.results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
+.results-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+.results-breakdown { margin-top: 20px; }
+.result-item {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.result-item:last-child { border-bottom: none; }
+.result-question {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.result-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+.result-badge.correct { background: var(--success-bg); color: var(--success); }
+.result-badge.incorrect { background: var(--error-bg); color: var(--error); }
+.result-domain { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+.result-answer { font-size: 13px; color: var(--text-secondary); }
+.result-answer strong { color: var(--text); }
+.result-explanation {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  line-height: 1.6;
+}
+
+/* ─── Blitz Setup ─── */
+.setup-group { margin-bottom: 20px; }
+.setup-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.setup-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.setup-option {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.12s ease;
+  color: var(--text-secondary);
+  user-select: none;
+}
+.setup-option:hover { border-color: var(--blue); color: var(--blue); }
+.setup-option.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.setup-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; }
+.setup-checkbox {
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.12s ease;
+  user-select: none;
+  color: var(--text-secondary);
+}
+.setup-checkbox:hover { border-color: var(--blue); }
+.setup-checkbox.checked { background: var(--blue); color: white; border-color: var(--blue); }
+.setup-actions { margin-top: 24px; display: flex; gap: 12px; }
+
+/* ─── Timer Overlay ─── */
+.timer-overlay {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 200;
+  font-variant-numeric: tabular-nums;
+}
+.timer-overlay .timer-ring {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.timer-overlay .timer-ring.warning { border-color: var(--warning); }
+.timer-overlay .timer-ring.danger { border-color: var(--error); }
+
+/* ─── Loading — ─── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+}
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--blue);
+  animation: spin 0.7s linear infinite;
+  margin-bottom: 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: var(--text-secondary); }
+
+.error-state { text-align: center; padding: 40px 24px; }
+.error-icon { font-size: 36px; margin-bottom: 12px; }
+.error-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .container { padding: 20px 16px; }
+  .action-grid { grid-template-columns: 1fr; }
+  .header { padding: 0 16px; }
+  .question-content { padding: 20px 16px; }
+  .question-header { padding: 10px 16px; flex-wrap: wrap; gap: 6px; }
+  .passage { padding: 16px 18px; font-size: 14px; }
+  .choice { padding: 12px 14px; font-size: 14px; }
+  .results-score { font-size: 40px; }
+  .timer-overlay { bottom: 12px; right: 12px; padding: 10px 14px; }
+}
+.katex { font-size: 1.05em; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header class="header">
+  <div class="header-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+    </svg>
+    SAT Prep
+  </div>
+  <div class="header-right">
+    <span id="headerStreak">—</span>
+  </div>
+</header>
+
+<!-- ════════════════════ CONTAINER ════════════════════ -->
+<div class="container">
+
+  <!-- VIEW: Dashboard -->
+  <div id="viewDashboard" class="view active">
+    <div class="dashboard-greeting" id="greeting">Good morning</div>
+    <div class="dashboard-sub" id="greetingSub">Your SAT is on August 22nd. Let's get started.</div>
+
+    <div class="study-plan-bar">
+      <span id="daysRemaining">40 days to go</span>
+      <div class="study-plan-track">
+        <div class="study-plan-fill" id="planFill" style="width:0%"></div>
+      </div>
+      <span id="sessionsDone">0 sessions</span>
+    </div>
+
+    <div class="action-grid">
+      <div class="action-card" onclick="startDailySession()">
+        <div class="action-icon daily">📅</div>
+        <div class="action-title">Daily Session</div>
+        <div class="action-desc">10 questions — 9 Reading &amp; Writing, 1 Math. Adapts to your weak areas.</div>
+      </div>
+      <div class="action-card" onclick="showBlitzSetup()">
+        <div class="action-icon blitz">⚡</div>
+        <div class="action-title">Blitz Session</div>
+        <div class="action-desc">Custom intensive run. Pick subject, pace, topics, and length.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">📊 Performance by Domain</div>
+      <div id="performanceList"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: Question -->
+  <div id="viewQuestion" class="view">
+    <div class="question-header">
+      <span class="question-progress" id="qProgress">Question 1 of 10</span>
+      <span class="question-domain-badge" id="qDomain">Domain</span>
+      <span class="question-timer" id="qTimer" style="display:none">—</span>
+    </div>
+    <div class="progress-strip">
+      <div class="progress-strip-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div class="question-content" id="questionContent">
+      <div class="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading questions…</div>
+      </div>
+    </div>
+
+    <div class="timer-overlay" id="timerOverlay" style="display:none">
+      <div class="timer-ring" id="timerRing">⏱</div>
+      <span id="timerDisplay">—</span>
+    </div>
+  </div>
+
+  <!-- VIEW: Results -->
+  <div id="viewResults" class="view">
+    <div class="card">
+      <div class="results-summary">
+        <div class="results-score" id="resultScore">0/0</div>
+        <div class="results-label">Score</div>
+        <div class="results-sub" id="resultType">Daily Session</div>
+        <button class="btn btn-primary" onclick="goToDashboard()">Back to Dashboard</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">Review Your Answers</div>
+      <div id="resultsBreakdown"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: Blitz Setup -->
+  <div id="viewBlitzSetup" class="view">
+    <div class="card">
+      <div class="card-header">⚡ Blitz Session</div>
+
+      <div class="setup-group">
+        <div class="setup-label">Subject</div>
+        <div class="setup-options" id="blitzSubject">
+          <div class="setup-option active" data-value="english" onclick="selectBlitzOption('subject', this)">Reading &amp; Writing</div>
+          <div class="setup-option" data-value="math" onclick="selectBlitzOption('subject', this)">Math</div>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <div class="setup-label">Pacing</div>
+        <div class="setup-options" id="blitzPacing">
+          <div class="setup-option active" data-value="normal" onclick="selectBlitzOption('pacing', this)">Normal</div>
+          <div class="setup-option" data-value="fast" onclick="selectBlitzOption('pacing', this)">Fast (45s/q)</div>
+          <div class="setup-option" data-value="blitz" onclick="selectBlitzOption('pacing', this)">Blitz (30s/q)</div>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <div class="setup-label">Questions</div>
+        <div class="setup-options" id="blitzCount">
+          <div class="setup-option active" data-value="10" onclick="selectBlitzOption('count', this)">10</div>
+          <div class="setup-option" data-value="20" onclick="selectBlitzOption('count', this)">20</div>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <div class="setup-label">Topics</div>
+        <div class="setup-checkboxes" id="blitzTopics"></div>
+      </div>
+
+      <div class="setup-actions">
+        <button class="btn btn-primary" onclick="launchBlitz()">Start Blitz</button>
+        <button class="btn btn-outline" onclick="goToDashboard()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   SAT Prep Suite
+   ═══════════════════════════════════════════════════════ */
+
+// ─── Constants ───
+const API_BASE = '/api/questions';
+const STUDY_START = new Date('2026-07-13');
+const STUDY_END   = new Date('2026-08-22');
+const TOTAL_DAYS  = Math.round((STUDY_END - STUDY_START) / (1000*60*60*24));
+
+const ENGLISH_DOMAINS = ['Craft and Structure','Expression of Ideas','Information and Ideas','Standard English Conventions'];
+const MATH_DOMAINS    = ['Algebra','Advanced Math','Problem-Solving and Data Analysis','Geometry and Trigonometry'];
+
+const PACING_LIMITS = { normal: 0, fast: 45, blitz: 30 };
+
+// ─── State ───
+let app = {
+  view: 'dashboard',
+  questions: [],
+  qIndex: 0,
+  answers: [],
+  sessionType: null,
+  sessionConfig: null,
+  timerInterval: null,
+  timerRemaining: Infinity,
+  isTimed: false,
+  awaitingNext: false,
+  blitzConfig: { subject: 'english', pacing: 'normal', count: 10, topics: [] },
+};
+
+// ─── Data ───
+function defaultData() {
+  return { performance: {}, history: [], streak: 0, lastDate: null, totalQ: 0, totalSessions: 0 };
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem('sat-prep-data');
+    if (raw) {
+      const d = JSON.parse(raw);
+      for (const dm of [...ENGLISH_DOMAINS, ...MATH_DOMAINS]) {
+        if (!d.performance[dm]) d.performance[dm] = { correct: 0, total: 0 };
+      }
+      return d;
+    }
+  } catch (_) {}
+  return defaultData();
+}
+function saveData(d) {
+  try { localStorage.setItem('sat-prep-data', JSON.stringify(d)); } catch (_) {}
+}
+let DATA = loadData();
+
+// ─── Helpers ───
+function $(id) { return document.getElementById(id); }
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  return arr;
+}
+function esc(t) {
+  if (!t) return '';
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+// ─── Navigation ───
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  $(id).classList.add('active');
+  app.view = id;
+}
+
+function goToDashboard() {
+  stopTimer();
+  showView('viewDashboard');
+  renderDashboard();
+}
+
+// ─── API ───
+// Note: the remote API ignores `limit` and returns ALL questions for a section.
+let qCache = { english: [], math: [] };
+let loading = { english: false, math: false };
+
+async function fetchAll(section) {
+  if (qCache[section].length > 0) return;
+  if (loading[section]) {
+    while (loading[section]) await new Promise(r => setTimeout(r, 100));
+    return;
+  }
+  loading[section] = true;
+  try {
+    const r = await fetch(`${API_BASE}?section=${section}&limit=999`);
+    if (!r.ok) throw new Error(`API ${r.status}`);
+    const qs = await r.json();
+    if (Array.isArray(qs)) qCache[section] = qs;
+  } finally {
+    loading[section] = false;
+  }
+}
+
+async function ensureLoaded(section) {
+  if (qCache[section].length < 10) await fetchAll(section);
+}
+
+function takeQuestions(section, count, domains) {
+  let pool = qCache[section];
+  if (domains && domains.length) pool = pool.filter(q => domains.includes(q.domain));
+  if (!pool.length) return [];
+  shuffle(pool);
+  const ids = new Set(pool.slice(0, count).map(q => q.id));
+  qCache[section] = qCache[section].filter(q => !ids.has(q.id));
+  return pool.slice(0, count);
+}
+
+async function getQuestions(section, count, domains) {
+  await ensureLoaded(section);
+  return takeQuestions(section, count, domains);
+}
+
+// ─── Adaptive Selection ───
+function domainWeights(section) {
+  const domains = section === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
+  const w = {};
+  for (const dm of domains) {
+    const p = DATA.performance[dm];
+    if (!p || p.total === 0) { w[dm] = 0.3; } // unseen → boosted weight
+    else { w[dm] = Math.max(0.15, 1 - p.correct / p.total); }
+  }
+  const total = Object.values(w).reduce((a,b)=>a+b,0);
+  for (const dm of domains) w[dm] /= total;
+  return w;
+}
+
+function pickDomains(section, count) {
+  const w = domainWeights(section);
+  const domains = section === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    const r = Math.random();
+    let cum = 0, chosen = domains[0];
+    for (const dm of domains) { cum += w[dm] || 0; if (r <= cum) { chosen = dm; break; } }
+    result.push(chosen);
+  }
+  return result;
+}
+
+// ─── Daily Session ───
+async function startDailySession() {
+  // Confirm if already done today
+  if (DATA.lastDate === todayStr() && DATA.history.some(h => h.date === todayStr() && h.type === 'daily')) {
+    if (!confirm('You already completed your daily session today. Start another one?')) return;
+  }
+
+  showView('viewQuestion');
+  renderLoading('Preparing your daily session…');
+
+  try {
+    const engDomains = pickDomains('english', 9);
+    const [eng, mth] = await Promise.all([
+      getQuestions('english', 9, [...new Set(engDomains)]),
+      getQuestions('math', 1),
+    ]);
+
+    // Interleave: put math question around position 7 (last third)
+    const all = [];
+    eng.forEach((q, i) => {
+      if (i === 7 && mth.length) all.push(mth.shift());
+      all.push(q);
+    });
+    if (mth.length) all.splice(Math.min(7, all.length), 0, ...mth);
+
+    app.questions = all.slice(0, 10);
+    app.qIndex = 0;
+    app.answers = [];
+    app.sessionType = 'daily';
+    app.sessionConfig = { pacing: 'normal' };
+    renderQuestion();
+  } catch (e) {
+    showError('Could not load questions. Check your connection and try again.');
+  }
+}
+
+// ─── Blitz Setup ───
+function showBlitzSetup() {
+  refreshBlitzTopics();
+  showView('viewBlitzSetup');
+}
+
+function refreshBlitzTopics() {
+  const container = $('blitzTopics');
+  const subject = app.blitzConfig.subject;
+  const domains = subject === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
+  const w = domainWeights(subject);
+  const sorted = domains.slice().sort((a,b) => (w[b]||0)-(w[a]||0));
+
+  // If no topics selected yet, default to weakest
+  if (!app.blitzConfig.topics.length) {
+    const avg = 1 / domains.length;
+    app.blitzConfig.topics = sorted.filter(d => w[d] > avg);
+    if (!app.blitzConfig.topics.length) app.blitzConfig.topics = [sorted[0]];
+  }
+
+  container.innerHTML = sorted.map(dm => {
+    const checked = app.blitzConfig.topics.includes(dm);
+    return `<div class="setup-checkbox ${checked?'checked':''}" data-value="${dm}" onclick="toggleBlitzTopic(this)">${dm}</div>`;
+  }).join('');
+}
+
+function selectBlitzOption(field, el) {
+  el.parentElement.querySelectorAll('.setup-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  app.blitzConfig[field] = el.dataset.value;
+  if (field === 'subject') { app.blitzConfig.topics = []; refreshBlitzTopics(); }
+}
+
+function toggleBlitzTopic(el) {
+  el.classList.toggle('checked');
+  const val = el.dataset.value;
+  if (app.blitzConfig.topics.includes(val)) {
+    app.blitzConfig.topics = app.blitzConfig.topics.filter(t => t !== val);
+  } else {
+    app.blitzConfig.topics.push(val);
+  }
+}
+
+async function launchBlitz() {
+  const cfg = app.blitzConfig;
+  const count = parseInt(cfg.count);
+  const topics = cfg.topics.length ? cfg.topics : null;
+
+  showView('viewQuestion');
+  renderLoading('Preparing blitz session…');
+
+  try {
+    const qs = await getQuestions(cfg.subject, count, topics);
+    if (!qs.length) { showError('No questions available for these topics. Try different ones.'); return; }
+    app.questions = qs.slice(0, count);
+    app.qIndex = 0;
+    app.answers = [];
+    app.sessionType = 'blitz';
+    app.sessionConfig = { ...cfg };
+    renderQuestion();
+  } catch (e) {
+    showError('Could not load questions. Check your connection and try again.');
+  }
+}
+
+// ─── Question Rendering ───
+function renderLoading(msg) {
+  $('questionContent').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">${msg||'Loading…'}</div></div>`;
+}
+function showError(msg) {
+  $('questionContent').innerHTML = `<div class="error-state"><div class="error-icon">⚠️</div><div class="error-text">${msg}</div><button class="btn btn-primary" onclick="goToDashboard()">Back to Dashboard</button></div>`;
+}
+
+function renderQuestion() {
+  if (app.qIndex >= app.questions.length) { endSession(); return; }
+
+  const q = app.questions[app.qIndex];
+  const total = app.questions.length;
+  const idx = app.qIndex;
+
+  // Header
+  $('qProgress').textContent = `Question ${idx+1} of ${total}`;
+  $('qDomain').textContent = q.domain;
+  $('progressFill').style.width = `${(idx/total)*100}%`;
+
+  // Timer setup
+  const pacing = app.sessionConfig.pacing || 'normal';
+  const timeLimit = PACING_LIMITS[pacing] || 0;
+  app.isTimed = timeLimit > 0;
+
+  if (app.isTimed) {
+    $('qTimer').style.display = '';
+    $('qTimer').textContent = formatTime(timeLimit);
+    $('timerOverlay').style.display = '';
+    app.timerRemaining = timeLimit;
+    updateTimerDisplay();
+    stopTimer();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining--;
+      updateTimerDisplay();
+      if (app.timerRemaining <= 0) {
+        clearInterval(app.timerInterval);
+        app.timerInterval = null;
+        app.timerRemaining = 0;
+        updateTimerDisplay();
+        if (!app.awaitingNext) handleTimeout();
+      }
+    }, 1000);
+  } else {
+    $('qTimer').style.display = 'none';
+    $('timerOverlay').style.display = 'none';
+    stopTimer();
+  }
+
+  app.awaitingNext = false;
+
+  // Build content
+  let html = '';
+
+  // Passage / paragraph
+  const para = q.question.paragraph;
+  if (para && para !== 'null' && para.trim()) {
+    html += `<div class="passage">${esc(para)}</div>`;
+  }
+
+  // Question
+  html += `<div class="question-text">${esc(q.question.question)}</div>`;
+
+  // Choices
+  html += '<div class="choices">';
+  for (const letter of ['A','B','C','D']) {
+    const text = q.question.choices[letter];
+    if (!text) continue;
+    html += `<div class="choice" data-letter="${letter}" onclick="selectChoice(this)">
+      <div class="choice-letter">${letter}</div>
+      <div class="choice-text">${esc(text)}</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  // Footer
+  html += `<div class="question-footer">
+    <span style="font-size:13px;color:var(--text-secondary)">${app.sessionType==='daily'?'Daily':'Blitz'}</span>
+    <button class="btn btn-primary" id="nextBtn" disabled onclick="confirmAnswer()">Next</button>
+  </div>`;
+
+  $('questionContent').innerHTML = html;
+  renderMath();
+}
+
+function formatTime(s) {
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+function selectChoice(el) {
+  if (app.awaitingNext) return;
+  document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  $('nextBtn').disabled = false;
+  app.answers[app.qIndex] = { selected: el.dataset.letter };
+}
+
+function confirmAnswer() {
+  if (app.awaitingNext) return;
+  const selected = app.answers[app.qIndex]?.selected;
+
+  app.awaitingNext = true;
+  stopTimer();
+
+  const q = app.questions[app.qIndex];
+  const correct = selected === q.question.correct_answer;
+
+  // Mark choices
+  document.querySelectorAll('.choice').forEach(c => {
+    c.style.cursor = 'default';
+    if (c.dataset.letter === q.question.correct_answer) c.classList.add('correct');
+    else if (c.dataset.letter === selected && !correct) c.classList.add('incorrect');
+  });
+
+  // Store full answer
+  app.answers[app.qIndex] = {
+    questionIdx: app.qIndex,
+    questionId: q.id,
+    domain: q.domain,
+    difficulty: q.difficulty,
+    selected,
+    correct,
+    correctAnswer: q.question.correct_answer,
+    explanation: q.question.explanation,
+    questionText: q.question.question,
+    choices: q.question.choices,
+  };
+
+  // Footer feedback
+  const fb = document.querySelector('.question-footer span');
+  if (fb) {
+    fb.innerHTML = correct
+      ? '<span style="color:var(--success);font-weight:600;">✅ Correct</span>'
+      : '<span style="color:var(--error);font-weight:600;">❌ Incorrect</span>';
+  }
+
+  const btn = $('nextBtn');
+  btn.textContent = app.qIndex < app.questions.length - 1 ? 'Continue →' : 'See Results';
+  btn.disabled = false;
+  btn.onclick = advanceQuestion;
+}
+
+function handleTimeout() {
+  // No answer selected → store as skipped
+  const q = app.questions[app.qIndex];
+  app.awaitingNext = true;
+
+  app.answers[app.qIndex] = {
+    questionIdx: app.qIndex,
+    questionId: q.id,
+    domain: q.domain,
+    difficulty: q.difficulty,
+    selected: null,
+    correct: false,
+    correctAnswer: q.question.correct_answer,
+    explanation: q.question.explanation,
+    questionText: q.question.question,
+    choices: q.question.choices,
+  };
+
+  document.querySelectorAll('.choice').forEach(c => {
+    c.style.cursor = 'default';
+    if (c.dataset.letter === q.question.correct_answer) c.classList.add('correct');
+  });
+
+  const fb = document.querySelector('.question-footer span');
+  if (fb) fb.innerHTML = '<span style="color:var(--error);font-weight:600;">⏰ Time’s up!</span>';
+
+  const btn = $('nextBtn');
+  btn.textContent = app.qIndex < app.questions.length - 1 ? 'Continue →' : 'See Results';
+  btn.disabled = false;
+  btn.onclick = advanceQuestion;
+}
+
+function advanceQuestion() {
+  app.awaitingNext = false;
+  app.qIndex++;
+  renderQuestion();
+}
+
+function stopTimer() {
+  if (app.timerInterval) { clearInterval(app.timerInterval); app.timerInterval = null; }
+}
+
+function updateTimerDisplay() {
+  const s = Math.max(0, Math.ceil(app.timerRemaining));
+  $('timerDisplay').textContent = formatTime(s);
+  $('qTimer').textContent = formatTime(s);
+
+  const pacing = app.sessionConfig.pacing;
+  const total = PACING_LIMITS[pacing] || 60;
+  const pct = total > 0 ? app.timerRemaining / total : 1;
+
+  const ring = $('timerRing');
+  ring.className = 'timer-ring';
+  if (pct < 0.2) ring.classList.add('danger');
+  else if (pct < 0.4) ring.classList.add('warning');
+
+  $('qTimer').className = 'question-timer';
+  if (pct < 0.2) $('qTimer').classList.add('danger');
+  else if (pct < 0.4) $('qTimer').classList.add('warning');
+}
+
+// ─── End Session ───
+function endSession() {
+  stopTimer();
+  showView('viewResults');
+
+  const total = app.questions.length;
+  const correct = app.answers.filter(a => a && a.correct).length;
+
+  $('resultScore').textContent = `${correct}/${total}`;
+  $('resultType').textContent = app.sessionType === 'daily' ? 'Daily Session' : 'Blitz Session';
+
+  // Update DATA
+  const session = {
+    date: todayStr(),
+    type: app.sessionType,
+    score: correct,
+    total,
+    answers: app.answers.filter(Boolean).map(a => ({
+      id: a.questionId, domain: a.domain, difficulty: a.difficulty,
+      correct: a.correct, selected: a.selected, correctAnswer: a.correctAnswer,
+    })),
+  };
+  DATA.history.push(session);
+  DATA.totalQ += total;
+  DATA.totalSessions++;
+
+  // Streak
+  const today = todayStr();
+  if (DATA.lastDate !== today) {
+    const y = new Date(); y.setDate(y.getDate()-1);
+    DATA.streak = DATA.lastDate === y.toISOString().slice(0,10) ? DATA.streak + 1 : 1;
+    DATA.lastDate = today;
+  }
+
+  // Per-domain
+  for (const a of app.answers) {
+    if (!a) continue;
+    if (!DATA.performance[a.domain]) DATA.performance[a.domain] = { correct:0, total:0 };
+    DATA.performance[a.domain].total++;
+    if (a.correct) DATA.performance[a.domain].correct++;
+  }
+
+  saveData(DATA);
+
+  // Render breakdown
+  let html = '';
+  for (let i = 0; i < app.answers.length; i++) {
+    const a = app.answers[i];
+    if (!a) continue;
+    html += `<div class="result-item">
+      <div class="result-question">
+        ${a.correct ? '✅' : '❌'} Question ${i+1}
+        <span class="result-badge ${a.correct?'correct':'incorrect'}">${a.correct?'Correct':'Incorrect'}</span>
+      </div>
+      <div class="result-domain">${esc(a.domain)} · ${esc(a.difficulty)}</div>
+      <div class="result-answer"><strong>Your answer:</strong> ${a.selected ? `${a.selected}. ${esc(a.choices?.[a.selected]||'')}` : 'No answer (time)'}</div>
+      ${!a.correct ? `<div class="result-answer"><strong>Correct answer:</strong> ${a.correctAnswer}. ${esc(a.choices?.[a.correctAnswer]||'')}</div>` : ''}
+      <div class="result-explanation"><strong>Explanation:</strong> ${esc(a.explanation||'')}</div>
+    </div>`;
+  }
+  $('resultsBreakdown').innerHTML = html;
+  renderMath();
+}
+
+// ─── Dashboard ───
+function renderDashboard() {
+  const h = new Date().getHours();
+  let greet = 'Good evening';
+  if (h < 12) greet = 'Good morning';
+  else if (h < 17) greet = 'Good afternoon';
+
+  $('greeting').textContent = `${greet}, ready to prep?`;
+
+  const now = new Date();
+  const left = Math.max(0, Math.round((STUDY_END - now) / (1000*60*60*24)));
+  $('daysRemaining').textContent = `${left} days to go`;
+
+  const elapsed = Math.max(0, Math.round((now - STUDY_START) / (1000*60*60*24)));
+  $('planFill').style.width = `${Math.min(100, (elapsed / TOTAL_DAYS) * 100)}%`;
+  $('sessionsDone').textContent = `${DATA.totalSessions} sessions`;
+
+  $('headerStreak').textContent = DATA.streak > 0 ? `🔥 ${DATA.streak} day streak` : 'Start your streak!';
+
+  // Performance
+  const container = $('performanceList');
+  const all = [...ENGLISH_DOMAINS, ...MATH_DOMAINS].map(dm => {
+    const p = DATA.performance[dm];
+    const c = p?.correct||0, t = p?.total||0;
+    return { domain: dm, correct: c, total: t, pct: t > 0 ? Math.round((c/t)*100) : null };
+  }).sort((a,b) => (a.pct ?? -1) - (b.pct ?? -1));
+
+  if (all.every(i => i.total === 0)) {
+    container.innerHTML = '<div class="performance-empty">No data yet. Complete a session to see your breakdown.</div>';
+    return;
+  }
+
+  container.innerHTML = all.map(i => {
+    const pct = i.pct !== null ? i.pct : 0;
+    const bar = i.total === 0 ? 'var(--border)' : pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+    return `<div class="performance-item">
+      <div class="performance-domain">${i.domain}</div>
+      <div class="performance-bar-wrap"><div class="performance-bar" style="width:${i.total>0?pct:5}%;background:${bar}"></div></div>
+      <div class="performance-pct" style="color:${i.total>0?'var(--text)':'var(--text-muted)'}">${i.total>0?pct+'%':'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── Math Rendering ───
+function renderMath() {
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement(document.getElementById('questionContent') || document.body, {
+        delimiters: [
+          {left:'$$',right:'$$',display:true},
+          {left:'\\\\[',right:'\\\\]',display:true},
+          {left:'$',right:'$',display:false},
+          {left:'\\(',right:'\\)',display:false},
+        ],
+        throwOnError: false,
+      });
+    } catch (_) {}
+  }
+}
+
+// ─── Boot ───
+document.addEventListener('DOMContentLoaded', () => {
+  renderDashboard();
+  // Pre-fetch all questions (API returns everything per section)
+  fetchAll('english').catch(()=>{});
+  fetchAll('math').catch(()=>{});
+  // Refresh on return
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && app.view === 'dashboard') { DATA = loadData(); renderDashboard(); }
+  });
+});
+</script>
+</body>
+</html>
