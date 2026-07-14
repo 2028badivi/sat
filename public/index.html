@@ -1530,19 +1530,27 @@ function getEventsForDate(date) {
   const dow = date.getDay();
   const ds = dateToStr(date);
   const events = [];
-  // Daily schedule for weekdays (not weekend? No, the schedule seems to be daily)
-  // Actually user said daily schedule - let me include it for all days by default
-  // But the user might have meant weekdays. Let me include the daily schedule every day,
-  // since the user said "Daily schedule" at the top.
   for (const s of DAILY_SCHEDULE) {
     events.push({start:s[0], end:s[1], title:s[2], type:'daily'});
   }
-  // Weekly recurring
   const weekly = WEEKLY_RECURRING[dow] || [];
   for (const w of weekly) {
     events.push({start:w[0], end:w[1], title:w[2], type:'weekly'});
   }
-  // Monthly schedule
+  if (MONTHLY_SCHEDULE[ds]) {
+    events.push({start:'All day', end:'', title:MONTHLY_SCHEDULE[ds], type:'monthly'});
+  }
+  return events;
+}
+function getEventsForMonthView(date) {
+  const dow = date.getDay();
+  const ds = dateToStr(date);
+  const events = [];
+  // Only show weekly recurring + monthly schedule in month cells (not daily routine)
+  const weekly = WEEKLY_RECURRING[dow] || [];
+  for (const w of weekly) {
+    events.push({start:w[0], end:w[1], title:w[2], type:'weekly'});
+  }
   if (MONTHLY_SCHEDULE[ds]) {
     events.push({start:'All day', end:'', title:MONTHLY_SCHEDULE[ds], type:'monthly'});
   }
@@ -1753,7 +1761,7 @@ function calRenderMonth() {
     if (isOther) cls.push('other-month');
     if (isToday(d)) cls.push('today');
 
-    const events = getEventsForDate(d);
+    const events = getEventsForMonthView(d);
     const dots = events.slice(0, 3).map(e => `<span class="cal-event-label">${escHtml(e.title.slice(0,20))}</span>`).join('');
 
     grid.innerHTML += `<div class="${cls.join(' ')}" onclick="calGoDay(${day},${month},${year})">
