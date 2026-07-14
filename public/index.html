@@ -3,2700 +3,2160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAT Prep</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<title>LockedIn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #1b3a5c;
-  --blue: #2563eb;
-  --blue-hover: #1d4ed8;
-  --blue-light: #dbeafe;
-  --bg: #f8f9fa;
+  --bg: #f5f5f7;
   --card: #ffffff;
-  --text: #1a1a2e;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
-  --success: #059669;
-  --success-bg: #d1fae5;
-  --error: #dc2626;
-  --error-bg: #fee2e2;
-  --warning: #d97706;
-  --warning-bg: #fef3c7;
+  --card-hover: #f0f0f2;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --border: #d2d2d7;
+  --border-light: #e5e5ea;
+  --accent: #0071e3;
+  --accent-hover: #0066cc;
+  --accent-light: #e3f0ff;
+  --success: #34c759;
+  --success-bg: #e8f8ee;
+  --warning: #ff9500;
+  --warning-bg: #fff4e0;
+  --error: #ff3b30;
+  --error-bg: #ffe8e6;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
   --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
   --radius: 10px;
   --radius-sm: 6px;
+  --radius-lg: 14px;
+  --nav-height: 52px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { height: 100%; }
+html, body { height: 100%; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
-  min-height: 100%;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { font-family: var(--font); cursor: pointer; }
+input, textarea { font-family: var(--font); }
 
-/* ─── Header ─── */
-.header {
-  background: var(--navy);
-  color: white;
-  padding: 0 24px;
-  height: 56px;
+/* ─── LockedIn Nav ─── */
+.lockedin-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border-light);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  z-index: 200;
 }
-.header-logo {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.header-logo svg { width: 22px; height: 22px; }
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.8);
-}
-#fullscreenBtn:hover { color: white !important; }
-
-/* ─── Container ─── */
-.container { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
-
-/* ─── Views ─── */
-.view { display: none; }
-.view.active { display: block; }
-
-/* ─── Cards ─── */
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  padding: 24px;
-  margin-bottom: 20px;
-}
-.card-header {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ─── Dashboard ─── */
-.dashboard-greeting {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.dashboard-sub {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 24px;
-}
-.study-plan-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-.study-plan-track {
-  flex: 1;
-  height: 6px;
-  background: var(--border);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.study-plan-fill {
-  height: 100%;
-  background: var(--blue);
-  border-radius: 3px;
-  transition: width 0.5s ease;
-}
-.action-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.action-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: left;
-  text-decoration: none;
-  color: inherit;
-}
-.action-card:hover {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-.action-card:active { transform: translateY(0); }
-.action-icon {
-  width: 36px; height: 36px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-  font-size: 18px;
-}
-.action-icon.daily { background: var(--blue-light); }
-.action-icon.blitz { background: #fef3c7; }
-.action-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-.action-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-
-.section-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.performance-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-light);
-}
-.performance-item:last-child { border-bottom: none; }
-.performance-domain { flex: 1; font-size: 13px; font-weight: 500; }
-.performance-bar-wrap {
-  flex: 0 0 140px;
-  height: 6px;
-  background: var(--border);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.performance-bar {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.3s ease;
-}
-.performance-pct {
-  font-size: 13px;
-  font-weight: 600;
-  min-width: 36px;
-  text-align: right;
-}
-.performance-empty {
-  text-align: center;
-  padding: 24px 0;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* ─── Question Screen ─── */
-.question-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 16px;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 56px;
-  z-index: 50;
-}
-.question-header .question-progress { flex: 1; text-align: center; }
-.question-header .btn-ghost { flex-shrink: 0; }
-.question-progress { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
-.question-domain-badge {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--blue);
-  background: var(--blue-light);
-  padding: 2px 10px;
-  border-radius: 100px;
-}
-.question-timer {
-  font-size: 14px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-secondary);
-}
-.question-timer.warning { color: var(--warning); }
-.question-timer.danger { color: var(--error); }
-.progress-strip {
-  height: 3px;
-  background: var(--border);
-  position: sticky;
-  top: 100px;
-  z-index: 49;
-}
-.progress-strip-fill {
-  height: 100%;
-  background: var(--blue);
-  transition: width 0.3s ease;
-}
-
-.question-content { padding: 28px 24px; max-width: 720px; margin: 0 auto; }
-
-.passage {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 15px;
-  line-height: 1.75;
-  color: #334155;
-  margin-bottom: 28px;
-  padding: 20px 24px;
-  background: #fafbfc;
-  border-left: 3px solid var(--border);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-}
-.passage p { margin-bottom: 14px; }
-.passage p:last-child { margin-bottom: 0; }
-
-.question-text {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.choices { display: flex; flex-direction: column; gap: 10px; }
-
-.choice {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 14px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.12s ease;
-  background: var(--card);
-  font-size: 15px;
-  line-height: 1.5;
-}
-.choice:hover { border-color: var(--blue); background: #f8faff; }
-.choice.selected { border-color: var(--blue); background: var(--blue-light); }
-.choice.correct { border-color: var(--success); background: var(--success-bg); }
-.choice.incorrect { border-color: var(--error); background: var(--error-bg); }
-
-.choice-letter {
-  flex-shrink: 0;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  border: 1.5px solid var(--border);
-  transition: all 0.12s ease;
-}
-.choice.selected .choice-letter { background: var(--blue); color: white; border-color: var(--blue); }
-.choice.correct .choice-letter { background: var(--success); color: white; border-color: var(--success); }
-.choice.incorrect .choice-letter { background: var(--error); color: white; border-color: var(--error); }
-.choice-text { flex: 1; padding-top: 2px; }
-
-.question-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 24px;
-  border-radius: var(--radius-sm);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.12s ease;
-  text-decoration: none;
-  line-height: 1;
-}
-.btn-primary { background: var(--blue); color: white; }
-.btn-primary:hover { background: var(--blue-hover); }
-.btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
-.btn-outline { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
-.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
-
-/* ─── Results ─── */
-.results-summary { text-align: center; padding: 32px 24px; }
-.results-score { font-size: 48px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
-.results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
-.results-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
-.results-breakdown { margin-top: 20px; }
-.result-item {
-  padding: 16px;
-  border-bottom: 1px solid var(--border-light);
-}
-.result-item:last-child { border-bottom: none; }
-.result-question {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.result-badge {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 100px;
-}
-.result-badge.correct { background: var(--success-bg); color: var(--success); }
-.result-badge.incorrect { background: var(--error-bg); color: var(--error); }
-.result-domain { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
-.result-answer { font-size: 13px; color: var(--text-secondary); }
-.result-answer strong { color: var(--text); }
-.result-explanation {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-top: 8px;
-  padding: 10px 12px;
-  background: var(--bg);
-  border-radius: var(--radius-sm);
-  line-height: 1.6;
-}
-
-/* ─── Blitz Setup ─── */
-.setup-group { margin-bottom: 20px; }
-.setup-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 10px;
-}
-.setup-options { display: flex; gap: 8px; flex-wrap: wrap; }
-.setup-option {
-  padding: 8px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  transition: all 0.12s ease;
-  color: var(--text-secondary);
-  user-select: none;
-}
-.setup-option:hover { border-color: var(--blue); color: var(--blue); }
-.setup-option.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
-.setup-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; }
-.setup-checkbox {
-  padding: 8px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: 100px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.12s ease;
-  user-select: none;
-  color: var(--text-secondary);
-}
-.setup-checkbox:hover { border-color: var(--blue); }
-.setup-checkbox.checked { background: var(--blue); color: white; border-color: var(--blue); }
-.setup-actions { margin-top: 24px; display: flex; gap: 12px; }
-
-/* ─── Timer Overlay ─── */
-.timer-overlay {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  padding: 12px 20px;
+.lockedin-nav-left {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  z-index: 200;
-  font-variant-numeric: tabular-nums;
 }
-.timer-overlay .timer-ring {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 3px solid var(--border);
+.lockedin-nav-logo {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.lockedin-nav-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 2px 8px;
+  background: var(--border-light);
+  border-radius: 20px;
+}
+.back-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 18px;
+  transition: background 0.15s;
 }
-.timer-overlay .timer-ring.warning { border-color: var(--warning); }
-.timer-overlay .timer-ring.danger { border-color: var(--error); }
+.back-btn:hover { background: var(--accent-light); }
 
-/* ─── Explanation Area ─── */
-.explanation-area {
-  margin-top: 20px;
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
+/* ─── HOME VIEW ─── */
+#viewHome {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
 }
-.explanation-content {
-  background: var(--bg);
+.home-greeting {
+  margin-bottom: 4px;
+}
+.home-greeting h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.home-greeting p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.home-datetime {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 24px;
+  padding: 12px 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+.home-datetime .date {
+  font-size: 15px;
+  font-weight: 500;
+}
+.home-datetime .time {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.home-datetime .schedule-btn {
+  margin-left: auto;
+  padding: 6px 14px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
+  transition: background 0.15s;
+}
+.home-datetime .schedule-btn:hover { background: var(--accent-hover); }
+
+/* ─── Search ─── */
+.search-wrapper {
+  position: relative;
+  margin-bottom: 24px;
+}
+.search-wrapper input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search-wrapper input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+.search-wrapper .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 16px;
+  pointer-events: none;
+}
+.search-wrapper input::placeholder { color: var(--text-muted); }
+
+/* ─── App Grid ─── */
+.app-section-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.app-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 16px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  text-align: center;
+  min-height: 120px;
+}
+.app-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border);
+}
+.app-box:active { transform: translateY(0); }
+.app-box-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.app-box-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.app-box-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+.app-box.sat { border-left: 3px solid #1b3a5c; }
+.app-box.documents { border-left: 3px solid #4285f4; }
+.app-box.calendar { border-left: 3px solid #ea4335; }
+.app-box.notes { border-left: 3px solid #34a853; }
+.app-box.workspace { border-left: 3px solid #fbbc04; }
+.app-box.pomodoro { border-left: 3px solid #e74c3c; }
+
+/* ─── APP: Pomodoro ─── */
+.pomo-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.pomo-main {
+  flex: 1;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.pomo-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 20px;
+}
+@media (max-width: 820px) {
+  .pomo-layout { flex-direction: column; align-items: center; }
+  .pomo-sidebar { width: 100%; max-width: 420px; position: static; }
+}
+.pomo-mode-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.pomo-timer-ring {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: 16px auto;
+}
+.pomo-timer-ring svg { transform: rotate(-90deg); }
+.pomo-timer-ring .bg-circle { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.pomo-timer-ring .progress-circle {
+  fill: none;
+  stroke: #e74c3c;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s;
+}
+.pomo-timer-ring .pomo-time-display {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.pomo-timer-ring .pomo-time-display .time-text {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: var(--text);
+}
+.pomo-timer-ring .pomo-time-display .session-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.pomo-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.pomo-btn {
+  padding: 10px 24px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.pomo-btn:hover { background: var(--card-hover); }
+.pomo-btn.primary {
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+.pomo-btn.primary:hover { background: #c0392b; }
+.pomo-btn.primary.running { background: var(--accent); border-color: var(--accent); }
+.pomo-btn.skip { font-size: 12px; padding: 6px 14px; color: var(--text-muted); }
+.pomo-btn.skip:hover { color: var(--text); background: var(--border-light); }
+.pomo-settings {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  text-align: left;
+}
+.pomo-settings summary {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 2px 0;
+}
+.pomo-settings summary:hover { color: var(--text); }
+.pomo-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+.pomo-settings-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pomo-settings-item label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.pomo-settings-item input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+}
+.pomo-settings-item input:focus { border-color: var(--accent); }
+.pomo-comp-msg {
+  font-size: 11px;
+  color: var(--warning);
+  text-align: center;
+  margin: 4px 0 0;
+  min-height: 16px;
+}
+
+/* Pomodoro task box */
+.pomo-task-box {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  text-align: left;
+}
+.pomo-task-box h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-light);
+}
+.pomo-task-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.pomo-task-input-row input {
+  flex: 1;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  outline: none;
+}
+.pomo-task-input-row input:focus { border-color: var(--accent); }
+.pomo-task-input-row button {
+  padding: 7px 14px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.pomo-task-input-row button:hover { background: var(--accent-hover); }
+.pomo-task-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.pomo-task-item:last-child { border-bottom: none; }
+.pomo-task-item input[type="checkbox"] {
+  width: 14px; height: 14px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.pomo-task-item .task-label {
+  flex: 1;
+  min-width: 0;
+}
+.pomo-task-item.done .task-label { text-decoration: line-through; color: var(--text-muted); }
+.pomo-task-item .task-del {
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.pomo-task-item .task-del:hover { color: var(--error); background: var(--error-bg); }
+
+/* Mini day view sidebar */
+.pomo-day-mini {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
   overflow: hidden;
 }
-.explanation-header {
+.pomo-day-mini-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: var(--border-light);
   font-size: 13px;
   font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
+}
+.pomo-day-mini-header button {
+  padding: 2px 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
   cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s;
 }
-.explanation-close {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 0 4px;
-  line-height: 1;
+.pomo-day-mini-header button:hover { background: var(--card-hover); color: var(--text); }
+.pomo-day-mini-body {
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 4px 0;
 }
-.explanation-close:hover { color: var(--text); }
-.explanation-body {
-  padding: 14px;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-secondary);
+.pomo-day-mini-body .cal-time-slot { min-height: 28px; }
+.pomo-day-mini-body .cal-time-label {
+  width: 44px;
+  padding: 4px 6px;
+  font-size: 9px;
 }
+.pomo-day-mini-body .cal-time-content { padding: 0 6px; }
+.pomo-day-mini-body .cal-event-block {
+  padding: 2px 6px;
+  margin: 1px 0;
+  font-size: 10px;
+  min-height: 16px;
+}
+.pomo-day-mini-body .cal-event-block .evt-title { font-size: 10px; }
+.pomo-day-mini-body .cal-now-line { height: 1.5px; }
+.pomo-day-mini-body .cal-now-line::before { width: 7px; height: 7px; top: -3px; left: -3px; }
 
-/* ─── Loading — ─── */
-.loading {
+/* ─── APP: Workspace ─── */
+.ws-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 700px) { .ws-grid { grid-template-columns: 1fr; } }
+.ws-card {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ws-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+  font-weight: 600;
+  font-size: 15px;
+}
+.ws-card-header .ws-icon { font-size: 20px; }
+.ws-card-header .ws-open-btn {
+  margin-left: auto;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  transition: background 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ws-card-header .ws-open-btn:hover { background: var(--card-hover); }
+.ws-card iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  flex: 1;
+  min-height: 350px;
+}
+.ws-card .ws-fallback {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 24px;
-  text-align: center;
+  gap: 8px;
 }
-.spinner {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 3px solid var(--border);
-  border-top-color: var(--blue);
-  animation: spin 0.7s linear infinite;
-  margin-bottom: 12px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text { font-size: 14px; color: var(--text-secondary); }
+.ws-card .ws-fallback .big-icon { font-size: 32px; }
 
-.error-state { text-align: center; padding: 40px 24px; }
-.error-icon { font-size: 36px; margin-bottom: 12px; }
-.error-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
-
-/* ─── Responsive ─── */
-@media (max-width: 600px) {
-  .container { padding: 20px 16px; }
-  .action-grid { grid-template-columns: 1fr; }
-  .header { padding: 0 16px; }
-  .question-content { padding: 20px 16px; }
-  .question-header { padding: 10px 16px; flex-wrap: wrap; gap: 6px; }
-  .passage { padding: 16px 18px; font-size: 14px; }
-  .choice { padding: 12px 14px; font-size: 14px; }
-  .results-score { font-size: 40px; }
-  .timer-overlay { bottom: 12px; right: 12px; padding: 10px 14px; }
-}
-.katex { font-size: 1.05em; }
-
-/* ─── College Board Style Blitz Testing UI ─── */
-#viewQuestionBlitz {
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  z-index: 1000;
+/* ─── App Views (shared) ─── */
+.app-view {
   display: none;
-  flex-direction: column;
-  color: #1a1a1a;
-  font-size: 15px;
-  line-height: 1.5;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  z-index: 100;
+  overflow-y: auto;
 }
-#viewQuestionBlitz.active {
-  display: flex;
+.app-view.active { display: block; }
+.app-view-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
 }
-.cb-top-bar {
-  height: 60px;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+
+/* ─── APP: Documents ─── */
+.doc-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 100;
+  margin-bottom: 20px;
 }
-.cb-top-bar-left {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 160px;
-}
-.cb-directions-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a1a;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-family: inherit;
+.doc-header h2 { font-size: 22px; font-weight: 700; }
+.doc-header .doc-actions { display: flex; gap: 8px; }
+.doc-btn {
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
   transition: background 0.15s;
 }
-.cb-directions-btn:hover { background: #f3f4f6; }
-.cb-directions-btn svg { width: 14px; height: 14px; }
+.doc-btn:hover { background: var(--card-hover); }
+.doc-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.doc-btn.primary:hover { background: var(--accent-hover); }
 
-.cb-top-bar-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+.doc-list {
+  display: grid;
+  gap: 8px;
 }
-.cb-timer-display {
-  font-size: 22px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.5px;
-  color: #111827;
-  transition: color 0.3s;
-}
-.cb-timer-display.warning { color: #d97706; }
-.cb-timer-display.danger { color: #dc2626; }
-
-.cb-hide-btn {
-  background: #fff;
-  border: 1.5px solid #9ca3af;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #374151;
-  padding: 3px 14px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.15s;
-}
-.cb-hide-btn:hover { border-color: #4b5563; background: #f9fafb; }
-
-.cb-top-bar-right {
-  min-width: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 20px;
-}
-.cb-annotate-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 600;
-  color: #374151;
-  font-family: inherit;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: background 0.15s;
-}
-.cb-annotate-btn:hover { background: #f3f4f6; }
-.cb-annotate-btn svg { width: 16px; height: 16px; }
-
-.cb-dashed-sep {
-  height: 10px;
-  flex-shrink: 0;
-  background-image: repeating-linear-gradient(
-    90deg,
-    #1e3a8a 0px, #1e3a8a 18px,
-    transparent 18px, transparent 22px,
-    #3b82f6 22px, #3b82f6 34px,
-    transparent 34px, transparent 38px,
-    #facc15 38px, #facc15 50px,
-    transparent 50px, transparent 54px,
-    #ef4444 54px, #ef4444 66px,
-    transparent 66px, transparent 70px
-  );
-  background-size: 70px 3px;
-  background-repeat: repeat-x;
-  background-position: center;
-}
-
-.cb-main-content {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
-.cb-passage-panel {
-  flex: 1;
-  overflow-y: auto;
-  padding: 32px 36px 32px 40px;
-  border-right: 1.5px solid #e5e7eb;
-}
-.cb-passage-text {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 16px;
-  line-height: 1.85;
-  color: #1f2937;
-  max-width: 540px;
-}
-.cb-passage-text p { margin-bottom: 16px; }
-.cb-passage-text p:last-child { margin-bottom: 0; }
-
-.cb-divider {
-  width: 5px;
-  background: #e5e7eb;
-  cursor: col-resize;
-  flex-shrink: 0;
-  transition: background 0.15s;
-}
-.cb-divider:hover, .cb-divider.active { background: #3b82f6; }
-
-.cb-question-panel {
-  flex: 1;
-  overflow-y: auto;
-  padding: 28px 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.cb-question-header-row {
+.doc-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 10px 16px;
-}
-.cb-question-num-badge {
-  width: 28px;
-  height: 28px;
-  background: #111827;
-  color: #fff;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.cb-mark-review-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  font-family: inherit;
-  padding: 0;
-  transition: color 0.15s;
-}
-.cb-mark-review-btn:hover { color: #1d4ed8; }
-.cb-mark-review-btn.marked { color: #1d4ed8; }
-.cb-mark-review-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-.cb-question-text {
-  font-size: 15px;
-  color: #1f2937;
-  line-height: 1.65;
-}
-.cb-choices-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.cb-choice-item {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  border: 1.5px solid #d1d5db;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-  overflow: hidden;
-  background: #fff;
-}
-.cb-choice-item:hover { border-color: #6b7280; }
-.cb-choice-item.selected { border-color: #2563eb; background: #eff6ff; }
-.cb-choice-item.eliminated { opacity: 0.45; }
-.cb-choice-item.eliminated .cb-choice-text-inner { text-decoration: line-through; }
-.cb-choice-item.correct { border-color: #059669; background: #ecfdf5; }
-.cb-choice-item.incorrect { border-color: #dc2626; background: #fef2f2; }
-.cb-choice-item.correct .cb-choice-letter-area { background: #059669; color: #fff; border-color: #059669; }
-.cb-choice-item.incorrect .cb-choice-letter-area { background: #dc2626; color: #fff; border-color: #dc2626; }
-
-.cb-choice-main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-}
-.cb-choice-letter-area {
-  flex-shrink: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 1.5px solid #9ca3af;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  transition: all 0.15s;
-}
-.cb-choice-item.selected .cb-choice-letter-area {
-  background: #2563eb;
-  border-color: #2563eb;
-  color: #fff;
-}
-.cb-choice-text-inner {
-  font-size: 15px;
-  color: #1f2937;
-  line-height: 1.5;
-}
-.cb-choice-eliminate-btn {
-  flex-shrink: 0;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left: 1px solid #e5e7eb;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  color: #9ca3af;
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  transition: color 0.15s, background 0.15s;
-}
-.cb-choice-eliminate-btn:hover { color: #374151; background: #f3f4f6; }
-.cb-choice-item.eliminated .cb-choice-eliminate-btn { color: #ef4444; }
-
-.cb-bottom-bar {
-  height: 60px;
-  background: #fff;
-  border-top: 1px solid #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 28px;
-  flex-shrink: 0;
-  position: relative;
-}
-.cb-bottom-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.cb-question-nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #1f2937;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 9px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
   transition: background 0.15s;
+}
+.doc-item:hover { background: var(--card-hover); }
+.doc-item-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.doc-item-info { flex: 1; min-width: 0; }
+.doc-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
-.cb-question-nav-btn:hover { background: #111827; }
-.cb-question-nav-btn svg { width: 14px; height: 14px; }
-
-.cb-nav-btn {
-  padding: 9px 22px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+.doc-item-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.doc-item-delete {
+  padding: 4px 8px;
   border: none;
-  font-family: inherit;
-  transition: all 0.15s;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
 }
-.cb-nav-btn.back {
-  background: #3b82f6;
-  color: #fff;
-}
-.cb-nav-btn.back:hover { background: #2563eb; }
-.cb-nav-btn.next {
-  background: #3b82f6;
-  color: #fff;
-}
-.cb-nav-btn.next:hover { background: #2563eb; }
-.cb-nav-btn:disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; }
+.doc-item-delete:hover { color: var(--error); background: var(--error-bg); }
 
-.cb-directions-modal {
-  position: fixed;
-  top: 70px;
-  left: 28px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  padding: 20px 24px;
-  width: 320px;
-  z-index: 300;
-  display: none;
-}
-.cb-directions-modal.open { display: block; }
-.cb-directions-modal h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
-.cb-directions-modal p { font-size: 13px; color: #4b5563; line-height: 1.6; }
-
-.cb-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: 1200;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 70px;
-}
-.cb-modal-backdrop.open { display: flex; }
-.cb-nav-modal {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-  padding: 24px;
-  width: 420px;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-.cb-nav-modal-title {
-  font-size: 16px;
-  font-weight: 700;
+/* Document editor */
+.doc-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+.doc-editor-header .doc-title-input {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 4px 0;
+}
+.doc-editor-header .doc-title-input:focus { border-bottom: 2px solid var(--accent); }
+.doc-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.doc-toolbar button {
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: background 0.15s;
+  min-width: 28px;
+}
+.doc-toolbar button:hover { background: var(--card-hover); color: var(--text); }
+.doc-toolbar .sep { width: 1px; height: 20px; background: var(--border-light); margin: 0 4px; }
+.doc-content {
+  min-height: 500px;
+  padding: 20px 24px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  outline: none;
+  line-height: 1.6;
+  font-size: 14px;
+}
+.doc-content:focus { border-color: var(--accent); }
+.doc-save-indicator {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* ─── APP: Calendar ─── */
+.cal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 16px;
 }
-.cb-modal-close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  color: #6b7280;
-  line-height: 1;
-}
-.cb-nav-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-}
-.cb-nav-grid-btn {
-  aspect-ratio: 1;
-  border-radius: 6px;
-  border: 1.5px solid #d1d5db;
-  background: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.12s;
-  position: relative;
+.cal-header h2 { font-size: 22px; font-weight: 700; }
+.cal-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
 }
-.cb-nav-grid-btn:hover { border-color: #3b82f6; color: #3b82f6; }
-.cb-nav-grid-btn.current { border-color: #1f2937; background: #1f2937; color: #fff; }
-.cb-nav-grid-btn.answered { border-color: #2563eb; color: #2563eb; }
-.cb-nav-grid-btn.marked::after {
-  content: '';
-  position: absolute;
-  top: 3px; right: 3px;
-  width: 7px; height: 7px;
-  background: #f59e0b;
-  border-radius: 50%;
+.cal-nav button {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  transition: background 0.15s;
 }
-.cb-nav-legend {
+.cal-nav button:hover { background: var(--card-hover); }
+.cal-nav .cal-label { font-size: 15px; font-weight: 600; min-width: 140px; text-align: center; }
+.cal-view-toggle {
   display: flex;
-  gap: 16px;
-  margin-top: 16px;
-  font-size: 12px;
-  color: #6b7280;
-  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 16px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  width: fit-content;
 }
-.cb-legend-item {
+.cal-view-toggle button {
+  padding: 5px 14px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.cal-view-toggle button.active { background: var(--accent); color: white; }
+.cal-view-toggle button:hover:not(.active) { background: var(--card-hover); }
+
+.cal-ai-btn {
+  padding: 7px 16px;
+  border: none;
+  background: #4285f4;
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.cb-legend-dot {
-  width: 14px; height: 14px;
+.cal-ai-btn:hover { background: #3367d6; }
+
+/* Month grid */
+.cal-month-grid {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.cal-weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border-light);
+}
+.cal-weekday-row div {
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cal-month-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.cal-day {
+  min-height: 80px;
+  padding: 6px;
+  border-bottom: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-light);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cal-day:nth-child(7n) { border-right: none; }
+.cal-day:hover { background: var(--card-hover); }
+.cal-day.other-month { color: var(--text-muted); background: var(--bg); }
+.cal-day.today {
+  background: var(--accent-light);
+  font-weight: 600;
+}
+.cal-day .day-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+}
+.cal-day.today .day-num { background: var(--accent); color: white; }
+.cal-day .cal-event-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin: 1px;
+}
+.cal-day .cal-events-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 4px;
+}
+.cal-day .cal-event-label {
+  font-size: 9px;
+  color: var(--accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  padding: 1px 4px;
+  background: var(--accent-light);
   border-radius: 3px;
-  border: 1.5px solid;
+}
+
+/* Day view */
+.cal-day-view {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 8px 0;
+}
+.cal-day-view .cal-day-header {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.cal-time-slot {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  min-height: 40px;
+}
+.cal-time-slot:last-child { border-bottom: none; }
+.cal-time-label {
+  width: 60px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  text-align: right;
+  border-right: 1px solid var(--border-light);
+}
+.cal-time-content {
+  flex: 1;
+  padding: 2px 8px;
+  position: relative;
+}
+.cal-event-block {
+  padding: 4px 8px;
+  margin: 2px 0;
+  border-radius: 4px;
+  font-size: 12px;
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+}
+.cal-event-block .evt-time { font-size: 10px; color: var(--text-secondary); }
+.cal-event-block .evt-title { font-weight: 500; }
+.cal-now-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--error);
+  z-index: 1;
+}
+.cal-now-line::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--error);
+}
+
+/* ─── APP: Notes ─── */
+.notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.notes-header h2 { font-size: 22px; font-weight: 700; }
+.notes-date-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notes-date-nav button {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  transition: background 0.15s;
+}
+.notes-date-nav button:hover { background: var(--card-hover); }
+.notes-date-nav .notes-date-label { font-size: 14px; font-weight: 600; min-width: 130px; text-align: center; }
+.notes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 600px) { .notes-grid { grid-template-columns: 1fr; } }
+.notes-section {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.notes-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+.notes-textarea {
+  width: 100%;
+  min-height: 200px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  background: transparent;
+}
+.notes-textarea::placeholder { color: var(--text-muted); }
+.todo-list { list-style: none; }
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+}
+.todo-item:last-child { border-bottom: none; }
+.todo-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
   flex-shrink: 0;
 }
-.cb-annotation-highlight {
-  background: #fef08a;
-  border-radius: 2px;
+.todo-item .todo-text {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text);
+}
+.todo-item .todo-text:focus { }
+.todo-item.done .todo-text { text-decoration: line-through; color: var(--text-muted); }
+.todo-item .todo-del {
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
   cursor: pointer;
+  border-radius: 4px;
+}
+.todo-item .todo-del:hover { color: var(--error); background: var(--error-bg); }
+.todo-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+  transition: background 0.15s;
+}
+.todo-add-btn:hover { background: var(--accent-light); }
+
+/* ─── No results ─── */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .home-greeting h1 { font-size: 22px; }
+  .app-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .app-box { min-height: 90px; padding: 16px; }
+  .app-box-icon { font-size: 22px; }
+  .app-view-inner { padding: 16px 12px; }
+  .doc-content { min-height: 300px; padding: 12px 14px; }
+  .cal-day { min-height: 60px; padding: 4px; font-size: 11px; }
+  .cal-time-label { width: 50px; font-size: 10px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════ HEADER ════════════════════ -->
-<header class="header">
-  <div class="header-logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-    </svg>
-    SAT Prep
+<!-- ═══════════════ LOCKEDIN NAV ═══════════════ -->
+<nav class="lockedin-nav" id="lockedinNav">
+  <div class="lockedin-nav-left">
+    <button class="back-btn" id="globalBackBtn" style="display:none" onclick="goHome()">←</button>
+    <span class="lockedin-nav-logo">LockedIn</span>
+    <span class="lockedin-nav-subtitle">Hub</span>
   </div>
-  <div class="header-right">
-    <span id="headerStreak">—</span>
-    <button id="fullscreenBtn" onclick="toggleFullscreen()" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:16px;padding:4px;display:flex;align-items:center" title="Full screen">⛶</button>
-  </div>
-</header>
+  <button onclick="toggleFullscreen()" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:17px;padding:4px 6px;display:flex;align-items:center;border-radius:6px;transition:background 0.15s" title="Full screen" onmouseover="this.style.background='var(--card-hover)'" onmouseout="this.style.background='transparent'">⛶</button>
+</nav>
 
-<!-- ════════════════════ CONTAINER ════════════════════ -->
-<div class="container">
-
-  <!-- VIEW: Dashboard -->
-  <div id="viewDashboard" class="view active">
-    <div class="dashboard-greeting" id="greeting">Good morning</div>
-    <div class="dashboard-sub" id="greetingSub">Your SAT is on August 22nd. Let's get started.</div>
-
-    <div class="study-plan-bar">
-      <span id="daysRemaining">40 days to go</span>
-      <div class="study-plan-track">
-        <div class="study-plan-fill" id="planFill" style="width:0%"></div>
-      </div>
-      <span id="sessionsDone">0 sessions</span>
-    </div>
-
-    <div class="action-grid">
-      <div class="action-card" onclick="startDailySession()">
-        <div class="action-icon daily">📅</div>
-        <div class="action-title">Daily Session</div>
-        <div class="action-desc">10 questions — 9 Reading &amp; Writing, 1 Math. Adapts to your weak areas.</div>
-      </div>
-      <div class="action-card" onclick="showBlitzSetup()">
-        <div class="action-icon blitz">⚡</div>
-        <div class="action-title">Blitz Session</div>
-        <div class="action-desc">Custom intensive run. Pick subject, pace, topics, and length.</div>
-      </div>
-    </div>
-
-    <div class="card" id="scoreProjectionCard">
-      <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
-        <span>🏆 Projected SAT Score</span>
-        <span id="scoreProjectionValue" style="font-size:24px;font-weight:800;color:var(--navy)">—</span>
-      </div>
-      <div id="scoreProjectionBreakdown" style="font-size:13px;color:var(--text-secondary)">Complete some sessions to see your projected score.</div>
-    </div>
-
-    <div class="card" id="targetPrepCard" style="display:none">
-      <div class="section-title">🎯 Target Prep — Focus Areas</div>
-      <div id="targetPrepList"></div>
-    </div>
-
-    <div class="card" id="missedCountCard" style="cursor:pointer" onclick="showMissedQuestions()">
-      <div class="section-title">📕 Review Missed Questions</div>
-      <div id="missedCountText" style="font-size:14px;color:var(--text-secondary)"></div>
-    </div>
-
-    <div class="card" id="sessionHistoryCard" style="cursor:pointer" onclick="showSessionHistory()">
-      <div class="section-title">📋 Past Sessions</div>
-      <div id="sessionHistoryPreview" style="font-size:14px;color:var(--text-secondary)">No sessions yet. Complete a daily or blitz session to track progress.</div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">📊 Performance by Domain</div>
-      <div id="performanceList"></div>
-    </div>
+<!-- ═══════════════ HOME VIEW ═══════════════ -->
+<div id="viewHome">
+  <div class="home-greeting">
+    <h1 id="greetingText">Welcome back, Bhavesh</h1>
+    <p id="subGreeting">Ready to crush your goals today.</p>
   </div>
 
-  <!-- VIEW: Missed Questions -->
-  <div id="viewMissedQuestions" class="view">
-    <div class="card">
-      <div class="card-header" style="justify-content:space-between">
-        <span>📕 Missed Questions</span>
-        <button class="btn btn-ghost" onclick="goToDashboard()" style="font-size:13px">← Back</button>
-      </div>
-      <div class="setup-group">
-        <div class="setup-label">Filter by domain</div>
-        <div class="setup-options" id="missedFilter">
-          <div class="setup-option active" data-value="all" onclick="filterMissed(this)">All</div>
-        </div>
-      </div>
-      <div id="missedQuestionsList"></div>
-    </div>
+  <div class="home-datetime">
+    <span class="date" id="currentDate">Loading...</span>
+    <span class="time" id="currentTime">--:--</span>
+    <button class="schedule-btn" onclick="openApp('calendar')">Go to Schedule</button>
   </div>
 
-  <!-- VIEW: Session History -->
-  <div id="viewSessionHistory" class="view">
-    <div class="card">
-      <div class="card-header" style="justify-content:space-between">
-        <span>📋 Session History</span>
-        <button class="btn btn-ghost" onclick="goToDashboard()" style="font-size:13px">← Back</button>
-      </div>
-      <div id="sessionHistoryList"></div>
-    </div>
+  <div class="search-wrapper">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search apps..." oninput="filterApps(this.value)">
   </div>
 
-  <!-- VIEW: Question -->
-  <div id="viewQuestion" class="view">
-    <div class="question-header">
-      <button class="btn btn-ghost" onclick="exitSession()" style="font-size:13px;padding:4px 8px;color:rgba(255,255,255,0.7);background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:4px">← Exit</button>
-      <span class="question-progress" id="qProgress">Question 1 of 10</span>
-      <span class="question-domain-badge" id="qDomain">Domain</span>
-      <span class="question-timer" id="qTimer" style="display:none">—</span>
+  <div class="app-section-label">Apps</div>
+  <div class="app-grid" id="appGrid">
+    <div class="app-box sat" data-app="sat" onclick="openSAT()">
+      <div class="app-box-icon">📚</div>
+      <div class="app-box-name">SAT Prep</div>
+      <div class="app-box-desc">Practice tests & daily drills</div>
     </div>
-    <div class="progress-strip">
-      <div class="progress-strip-fill" id="progressFill" style="width:0%"></div>
+    <div class="app-box documents" data-app="documents" onclick="openApp('documents')">
+      <div class="app-box-icon">📄</div>
+      <div class="app-box-name">Documents</div>
+      <div class="app-box-desc">Write & organize notes</div>
     </div>
-
-    <div class="question-content" id="questionContent">
-      <div class="loading">
-        <div class="spinner"></div>
-        <div class="loading-text">Loading questions…</div>
-      </div>
+    <div class="app-box calendar" data-app="calendar" onclick="openApp('calendar')">
+      <div class="app-box-icon">📅</div>
+      <div class="app-box-name">Calendar</div>
+      <div class="app-box-desc">Schedule & daily plan</div>
     </div>
-
-    <div class="timer-overlay" id="timerOverlay" style="display:none">
-      <div class="timer-ring" id="timerRing">⏱</div>
-      <span id="timerDisplay">—</span>
+    <div class="app-box notes" data-app="notes" onclick="openApp('notes')">
+      <div class="app-box-icon">📝</div>
+      <div class="app-box-name">Notes</div>
+      <div class="app-box-desc">Daily notes & to-dos</div>
+    </div>
+    <div class="app-box workspace" data-app="workspace" onclick="openApp('workspace')">
+      <div class="app-box-icon">🧩</div>
+      <div class="app-box-name">Workspace</div>
+      <div class="app-box-desc">Google Docs, Gmail, Colab & Calendar</div>
+    </div>
+    <div class="app-box pomodoro" data-app="pomodoro" onclick="openApp('pomodoro')">
+      <div class="app-box-icon">🍅</div>
+      <div class="app-box-name">Pomodoro</div>
+      <div class="app-box-desc">Focus timer with breaks</div>
     </div>
   </div>
+  <div class="no-results" id="noResults" style="display:none">No apps found.</div>
+</div>
 
-  <!-- VIEW: Blitz Question (College Board High-Fidelity UI) -->
-  <div id="viewQuestionBlitz" class="view">
-    <!-- Top Bar -->
-    <div class="cb-top-bar">
-      <div class="cb-top-bar-left">
-        <button class="cb-directions-btn" onclick="toggleCbDirections()">
-          Directions
-          <svg viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
-          </svg>
-        </button>
-      </div>
-
-      <div class="cb-top-bar-center">
-        <div class="cb-timer-display" id="cbTimerDisplay">—:—</div>
-        <button class="cb-hide-btn" id="cbHideTimerBtn" onclick="toggleCbTimer()">Hide</button>
-      </div>
-
-      <div class="cb-top-bar-right">
-        <button class="cb-annotate-btn" id="cbAnnotateBtn" onclick="toggleCbAnnotateMode()" title="Highlight text in the passage">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-          </svg>
-          Annotate
-        </button>
-        <button class="btn btn-ghost" onclick="exitSession()" style="font-size: 13px; color: #374151;">Exit</button>
-      </div>
+<!-- ═══════════════ APP: WORKSPACE ═══════════════ -->
+<div id="viewWorkspace" class="app-view">
+  <div class="app-view-inner">
+    <div class="doc-header">
+      <h2>🧩 Workspace</h2>
     </div>
-
-    <!-- Directions dropdown modal -->
-    <div class="cb-directions-modal" id="cbDirectionsModal">
-      <h3>Reading and Writing Directions</h3>
-      <p>The questions in this section address a number of important reading and writing skills. Each question includes one or more passages, which may include a table or graph. Read each passage and question carefully, and then choose the best answer to the question based on the passage(s).</p>
-      <p style="margin-top:10px">All questions in this section are multiple-choice with four answer choices. Each question has a single best answer.</p>
-    </div>
-
-    <!-- Color Dash Sep -->
-    <div class="cb-dashed-sep"></div>
-
-    <!-- Main Resizable Split panels -->
-    <div class="cb-main-content" id="cbMainContent">
-      <!-- Left Panel: Passage -->
-      <div class="cb-passage-panel" id="cbPassagePanel">
-        <div class="cb-passage-text" id="cbPassageText">
-          <!-- Loaded dynamically -->
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Quick access to your Google tools. Some services open in a new tab — use the buttons to launch in Chrome.</p>
+    <div class="ws-grid">
+      <!-- Google Docs -->
+      <div class="ws-card">
+        <div class="ws-card-header">
+          <span class="ws-icon">📄</span> Google Docs
+          <a class="ws-open-btn" href="https://docs.google.com" target="_blank" rel="noopener">Open in Chrome ↗</a>
+        </div>
+        <iframe src="https://docs.google.com/document/u/0/" sandbox="allow-scripts allow-same-origin allow-forms" title="Google Docs"></iframe>
+        <div class="ws-fallback" style="display:none" id="wsFallbackDocs">
+          <span class="big-icon">📄</span>
+          <span>Open Google Docs in Chrome to create and edit documents.</span>
+          <a href="https://docs.google.com" target="_blank" rel="noopener" style="margin-top:8px;padding:8px 20px;background:var(--accent);color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500">Open Docs →</a>
         </div>
       </div>
-
-      <!-- Drag Divider -->
-      <div class="cb-divider" id="cbDivider"></div>
-
-      <!-- Right Panel: Question & choices -->
-      <div class="cb-question-panel" id="cbQuestionPanel">
-        <div class="cb-question-header-row">
-          <div class="cb-question-num-badge" id="cbQuestionNumBadge">1</div>
-          <button class="cb-mark-review-btn" id="cbMarkReviewBtn" onclick="toggleCbMarkForReview()">
-            <svg id="cbBookmarkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-            </svg>
-            Mark for Review
-          </button>
+      <!-- Gmail -->
+      <div class="ws-card">
+        <div class="ws-card-header">
+          <span class="ws-icon">📧</span> Gmail
+          <a class="ws-open-btn" href="https://mail.google.com" target="_blank" rel="noopener">Open in Chrome ↗</a>
         </div>
-
-        <div class="cb-question-text" id="cbQuestionText">
-          <!-- Loaded dynamically -->
-        </div>
-
-        <div class="cb-choices-list" id="cbChoicesList">
-          <!-- Choices loaded dynamically -->
-        </div>
-
-        <!-- Explanation Area -->
-        <div class="explanation-area" id="cbExplanationArea" style="display:none">
-          <!-- Loaded dynamically -->
+        <iframe src="https://mail.google.com/mail/u/0/" sandbox="allow-scripts allow-same-origin allow-forms" title="Gmail"></iframe>
+        <div class="ws-fallback" style="display:none" id="wsFallbackGmail">
+          <span class="big-icon">📧</span>
+          <span>Open Gmail in Chrome to check your inbox.</span>
+          <a href="https://mail.google.com" target="_blank" rel="noopener" style="margin-top:8px;padding:8px 20px;background:var(--accent);color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500">Open Gmail →</a>
         </div>
       </div>
-    </div>
-
-    <!-- Bottom sep -->
-    <div class="cb-dashed-sep"></div>
-
-    <!-- Bottom Nav bar -->
-    <div class="cb-bottom-bar">
-      <div></div>
-
-      <div class="cb-bottom-center">
-        <button class="cb-question-nav-btn" onclick="openCbNavModal()">
-          <span id="cbQuestionNavLabel">Question 1 of 10</span>
-          <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
-          </svg>
-        </button>
-      </div>
-
-      <div class="cb-bottom-right">
-        <button class="cb-nav-btn back" id="cbBackBtn" onclick="cbGoBack()">Back</button>
-        <button class="cb-nav-btn next" id="cbNextBtn" onclick="cbGoNext()">Next</button>
-      </div>
-    </div>
-
-    <!-- Question Navigator Modal -->
-    <div class="cb-modal-backdrop" id="cbNavModalBackdrop" onclick="handleCbBackdropClick(event)">
-      <div class="cb-nav-modal">
-        <div class="cb-nav-modal-title">
-          <span>Question Navigator</span>
-          <button class="cb-modal-close-btn" onclick="closeCbNavModal()">×</button>
+      <!-- Google Colab -->
+      <div class="ws-card">
+        <div class="ws-card-header">
+          <span class="ws-icon">🧪</span> Google Colab
+          <a class="ws-open-btn" href="https://colab.research.google.com" target="_blank" rel="noopener">Open in Chrome ↗</a>
         </div>
-        <div class="cb-nav-grid" id="cbNavGrid"></div>
-        <div class="cb-nav-legend">
-          <div class="cb-legend-item">
-            <div class="cb-legend-dot" style="border-color:#d1d5db;background:#fff"></div>
-            Unanswered
-          </div>
-          <div class="cb-legend-item">
-            <div class="cb-legend-dot" style="border-color:#2563eb;background:#fff"></div>
-            Answered
-          </div>
-          <div class="cb-legend-item">
-            <div class="cb-legend-dot" style="border-color:#1f2937;background:#1f2937"></div>
-            Current
-          </div>
-          <div class="cb-legend-item" style="align-items:flex-start">
-            <div style="display:flex;align-items:center;gap:4px">
-              <div class="cb-legend-dot" style="border-color:#d1d5db;background:#fff;position:relative">
-                <div style="position:absolute;top:-3px;right:-3px;width:7px;height:7px;background:#f59e0b;border-radius:50%"></div>
-              </div>
-              Marked
-            </div>
-          </div>
+        <iframe src="https://colab.research.google.com" sandbox="allow-scripts allow-same-origin allow-forms" title="Google Colab"></iframe>
+        <div class="ws-fallback" style="display:none" id="wsFallbackColab">
+          <span class="big-icon">🧪</span>
+          <span>Open Google Colab in Chrome to run notebooks.</span>
+          <a href="https://colab.research.google.com" target="_blank" rel="noopener" style="margin-top:8px;padding:8px 20px;background:var(--accent);color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500">Open Colab →</a>
+        </div>
+      </div>
+      <!-- Google Calendar -->
+      <div class="ws-card">
+        <div class="ws-card-header">
+          <span class="ws-icon">📅</span> Google Calendar
+          <a class="ws-open-btn" href="https://calendar.google.com" target="_blank" rel="noopener">Open in Chrome ↗</a>
+        </div>
+        <iframe src="https://calendar.google.com/calendar/embed" sandbox="allow-scripts allow-same-origin allow-forms" title="Google Calendar"></iframe>
+        <div class="ws-fallback" style="display:none" id="wsFallbackCalendar">
+          <span class="big-icon">📅</span>
+          <span>Open Google Calendar in Chrome to view your schedule.</span>
+          <a href="https://calendar.google.com" target="_blank" rel="noopener" style="margin-top:8px;padding:8px 20px;background:var(--accent);color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500">Open Calendar →</a>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- VIEW: Results -->
-  <div id="viewResults" class="view">
-    <div class="card">
-      <div class="results-summary">
-        <div class="results-score" id="resultScore">0/0</div>
-        <div class="results-label">Score</div>
-        <div class="results-sub" id="resultType">Daily Session</div>
-        <button class="btn btn-primary" onclick="goToDashboard()">Back to Dashboard</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="section-title">Review Your Answers</div>
-      <div id="resultsBreakdown"></div>
-    </div>
-  </div>
-
-  <!-- VIEW: Blitz Setup -->
-  <div id="viewBlitzSetup" class="view">
-    <div class="card">
-      <div class="card-header">⚡ Blitz Session</div>
-
-      <div class="setup-group">
-        <div class="setup-label">Subject</div>
-        <div class="setup-options" id="blitzSubject">
-          <div class="setup-option active" data-value="english" onclick="selectBlitzOption('subject', this)">Reading &amp; Writing</div>
-          <div class="setup-option" data-value="math" onclick="selectBlitzOption('subject', this)">Math</div>
-        </div>
-      </div>
-
-      <div class="setup-group">
-        <div class="setup-label">Pacing</div>
-        <div class="setup-options" id="blitzPacing">
-          <div class="setup-option active" data-value="normal" onclick="selectBlitzOption('pacing', this)">Normal</div>
-          <div class="setup-option" data-value="fast" onclick="selectBlitzOption('pacing', this)">Fast (45s/q)</div>
-          <div class="setup-option" data-value="blitz" onclick="selectBlitzOption('pacing', this)">Blitz (30s/q)</div>
-        </div>
-      </div>
-
-      <div class="setup-group">
-        <div class="setup-label">Questions</div>
-        <div class="setup-options" id="blitzCount">
-          <div class="setup-option active" data-value="10" onclick="selectBlitzOption('count', this)">10</div>
-          <div class="setup-option" data-value="20" onclick="selectBlitzOption('count', this)">20</div>
-        </div>
-      </div>
-
-      <div class="setup-group">
-        <div class="setup-label">Topics</div>
-        <div class="setup-checkboxes" id="blitzTopics"></div>
-      </div>
-
-      <div class="setup-actions">
-        <button class="btn btn-primary" onclick="launchBlitz()">Start Blitz</button>
-        <button class="btn btn-outline" onclick="goToDashboard()">Cancel</button>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════
-   SAT Prep Suite
-   ═══════════════════════════════════════════════════════ */
+(function(){
+// Workspace iframe fallback handler
+document.querySelectorAll('#viewWorkspace .ws-card iframe').forEach(iframe => {
+  let fallbackShown = false;
+  const fallback = iframe.parentElement.querySelector('.ws-fallback');
+  if (!fallback) return;
+  // If the iframe fails to load, show the fallback
+  iframe.addEventListener('error', () => { if (!fallbackShown) { fallback.style.display = 'flex'; fallbackShown = true; } });
+  // Check after 8 seconds — if blocked, show fallback
+  setTimeout(() => {
+    try {
+      // Accessing contentDocument will throw if cross-origin blocked
+      if (iframe.contentDocument === null) throw new Error('blocked');
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (!doc || !doc.body || doc.body.innerHTML.trim() === '') throw new Error('empty');
+    } catch(e) {
+      if (!fallbackShown) { fallback.style.display = 'flex'; fallbackShown = true; }
+    }
+  }, 8000);
+});
+})();
+</script>
 
-// ─── Constants ───
-const API_BASE = '/api/questions';
-const STUDY_START = new Date('2026-07-13');
-const STUDY_END   = new Date('2026-08-22');
-const TOTAL_DAYS  = Math.round((STUDY_END - STUDY_START) / (1000*60*60*24));
+<!-- ═══════════════ APP: POMODORO ═══════════════ -->
+<div id="viewPomodoro" class="app-view">
+  <div class="app-view-inner">
+    <div class="pomo-layout">
+      <div class="pomo-main">
+        <div class="pomo-mode-label" id="pomoModeLabel">Focus</div>
+        <div class="pomo-timer-ring">
+          <svg width="260" height="260" viewBox="0 0 260 260">
+            <circle class="bg-circle" cx="130" cy="130" r="115"/>
+            <circle class="progress-circle" id="pomoProgress" cx="130" cy="130" r="115" stroke-dasharray="722.57" stroke-dashoffset="0"/>
+          </svg>
+          <div class="pomo-time-display">
+            <div class="time-text" id="pomoTimeDisplay">25:00</div>
+            <div class="session-text" id="pomoSessionDisplay">Session 0</div>
+          </div>
+        </div>
+        <div class="pomo-comp-msg" id="pomoCompMsg"></div>
+        <div class="pomo-controls">
+          <button class="pomo-btn primary" id="pomoMainBtn" onclick="pomoToggle()">Start</button>
+          <button class="pomo-btn" onclick="pomoReset()">Reset</button>
+          <button class="pomo-btn skip" id="pomoSkipBtn" onclick="pomoSkipToBreak()">Skip to Break ⏭</button>
+        </div>
+        <details class="pomo-settings">
+          <summary>Settings</summary>
+          <div class="pomo-settings-grid">
+            <div class="pomo-settings-item">
+              <label>Focus</label>
+              <input type="number" id="pomoFocusMin" value="25" min="1" max="120" onchange="pomoApplySettings()">
+            </div>
+            <div class="pomo-settings-item">
+              <label>Short Break</label>
+              <input type="number" id="pomoShortMin" value="5" min="1" max="30" onchange="pomoApplySettings()">
+            </div>
+            <div class="pomo-settings-item">
+              <label>Long Break</label>
+              <input type="number" id="pomoLongMin" value="15" min="1" max="60" onchange="pomoApplySettings()">
+            </div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-muted)">Long break after every 4 sessions</div>
+        </details>
+        <!-- Task box -->
+        <div class="pomo-task-box">
+          <h4>Focus Tasks</h4>
+          <div class="pomo-task-input-row">
+            <input type="text" id="pomoTaskInput" placeholder="What will you get done this session?" onkeydown="if(event.key==='Enter')pomoTaskAdd()">
+            <button onclick="pomoTaskAdd()">Add</button>
+          </div>
+          <div id="pomoTaskList"></div>
+        </div>
+      </div>
+      <!-- Sidebar: Mini day view -->
+      <div class="pomo-sidebar" id="pomoSidebar">
+        <div class="pomo-day-mini" id="pomoDayMini">
+          <div class="pomo-day-mini-header">
+            <span id="pomoMiniDayLabel">Today</span>
+            <button onclick="pomoToggleSidebar()" title="Collapse">−</button>
+          </div>
+          <div class="pomo-day-mini-body" id="pomoMiniDayBody"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-const ENGLISH_DOMAINS = ['Craft and Structure','Expression of Ideas','Information and Ideas','Standard English Conventions'];
-const MATH_DOMAINS    = ['Algebra','Advanced Math','Problem-Solving and Data Analysis','Geometry and Trigonometry'];
+<!-- ═══════════════ APP: DOCUMENTS ═══════════════ -->
+<div id="viewDocuments" class="app-view">
+  <div class="app-view-inner">
+    <div id="docListView">
+      <div class="doc-header">
+        <h2>📄 Documents</h2>
+        <div class="doc-actions">
+          <button class="doc-btn primary" onclick="docCreate()">+ New Document</button>
+        </div>
+      </div>
+      <div class="doc-list" id="docList"></div>
+    </div>
+    <div id="docEditorView" style="display:none">
+      <div class="doc-editor-header">
+        <button class="back-btn" onclick="docBackToList()">←</button>
+        <input class="doc-title-input" id="docTitleInput" placeholder="Untitled" oninput="docAutoSave()">
+        <span class="doc-save-indicator" id="docSaveStatus">Saved</span>
+      </div>
+      <div class="doc-toolbar">
+        <button onclick="docExec('bold')" title="Bold"><b>B</b></button>
+        <button onclick="docExec('italic')" title="Italic"><i>I</i></button>
+        <button onclick="docExec('underline')" title="Underline"><u>U</u></button>
+        <button onclick="docExec('strikeThrough')" title="Strikethrough"><s>S</s></button>
+        <div class="sep"></div>
+        <button onclick="docExec('insertOrderedList')" title="Numbered list">1.</button>
+        <button onclick="docExec('insertUnorderedList')" title="Bullet list">•</button>
+        <div class="sep"></div>
+        <button onclick="docHeading('h1')">H1</button>
+        <button onclick="docHeading('h2')">H2</button>
+        <button onclick="docHeading('h3')">H3</button>
+        <button onclick="docHeading('p')">P</button>
+      </div>
+      <div class="doc-content" id="docContent" contenteditable="true" oninput="docAutoSave()"></div>
+    </div>
+  </div>
+</div>
 
-const PACING_LIMITS = { normal: 0, fast: 45, blitz: 30 };
+<!-- ═══════════════ APP: CALENDAR ═══════════════ -->
+<div id="viewCalendar" class="app-view">
+  <div class="app-view-inner">
+    <div class="cal-header">
+      <h2>📅 Calendar</h2>
+      <button class="cal-ai-btn" onclick="window.open('https://gemini.google.com','_blank')">Schedule with AI →</button>
+    </div>
+    <div class="cal-view-toggle">
+      <button class="active" data-view="month" onclick="calSetView('month')">Month</button>
+      <button data-view="day" onclick="calSetView('day')">Day</button>
+    </div>
+    <div class="cal-nav">
+      <button onclick="calNavigate(-1)">←</button>
+      <span class="cal-label" id="calLabel">Loading...</span>
+      <button onclick="calNavigate(1)">→</button>
+      <button onclick="calToday()" style="margin-left:8px;font-size:12px">Today</button>
+    </div>
+    <div id="calMonthView" style="margin-top:12px">
+      <div class="cal-month-grid">
+        <div class="cal-weekday-row">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div class="cal-month-days" id="calMonthDays"></div>
+      </div>
+    </div>
+    <div id="calDayView" style="display:none;margin-top:12px">
+      <div class="cal-day-view" id="calDayContent"></div>
+    </div>
+  </div>
+</div>
 
-// ─── State ───
-let app = {
-  view: 'dashboard',
-  questions: [],
-  qIndex: 0,
-  answers: [],
-  sessionType: null,
-  sessionConfig: null,
-  timerInterval: null,
-  timerRemaining: Infinity,
-  isTimed: false,
-  awaitingNext: false,
-  blitzConfig: { subject: 'english', pacing: 'normal', count: 10, topics: [] },
+<!-- ═══════════════ APP: NOTES ═══════════════ -->
+<div id="viewNotes" class="app-view">
+  <div class="app-view-inner">
+    <div class="notes-header">
+      <h2>📝 Daily Notes</h2>
+    </div>
+    <div class="notes-date-nav">
+      <button onclick="notesNavigate(-1)">←</button>
+      <span class="notes-date-label" id="notesDateLabel">Loading...</span>
+      <button onclick="notesNavigate(1)">→</button>
+      <button onclick="notesToday()" style="margin-left:8px;font-size:12px">Today</button>
+    </div>
+    <div class="notes-grid" style="margin-top:16px">
+      <div class="notes-section">
+        <h3>Notes</h3>
+        <textarea class="notes-textarea" id="notesTextarea" placeholder="Write your notes for today..." oninput="notesAutoSave()"></textarea>
+      </div>
+      <div class="notes-section">
+        <h3>To-Do</h3>
+        <ul class="todo-list" id="todoList"></ul>
+        <button class="todo-add-btn" onclick="todoAdd()">+ Add item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ═══════════════════ CONFIG ═══════════════════ */
+const LS_PREFIX = 'lockedin_';
+const APP_NAME = 'LockedIn';
+
+/* ═══════════════════ DATA: Schedule ═══════════════════ */
+const DAILY_SCHEDULE = [
+  ['8:00 AM','8:30 AM','Get up and morning jog'],
+  ['8:30 AM','9:00 AM','Shower + breakfast'],
+  ['9:00 AM','11:30 AM','Scheduled task'],
+  ['11:30 AM','1:30 PM','SAT PREP SPEEDRUN'],
+  ['1:30 PM','2:00 PM','Bioinformatics || Neurobio'],
+  ['2:00 PM','3:00 PM','APUSH || AP Lang'],
+  ['3:00 PM','4:00 PM','AP Calculus BC'],
+  ['4:00 PM','4:30 PM','CRAFT || GL4HS || stanford'],
+  ['4:30 PM','5:15 PM','AP PHYSICS'],
+  ['5:15 PM','6:15 PM','Projects/build-sprint/ctc/extrava/comps'],
+  ['6:15 PM','7:15 PM','SCIENCE FAIR SPEEDRUN!!!'],
+  ['7:15 PM','8:00 PM','USABO/campbell/bio-neuro-comps'],
+  ['8:00 PM','9:00 PM','Game/free time'],
+  ['9:00 PM','11:00 PM','Miscellaneous stuffs/buffer'],
+];
+
+const WEEKLY_RECURRING = {
+  0: [['10:00 AM','12:00 PM','CNMC volunteering']], // Sunday
+  1: [],
+  2: [],
+  3: [],
+  4: [],
+  5: [['All day','','SAT practice test']], // Friday
+  6: [['All day','','SAT practice test review']], // Saturday
 };
 
-// ─── Data ───
-function defaultData() {
-  return { performance: {}, history: [], missedQuestions: {}, streak: 0, lastDate: null, totalQ: 0, totalSessions: 0 };
+const MONTHLY_SCHEDULE = {
+  '2026-6-16': 'Planning',
+  '2026-6-17': 'Planning',
+  '2026-6-18': 'Catch up programs + rivertide',
+  '2026-6-19': 'Ideas day — Scifair + all others',
+  '2026-6-20': 'Neurobio Part 1',
+  '2026-6-21': 'Neurobio Part 2',
+  '2026-6-22': 'Neurobio Part 3',
+  '2026-6-23': 'Comps+build sprint — Diamond, isef, breakthrough',
+  '2026-6-24': 'AP Chem Part 1',
+  '2026-6-25': 'AP Chem Part 2',
+  '2026-6-26': 'AP Chem Part 3',
+  '2026-6-27': 'Scifair lock in',
+  '2026-6-28': 'Scifair lock in',
+  '2026-6-29': 'GTown sprint (clustering)',
+  '2026-6-30': 'Comps+build sprint — Diamond, isef, breakthrough',
+  '2026-7-1': 'Paper 1 lit review + code all',
+  '2026-7-2': 'Paper 1 run sims + get results',
+  '2026-7-3': 'Paper 1 — Write full paper',
+  '2026-7-4': 'Diamond/Conrad LOCK IN!!!',
+  '2026-7-5': 'Diamond/Conrad LOCK IN!!!',
+  '2026-7-6': 'VCU MLS! + sat grammar',
+  '2026-7-7': 'VCU MLS! + sat grammar',
+  '2026-7-8': 'VCU MLS! + sat grammar',
+  '2026-7-9': 'VCU MLS! + sat grammar',
+  '2026-7-10': 'VCU MLS + cooldown',
+  '2026-7-11': 'SAT LOCK IN SPRINT',
+  '2026-7-12': 'Diamond/Conrad LOCK IN!!!',
+  '2026-7-13': 'Science fair lock in sprint!!!',
+  '2026-7-14': 'Science fair lock in sprint!!!',
+  '2026-7-15': 'Science fair lock in sprint!!!',
+  '2026-7-16': 'SAT LOCK IN SPRINT',
+  '2026-7-17': 'SAT Lock in!!',
+  '2026-7-18': 'campbell/science-comp',
+  '2026-7-19': 'campbell/science-comp',
+  '2026-7-20': 'campbell/science-comp',
+  '2026-7-21': 'campbell/science-comp',
+  '2026-7-22': 'campbell/science-comp',
+  '2026-7-23': 'campbell/science-comp',
+  '2026-7-24': 'campbell/science-comp',
+  '2026-7-25': 'Building ctc/diamond/projects',
+  '2026-7-26': 'Paper 2 (humanize)',
+  '2026-7-27': 'Paper 2 (humanize+submit)',
+  '2026-7-28': 'Science fair lock in sprint!!!',
+  '2026-7-29': 'Science fair lock in sprint!!!',
+  '2026-7-30': 'Diamond/Conrad LOCK IN!!!',
+  '2026-7-31': 'Diamond/Conrad LOCK IN!!!',
+  '2026-8-1': 'SAT LOCK IN SPRINT',
+  '2026-8-2': 'SAT LOCK IN SPRINT',
+  '2026-8-3': 'Building sprint + projects',
+  '2026-8-4': 'Building sprint + projects',
+  '2026-8-5': 'Science fair lock in sprint!!!',
+  '2026-8-6': 'Science fair lock in sprint!!!',
+  '2026-8-7': 'Science fair lock in sprint!!!',
+  '2026-8-8': 'AP Calc BC LOCK IN!!!',
+  '2026-8-9': 'AP Calc BC LOCK IN!!!',
+  '2026-8-10': 'AP Calc BC LOCK IN!!!',
+  '2026-8-11': 'AP Calc BC LOCK IN!!!',
+  '2026-8-12': 'AP Calc BC LOCK IN!!!',
+  '2026-8-13': 'AP Calc BC LOCK IN!!!',
+  '2026-8-14': 'AP Calc BC LOCK IN!!!',
+  '2026-8-15': 'AP Physics LOCK IN!!',
+  '2026-8-16': 'AP Physics LOCK IN!!',
+  '2026-8-17': 'AP Physics LOCK IN!!',
+  '2026-8-18': 'AP Physics LOCK IN!!',
+  '2026-8-19': 'AP Physics LOCK IN!!',
+  '2026-8-20': 'TBD/buffer/cooldown',
+  '2026-8-21': 'TBD/buffer/cooldown',
+  '2026-8-22': 'TBD/buffer/cooldown',
+  '2026-8-23': 'Prepare everything for school',
+};
+
+/* ═══════════════════ GREETINGS ═══════════════════ */
+const GREETINGS = {
+  morning: ['Good morning, Bhavesh! 🌅', 'Morning, Bhavesh! Time to lock in ☀️', 'Rise and shine, Bhavesh! 🚀', 'Let\'s get this day, Bhavesh! 💪'],
+  afternoon: ['Good afternoon, Bhavesh! ☀️', 'Hope you\'re crushing it, Bhavesh! ⚡', 'Afternoon grind, Bhavesh! 🔥', 'Keep the momentum, Bhavesh! 💯'],
+  evening: ['Good evening, Bhavesh! 🌆', 'Evening, Bhavesh! Keep pushing! 🌙', 'The grind doesn\'t stop, Bhavesh! 💪'],
+  night: ['Welcome back, night owl! 🦉', 'Burning the midnight oil, Bhavesh? 🔥', 'Late night lock-in! 🌙', 'Night owl mode activated 🦉💪'],
+};
+const SUB_GREETINGS = [
+  'Ready to crush your goals today.',
+  'Let\'s make today productive.',
+  'Time to lock in and execute.',
+  'Your future self will thank you.',
+  'Consistency beats intensity. Keep showing up.',
+  'One day at a time. You\'ve got this.',
+  'Small steps lead to big wins.',
+];
+
+/* ═══════════════════ STATE ═══════════════════ */
+let calDate = new Date();
+let calView = 'month';
+let notesDate = new Date();
+let notesDateStr = dateToStr(notesDate);
+let docs = [];
+let docEditingId = null;
+let docSaveTimer = null;
+
+/* ═══════════════════ UTILITY ═══════════════════ */
+function dateToStr(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function formatDateNice(d) {
+  return d.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+}
+function formatDateShort(d) {
+  return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+}
+function getDayStart(d) {
+  const nd = new Date(d); nd.setHours(0,0,0,0); return nd;
+}
+function parseTimeToMinutes(t) {
+  // "8:00 AM" or "8:00 PM"
+  let [h, rest] = t.split(':');
+  let m = parseInt(rest.slice(0,2));
+  let ampm = rest.slice(3).trim().toUpperCase();
+  let hour = parseInt(h);
+  if (ampm === 'PM' && hour !== 12) hour += 12;
+  if (ampm === 'AM' && hour === 12) hour = 0;
+  return hour * 60 + m;
+}
+function minutesToTime(min) {
+  let h = Math.floor(min / 60);
+  let m = min % 60;
+  let ampm = h >= 12 ? 'PM' : 'AM';
+  if (h === 0) h = 12;
+  else if (h > 12) h -= 12;
+  return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+function isAllDay(evt) { return evt[0] === 'All day'; }
+function dayOfWeek(d) { return d.getDay(); }
+function isToday(d) {
+  const t = new Date();
+  return d.getFullYear() === t.getFullYear() && d.getMonth() === t.getMonth() && d.getDate() === t.getDate();
+}
+function getEventsForDate(date) {
+  const dow = date.getDay();
+  const ds = dateToStr(date);
+  const events = [];
+  // Daily schedule for weekdays (not weekend? No, the schedule seems to be daily)
+  // Actually user said daily schedule - let me include it for all days by default
+  // But the user might have meant weekdays. Let me include the daily schedule every day,
+  // since the user said "Daily schedule" at the top.
+  for (const s of DAILY_SCHEDULE) {
+    events.push({start:s[0], end:s[1], title:s[2], type:'daily'});
+  }
+  // Weekly recurring
+  const weekly = WEEKLY_RECURRING[dow] || [];
+  for (const w of weekly) {
+    events.push({start:w[0], end:w[1], title:w[2], type:'weekly'});
+  }
+  // Monthly schedule
+  if (MONTHLY_SCHEDULE[ds]) {
+    events.push({start:'All day', end:'', title:MONTHLY_SCHEDULE[ds], type:'monthly'});
+  }
+  return events;
 }
 
-function loadData() {
-  try {
-    const raw = localStorage.getItem('sat-prep-data');
-    if (raw) {
-      const d = JSON.parse(raw);
-      for (const dm of [...ENGLISH_DOMAINS, ...MATH_DOMAINS]) {
-        if (!d.performance[dm]) d.performance[dm] = { correct: 0, total: 0 };
-      }
-      if (!d.missedQuestions) d.missedQuestions = {};
-      return d;
-    }
-  } catch (_) {}
-  return defaultData();
+/* ═══════════════════ HOME ═══════════════════ */
+function updateGreeting() {
+  const h = new Date().getHours();
+  let arr;
+  if (h >= 5 && h < 12) arr = GREETINGS.morning;
+  else if (h >= 12 && h < 17) arr = GREETINGS.afternoon;
+  else if (h >= 17 && h < 21) arr = GREETINGS.evening;
+  else arr = GREETINGS.night;
+  document.getElementById('greetingText').textContent = arr[Math.floor(Math.random() * arr.length)];
+  document.getElementById('subGreeting').textContent = SUB_GREETINGS[Math.floor(Math.random() * SUB_GREETINGS.length)];
 }
-function saveData(d) {
-  try { localStorage.setItem('sat-prep-data', JSON.stringify(d)); } catch (_) {}
-}
-let DATA = loadData();
 
-// ─── Helpers ───
-function $(id) { return document.getElementById(id); }
-function todayStr() { return new Date().toISOString().slice(0,10); }
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-  return arr;
+function updateClock() {
+  const now = new Date();
+  document.getElementById('currentDate').textContent = formatDateNice(now);
+  document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
 }
-function esc(t) {
-  if (!t) return '';
+
+function filterApps(q) {
+  q = q.toLowerCase().trim();
+  const boxes = document.querySelectorAll('.app-box');
+  let any = false;
+  boxes.forEach(b => {
+    const name = b.querySelector('.app-box-name').textContent.toLowerCase();
+    const desc = b.querySelector('.app-box-desc').textContent.toLowerCase();
+    const match = !q || name.includes(q) || desc.includes(q);
+    b.style.display = match ? '' : 'none';
+    if (match) any = true;
+  });
+  document.getElementById('noResults').style.display = any ? 'none' : 'block';
+}
+
+/* ═══════════════════ NAVIGATION ═══════════════════ */
+function goHome() {
+  document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+  document.getElementById('viewHome').style.display = 'block';
+  document.getElementById('globalBackBtn').style.display = 'none';
+  document.querySelector('.lockedin-nav-subtitle').textContent = 'Hub';
+  updateGreeting();
+  updateClock();
+}
+
+function openApp(name) {
+  document.getElementById('viewHome').style.display = 'none';
+  document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view' + name.charAt(0).toUpperCase() + name.slice(1));
+  if (el) {
+    el.classList.add('active');
+    document.getElementById('globalBackBtn').style.display = 'flex';
+    document.querySelector('.lockedin-nav-subtitle').textContent = name.charAt(0).toUpperCase() + name.slice(1);
+    // Init app
+    if (name === 'documents') docRenderList();
+    if (name === 'calendar') { calRender(); }
+    if (name === 'notes') { notesDateStr = dateToStr(notesDate); notesLoad(); }
+    if (name === 'pomodoro') { pomoSyncDisplay(); pomoTaskRender(); pomoRenderMiniDay(); }
+  }
+}
+
+function openSAT() {
+  window.location.href = '/sat';
+}
+
+/* ═══════════════════ APP: DOCUMENTS ═══════════════════ */
+function docLoadAll() {
+  try { docs = JSON.parse(localStorage.getItem(LS_PREFIX+'docs')) || []; } catch(e) { docs = []; }
+  if (!docs.length) {
+    // Create a sample doc
+    docs = [{id:'1', title:'Welcome to LockedIn Docs', content:'<p>Welcome! This is your first document. Edit away — everything auto-saves to your browser.</p>', updated:Date.now()}];
+    docSaveAll();
+  }
+}
+function docSaveAll() {
+  localStorage.setItem(LS_PREFIX+'docs', JSON.stringify(docs));
+}
+function docRenderList() {
+  const list = document.getElementById('docList');
+  docs.sort((a,b) => b.updated - a.updated);
+  list.innerHTML = docs.map(d => `
+    <div class="doc-item" onclick="docOpen('${d.id}')">
+      <div class="doc-item-icon">📄</div>
+      <div class="doc-item-info">
+        <div class="doc-item-name">${escHtml(d.title) || 'Untitled'}</div>
+        <div class="doc-item-meta">${formatDateShort(new Date(d.updated))}</div>
+      </div>
+      <button class="doc-item-delete" onclick="event.stopPropagation();docDelete('${d.id}')">✕</button>
+    </div>
+  `).join('');
+  document.getElementById('docListView').style.display = 'block';
+  document.getElementById('docEditorView').style.display = 'none';
+}
+function escHtml(s) {
   const d = document.createElement('div');
-  d.textContent = t;
+  d.textContent = s;
   return d.innerHTML;
 }
-
-// ─── Navigation ───
-function showView(id) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  $(id).classList.add('active');
-  app.view = id;
+function docCreate() {
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+  docs.push({id, title:'Untitled', content:'<p>Start writing...</p>', updated:Date.now()});
+  docSaveAll();
+  docOpen(id);
+}
+function docOpen(id) {
+  const d = docs.find(x => x.id === id);
+  if (!d) return;
+  docEditingId = id;
+  document.getElementById('docListView').style.display = 'none';
+  document.getElementById('docEditorView').style.display = 'block';
+  document.getElementById('docTitleInput').value = d.title;
+  document.getElementById('docContent').innerHTML = d.content;
+  document.getElementById('docSaveStatus').textContent = 'Saved';
+  document.querySelector('.lockedin-nav-subtitle').textContent = 'Document';
+}
+function docBackToList() {
+  docAutoSave();
+  docEditingId = null;
+  docRenderList();
+  document.querySelector('.lockedin-nav-subtitle').textContent = 'Documents';
+}
+function docDelete(id) {
+  if (!confirm('Delete this document?')) return;
+  docs = docs.filter(x => x.id !== id);
+  docSaveAll();
+  if (docEditingId === id) docBackToList();
+  else docRenderList();
+}
+function docAutoSave() {
+  if (!docEditingId) return;
+  const d = docs.find(x => x.id === docEditingId);
+  if (!d) return;
+  d.title = document.getElementById('docTitleInput').value || 'Untitled';
+  d.content = document.getElementById('docContent').innerHTML;
+  d.updated = Date.now();
+  document.getElementById('docSaveStatus').textContent = 'Saving...';
+  clearTimeout(docSaveTimer);
+  docSaveTimer = setTimeout(() => {
+    docSaveAll();
+    document.getElementById('docSaveStatus').textContent = 'Saved';
+  }, 300);
+}
+function docExec(cmd) {
+  document.execCommand(cmd, false, null);
+  document.getElementById('docContent').focus();
+}
+function docHeading(tag) {
+  document.execCommand('formatBlock', false, `<${tag}>`);
+  document.getElementById('docContent').focus();
 }
 
-function goToDashboard() {
-  stopTimer();
-  showView('viewDashboard');
-  renderDashboard();
+/* ═══════════════════ APP: CALENDAR ═══════════════════ */
+function calSetView(v) {
+  calView = v;
+  document.querySelectorAll('.cal-view-toggle button').forEach(b => b.classList.toggle('active', b.dataset.view === v));
+  document.getElementById('calMonthView').style.display = v === 'month' ? '' : 'none';
+  document.getElementById('calDayView').style.display = v === 'day' ? '' : 'none';
+  calRender();
 }
-
-// ─── API ───
-// Note: the remote API ignores `limit` and returns ALL questions for a section.
-let qCache = { english: [], math: [] };
-let loading = { english: false, math: false };
-
-async function fetchAll(section) {
-  if (qCache[section].length > 0) return;
-  if (loading[section]) {
-    while (loading[section]) await new Promise(r => setTimeout(r, 100));
-    return;
-  }
-  loading[section] = true;
-  try {
-    const r = await fetch(`${API_BASE}?section=${section}&limit=999`);
-    if (!r.ok) throw new Error(`API ${r.status}`);
-    const qs = await r.json();
-    if (Array.isArray(qs)) qCache[section] = qs;
-  } finally {
-    loading[section] = false;
-  }
-}
-
-async function ensureLoaded(section) {
-  if (qCache[section].length < 10) await fetchAll(section);
-}
-
-function takeQuestions(section, count, domains) {
-  let pool = qCache[section];
-  if (domains && domains.length) pool = pool.filter(q => domains.includes(q.domain));
-  if (!pool.length) return [];
-  shuffle(pool);
-  const ids = new Set(pool.slice(0, count).map(q => q.id));
-  qCache[section] = qCache[section].filter(q => !ids.has(q.id));
-  return pool.slice(0, count);
-}
-
-async function getQuestions(section, count, domains) {
-  await ensureLoaded(section);
-  return takeQuestions(section, count, domains);
-}
-
-// ─── Adaptive Selection ───
-function domainWeights(section) {
-  const domains = section === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
-  const w = {};
-  for (const dm of domains) {
-    const p = DATA.performance[dm];
-    // Base weight from accuracy
-    let bw = 0.25;
-    if (p && p.total > 0) bw = Math.max(0.15, 1 - p.correct / p.total);
-    // Boost from missed questions in that domain
-    const missed = Object.values(DATA.missedQuestions || {}).filter(m => m.domain === dm).length;
-    const missBoost = Math.min(0.3, missed * 0.05);
-    w[dm] = bw + missBoost;
-  }
-  const total = Object.values(w).reduce((a,b)=>a+b,0);
-  for (const dm of domains) w[dm] /= total;
-  return w;
-}
-
-function pickDomains(section, count) {
-  const w = domainWeights(section);
-  const domains = section === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
-  const result = [];
-  for (let i = 0; i < count; i++) {
-    const r = Math.random();
-    let cum = 0, chosen = domains[0];
-    for (const dm of domains) { cum += w[dm] || 0; if (r <= cum) { chosen = dm; break; } }
-    result.push(chosen);
-  }
-  return result;
-}
-
-// ─── Daily Session ───
-async function startDailySession() {
-  // Confirm if already done today
-  if (DATA.lastDate === todayStr() && DATA.history.some(h => h.date === todayStr() && h.type === 'daily')) {
-    if (!confirm('You already completed your daily session today. Start another one?')) return;
-  }
-
-  showView('viewQuestionBlitz');
-  $('cbPassageText').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Preparing your daily session…</div></div>`;
-  $('cbQuestionText').innerHTML = '';
-  $('cbChoicesList').innerHTML = '';
-
-  try {
-    const engDomains = pickDomains('english', 9);
-    const [eng, mth] = await Promise.all([
-      getQuestions('english', 9, [...new Set(engDomains)]),
-      getQuestions('math', 1),
-    ]);
-
-    // Interleave: put math question around position 7 (last third)
-    const all = [];
-    eng.forEach((q, i) => {
-      if (i === 7 && mth.length) all.push(mth.shift());
-      all.push(q);
-    });
-    if (mth.length) all.splice(Math.min(7, all.length), 0, ...mth);
-
-    app.questions = all.slice(0, 10);
-    app.qIndex = 0;
-    app.answers = [];
-    app.sessionType = 'daily';
-    app.sessionConfig = { pacing: 'normal' };
-
-    // Initialize College Board UI States
-    cbState = {
-      eliminated: app.questions.map(() => new Set()),
-      marked: app.questions.map(() => false),
-      timerHidden: false,
-      annotateMode: false,
-      directionsOpen: false,
-      navModalOpen: false
-    };
-
-    renderQuestionBlitz();
-    startCbTimer();
-    initCbResize();
-  } catch (e) {
-    console.error(e);
-    $('cbPassageText').innerHTML = `<div class="error-state">Could not load questions. Check your connection and try again. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
-  }
-}
-
-// ─── Blitz Setup ───
-function showBlitzSetup() {
-  refreshBlitzTopics();
-  showView('viewBlitzSetup');
-}
-
-function refreshBlitzTopics() {
-  const container = $('blitzTopics');
-  const subject = app.blitzConfig.subject;
-  const domains = subject === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
-  const w = domainWeights(subject);
-  const sorted = domains.slice().sort((a,b) => (w[b]||0)-(w[a]||0));
-
-  // If no topics selected yet, default to weakest
-  if (!app.blitzConfig.topics.length) {
-    const avg = 1 / domains.length;
-    app.blitzConfig.topics = sorted.filter(d => w[d] > avg);
-    if (!app.blitzConfig.topics.length) app.blitzConfig.topics = [sorted[0]];
-  }
-
-  container.innerHTML = sorted.map(dm => {
-    const checked = app.blitzConfig.topics.includes(dm);
-    return `<div class="setup-checkbox ${checked?'checked':''}" data-value="${dm}" onclick="toggleBlitzTopic(this)">${dm}</div>`;
-  }).join('');
-}
-
-function selectBlitzOption(field, el) {
-  el.parentElement.querySelectorAll('.setup-option').forEach(o => o.classList.remove('active'));
-  el.classList.add('active');
-  app.blitzConfig[field] = el.dataset.value;
-  if (field === 'subject') { app.blitzConfig.topics = []; refreshBlitzTopics(); }
-}
-
-function toggleBlitzTopic(el) {
-  el.classList.toggle('checked');
-  const val = el.dataset.value;
-  if (app.blitzConfig.topics.includes(val)) {
-    app.blitzConfig.topics = app.blitzConfig.topics.filter(t => t !== val);
+function calNavigate(delta) {
+  if (calView === 'month') {
+    calDate.setMonth(calDate.getMonth() + delta);
   } else {
-    app.blitzConfig.topics.push(val);
+    calDate.setDate(calDate.getDate() + delta);
   }
+  calRender();
 }
-
-let cbState = {
-  eliminated: [],
-  marked: [],
-  timerHidden: false,
-  annotateMode: false,
-  directionsOpen: false,
-  navModalOpen: false
-};
-
-async function launchBlitz() {
-  const cfg = app.blitzConfig;
-  const count = parseInt(cfg.count);
-  const topics = cfg.topics.length ? cfg.topics : null;
-
-  showView('viewQuestionBlitz');
-  $('cbPassageText').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Preparing blitz session…</div></div>`;
-  $('cbQuestionText').innerHTML = '';
-  $('cbChoicesList').innerHTML = '';
-
-  try {
-    const qs = await getQuestions(cfg.subject, count, topics);
-    if (!qs.length) {
-      $('cbPassageText').innerHTML = `<div class="error-state">No questions available. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
-      return;
-    }
-    app.questions = qs.slice(0, count);
-    app.qIndex = 0;
-    app.answers = [];
-    app.sessionType = 'blitz';
-    app.sessionConfig = { ...cfg };
-
-    // Initialize College Board UI States
-    cbState = {
-      eliminated: app.questions.map(() => new Set()),
-      marked: app.questions.map(() => false),
-      timerHidden: false,
-      annotateMode: false,
-      directionsOpen: false,
-      navModalOpen: false
-    };
-
-    renderQuestionBlitz();
-    startCbTimer();
-    initCbResize();
-  } catch (e) {
-    console.error(e);
-    $('cbPassageText').innerHTML = `<div class="error-state">Could not load questions. Check your connection and try again. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
-  }
+function calToday() {
+  calDate = new Date();
+  calRender();
 }
+function calRender() {
+  if (calView === 'month') calRenderMonth();
+  else calRenderDay();
+}
+function calRenderMonth() {
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const label = calDate.toLocaleDateString('en-US', {month:'long', year:'numeric'});
+  document.getElementById('calLabel').textContent = label;
 
-// ─── College Board Style Blitz Rendering & Logic ───
-function renderQuestionBlitz() {
-  if (app.qIndex >= app.questions.length) { endSession(); return; }
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startPad = firstDay.getDay();
+  const daysInMonth = lastDay.getDate();
+  const prevMonthDays = new Date(year, month, 0).getDate();
 
-  const q = app.questions[app.qIndex];
-  const total = app.questions.length;
-  const idx = app.qIndex;
+  const grid = document.getElementById('calMonthDays');
+  grid.innerHTML = '';
+  const totalCells = Math.ceil((startPad + daysInMonth) / 7) * 7;
 
-  // Header & navigator info
-  $('cbQuestionNumBadge').textContent = idx + 1;
-  $('cbQuestionNavLabel').textContent = `Question ${idx + 1} of ${total}`;
-
-  // Mark for review button state
-  const markBtn = $('cbMarkReviewBtn');
-  if (cbState.marked[idx]) {
-    markBtn.classList.add('marked');
-    markBtn.setAttribute('aria-pressed', 'true');
-    $('cbBookmarkIcon').setAttribute('fill', '#1d4ed8');
-    $('cbBookmarkIcon').setAttribute('stroke', '#1d4ed8');
-  } else {
-    markBtn.classList.remove('marked');
-    markBtn.setAttribute('aria-pressed', 'false');
-    $('cbBookmarkIcon').setAttribute('fill', 'none');
-    $('cbBookmarkIcon').setAttribute('stroke', 'currentColor');
-  }
-
-  // Passage (paragraph) content
-  const para = q.question.paragraph;
-  if (para && para !== 'null' && para.trim()) {
-    $('cbPassageText').innerHTML = `<p>${esc(para).replace(/\n\n/g, '</p><p>')}</p>`;
-  } else {
-    $('cbPassageText').innerHTML = `<p style="color:var(--text-secondary);font-style:italic">No passage for this question.</p>`;
-  }
-
-  // Question content
-  $('cbQuestionText').innerHTML = `<p>${esc(q.question.question)}</p>`;
-
-  // Render choices
-  const letters = ['A', 'B', 'C', 'D'];
-  const isSubmitted = app.awaitingNext;
-  const selectedAnswer = app.answers[idx]?.selected;
-
-  let choicesHtml = '';
-  for (const letter of letters) {
-    const text = q.question.choices[letter];
-    if (!text) continue;
-
-    const letterIdx = letter.charCodeAt(0) - 65; // A=0, B=1...
-    const isSelected = selectedAnswer === letter;
-    const isEliminated = cbState.eliminated[idx].has(letterIdx);
-
-    let classes = 'cb-choice-item';
-    if (isSelected) classes += ' selected';
-    if (isEliminated) classes += ' eliminated';
-    if (isSubmitted) {
-      if (letter === q.question.correct_answer) classes += ' correct';
-      else if (isSelected && letter !== q.question.correct_answer) classes += ' incorrect';
-    }
-
-    choicesHtml += `
-      <div class="${classes}" onclick="selectChoiceBlitz('${letter}')">
-        <div class="cb-choice-main">
-          <div class="cb-choice-letter-area">${letter}</div>
-          <div class="cb-choice-text-inner">${esc(text)}</div>
-        </div>
-        <button class="cb-choice-eliminate-btn" onclick="eliminateChoiceBlitz(event, ${letterIdx})" title="Cross out answer">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            ${isEliminated
-              ? '<line x1="5" y1="12" x2="19" y2="12"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 2"/>'
-              : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'}
-          </svg>
-        </button>
-      </div>
-    `;
-  }
-  $('cbChoicesList').innerHTML = choicesHtml;
-
-  // Explanation / feedback area
-  const explanationArea = $('cbExplanationArea');
-  if (isSubmitted) {
-    const correct = selectedAnswer === q.question.correct_answer;
-    explanationArea.className = correct ? 'explanation-area success-bg' : 'explanation-area error-bg';
-    explanationArea.style.display = 'block';
-    explanationArea.innerHTML = `
-      <div class="explanation-content" style="border:1px solid ${correct?'#6ee7b7':'#fca5a5'}; padding:14px; border-radius:8px">
-        <div class="explanation-header" style="background:transparent; cursor:default; font-weight:700; padding:0; margin-bottom:6px; color:${correct?'#065f46':'#7f1d1d'}">
-          ${correct ? '✅ Correct!' : '❌ Incorrect.'} Correct answer is ${q.question.correct_answer}.
-        </div>
-        <div class="explanation-body" style="padding:0; color:#374151">${esc(q.question.explanation || 'No explanation available.')}</div>
-      </div>
-    `;
-  } else {
-    explanationArea.style.display = 'none';
-    explanationArea.innerHTML = '';
-  }
-
-  // Footer nav buttons
-  if (app.sessionType === 'daily') {
-    $('cbBackBtn').style.display = '';
-    $('cbBackBtn').disabled = idx === 0;
-    $('cbQuestionNavLabel').parentElement.style.display = '';
-
-    const nextBtn = $('cbNextBtn');
-    nextBtn.textContent = idx === total - 1 ? 'Submit' : 'Next';
-    nextBtn.disabled = false;
-  } else {
-    $('cbBackBtn').style.display = 'none';
-    $('cbQuestionNavLabel').parentElement.style.display = 'none';
-
-    const nextBtn = $('cbNextBtn');
-    if (isSubmitted) {
-      nextBtn.textContent = idx === total - 1 ? 'See Results' : 'Continue →';
-      nextBtn.disabled = false;
+  for (let i = 0; i < totalCells; i++) {
+    let day, isOther = false;
+    if (i < startPad) {
+      day = prevMonthDays - startPad + 1 + i;
+      isOther = true;
+    } else if (i >= startPad + daysInMonth) {
+      day = i - startPad - daysInMonth + 1;
+      isOther = true;
     } else {
-      nextBtn.textContent = 'Submit';
-      nextBtn.disabled = !selectedAnswer;
+      day = i - startPad + 1;
     }
-  }
+    const d = new Date(year, month, day);
+    const cls = ['cal-day'];
+    if (isOther) cls.push('other-month');
+    if (isToday(d)) cls.push('today');
 
-  // Reset scroll
-  $('cbPassagePanel').scrollTop = 0;
-  $('cbQuestionPanel').scrollTop = 0;
+    const events = getEventsForDate(d);
+    const dots = events.slice(0, 3).map(e => `<span class="cal-event-label">${escHtml(e.title.slice(0,20))}</span>`).join('');
 
-  // Render Math equations
-  if (window.renderMathInElement) {
-    try {
-      renderMathInElement($('cbMainContent'), {
-        delimiters: [
-          {left:'$$',right:'$$',display:true},
-          {left:'\\\\[',right:'\\\\]',display:true},
-          {left:'$',right:'$',display:false},
-          {left:'\\(',right:'\\)',display:false},
-        ],
-        throwOnError: false,
-      });
-    } catch (_) {}
-  }
-}
-
-function selectChoiceBlitz(letter) {
-  if (app.sessionType === 'blitz' && app.awaitingNext) return;
-  const idx = app.qIndex;
-  const letterIdx = letter.charCodeAt(0) - 65;
-
-  if (app.answers[idx]?.selected === letter) {
-    app.answers[idx] = null;
-  } else {
-    app.answers[idx] = { selected: letter };
-    cbState.eliminated[idx].delete(letterIdx);
-  }
-  renderQuestionBlitz();
-}
-
-function eliminateChoiceBlitz(e, letterIdx) {
-  e.stopPropagation();
-  if (app.sessionType === 'blitz' && app.awaitingNext) return;
-  const idx = app.qIndex;
-
-  if (cbState.eliminated[idx].has(letterIdx)) {
-    cbState.eliminated[idx].delete(letterIdx);
-  } else {
-    cbState.eliminated[idx].add(letterIdx);
-    // Deselect if active
-    const letter = String.fromCharCode(65 + letterIdx);
-    if (app.answers[idx]?.selected === letter) {
-      app.answers[idx] = null;
-    }
-  }
-  renderQuestionBlitz();
-}
-
-function toggleCbMarkForReview() {
-  const idx = app.qIndex;
-  cbState.marked[idx] = !cbState.marked[idx];
-  renderQuestionBlitz();
-}
-
-function cbGoBack() {
-  if (app.sessionType === 'daily') {
-    if (app.qIndex > 0) {
-      app.qIndex--;
-      renderQuestionBlitz();
-    }
-  } else {
-    if (app.qIndex > 0 && !app.awaitingNext) {
-      app.qIndex--;
-      renderQuestionBlitz();
-    }
-  }
-}
-
-function cbGoNext() {
-  const idx = app.qIndex;
-  const total = app.questions.length;
-
-  if (app.sessionType === 'daily') {
-    const q = app.questions[idx];
-    const selected = app.answers[idx]?.selected || null;
-    const correct = selected === q.question.correct_answer;
-
-    app.answers[idx] = {
-      questionIdx: idx,
-      questionId: q.id,
-      domain: q.domain,
-      difficulty: q.difficulty,
-      selected,
-      correct,
-      correctAnswer: q.question.correct_answer,
-      explanation: q.question.explanation,
-      questionText: q.question.question,
-      choices: q.question.choices,
-      paragraph: q.question.paragraph,
-    };
-
-    if (idx === total - 1) {
-      const unanswered = app.questions.filter((_, i) => !app.answers[i] || app.answers[i].selected === null).length;
-      if (unanswered > 0) {
-        if (!confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit session?`)) return;
-      }
-      endSession();
-    } else {
-      app.qIndex++;
-      renderQuestionBlitz();
-    }
-  } else {
-    if (!app.awaitingNext) {
-      // Treat as "Submit"
-      app.awaitingNext = true;
-      stopTimer();
-      const q = app.questions[idx];
-      const selected = app.answers[idx]?.selected;
-      const correct = selected === q.question.correct_answer;
-
-      app.answers[idx] = {
-        questionIdx: idx,
-        questionId: q.id,
-        domain: q.domain,
-        difficulty: q.difficulty,
-        selected,
-        correct,
-        correctAnswer: q.question.correct_answer,
-        explanation: q.question.explanation,
-        questionText: q.question.question,
-        choices: q.question.choices,
-        paragraph: q.question.paragraph,
-      };
-
-      renderQuestionBlitz();
-    } else {
-      app.awaitingNext = false;
-      if (idx === total - 1) {
-        endSession();
-      } else {
-        app.qIndex++;
-        renderQuestionBlitz();
-        startCbTimer();
-      }
-    }
-  }
-}
-
-// ─── College Board Timer ───
-function startCbTimer() {
-  const pacing = app.sessionConfig.pacing || 'normal';
-  const timeLimit = PACING_LIMITS[pacing] || 0;
-  app.isTimed = timeLimit > 0;
-
-  stopTimer();
-  if (app.isTimed) {
-    app.timerRemaining = timeLimit;
-    updateCbTimerDisplay();
-    app.timerInterval = setInterval(() => {
-      app.timerRemaining--;
-      updateCbTimerDisplay();
-      if (app.timerRemaining <= 0) {
-        clearInterval(app.timerInterval);
-        app.timerInterval = null;
-        app.timerRemaining = 0;
-        updateCbTimerDisplay();
-        if (!app.awaitingNext) handleCbTimeout();
-      }
-    }, 1000);
-  } else {
-    app.timerRemaining = 0;
-    updateCbTimerDisplay();
-    app.timerInterval = setInterval(() => {
-      app.timerRemaining++;
-      updateCbTimerDisplay();
-    }, 1000);
-  }
-}
-
-function updateCbTimerDisplay() {
-  const display = $('cbTimerDisplay');
-  const s = Math.max(0, Math.ceil(app.timerRemaining));
-
-  if (cbState.timerHidden) {
-    display.textContent = 'Hidden';
-    display.className = 'cb-timer-display';
-  } else {
-    display.textContent = formatTime(s);
-    if (app.isTimed) {
-      const pacing = app.sessionConfig.pacing;
-      const total = PACING_LIMITS[pacing] || 60;
-      const pct = total > 0 ? app.timerRemaining / total : 1;
-      display.className = 'cb-timer-display';
-      if (pct < 0.2) display.classList.add('danger');
-      else if (pct < 0.4) display.classList.add('warning');
-    } else {
-      display.className = 'cb-timer-display';
-    }
-  }
-}
-
-function toggleCbTimer() {
-  cbState.timerHidden = !cbState.timerHidden;
-  $('cbHideTimerBtn').textContent = cbState.timerHidden ? 'Show' : 'Hide';
-  updateCbTimerDisplay();
-}
-
-function handleCbTimeout() {
-  // Skipping active choice selection
-  const idx = app.qIndex;
-  const q = app.questions[idx];
-  app.awaitingNext = true;
-
-  app.answers[idx] = {
-    questionIdx: idx,
-    questionId: q.id,
-    domain: q.domain,
-    difficulty: q.difficulty,
-    selected: null,
-    correct: false,
-    correctAnswer: q.question.correct_answer,
-    explanation: q.question.explanation,
-    questionText: q.question.question,
-    choices: q.question.choices,
-    paragraph: q.question.paragraph,
-  };
-
-  renderQuestionBlitz();
-}
-
-// ─── DirectionsDropdown ───
-function toggleCbDirections() {
-  cbState.directionsOpen = !cbState.directionsOpen;
-  $('cbDirectionsModal').classList.toggle('open', cbState.directionsOpen);
-}
-
-// ─── Annotate Mode ───
-function toggleCbAnnotateMode() {
-  cbState.annotateMode = !cbState.annotateMode;
-  const btn = $('cbAnnotateBtn');
-  const panel = $('cbPassagePanel');
-  if (cbState.annotateMode) {
-    btn.style.background = '#dbeafe';
-    btn.style.color = '#1d4ed8';
-    panel.style.cursor = 'text';
-  } else {
-    btn.style.background = '';
-    btn.style.color = '';
-    panel.style.cursor = '';
-  }
-}
-
-// Text selection listener for high-fidelity annotate tool
-document.addEventListener('mouseup', () => {
-  if (app.view !== 'viewQuestionBlitz' || !cbState.annotateMode) return;
-  const sel = window.getSelection();
-  if (!sel || sel.isCollapsed) return;
-  const range = sel.getRangeAt(0);
-  if (!$('cbPassagePanel').contains(range.commonAncestorContainer)) return;
-
-  try {
-    const mark = document.createElement('mark');
-    mark.className = 'cb-annotation-highlight';
-    mark.title = 'Click to remove highlight';
-    mark.onclick = (e) => { e.stopPropagation(); unwrapCbHighlight(mark); };
-    range.surroundContents(mark);
-    sel.removeAllRanges();
-  } catch (_) {
-    sel.removeAllRanges();
-  }
-});
-
-function unwrapCbHighlight(mark) {
-  const parent = mark.parentNode;
-  while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
-  parent.removeChild(mark);
-}
-
-// ─── Panels Resizing ───
-function initCbResize() {
-  const divider = $('cbDivider');
-  const left = $('cbPassagePanel');
-  const right = $('cbQuestionPanel');
-  const main = $('cbMainContent');
-  let dragging = false;
-
-  divider.addEventListener('mousedown', (e) => {
-    dragging = true;
-    divider.classList.add('active');
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
-    e.preventDefault();
-  });
-
-  document.addEventListener('mousemove', (e) => {
-    if (!dragging) return;
-    const rect = main.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const total = rect.width - 5;
-    const pct = Math.min(Math.max(x / total, 0.25), 0.75);
-    left.style.flex = 'none';
-    left.style.width = (pct * total) + 'px';
-    right.style.flex = '1';
-  });
-
-  document.addEventListener('mouseup', () => {
-    if (!dragging) return;
-    dragging = false;
-    divider.classList.remove('active');
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
-  });
-}
-
-// ─── Navigator Modal ───
-function openCbNavModal() {
-  cbState.navModalOpen = true;
-  $('cbNavModalBackdrop').classList.add('open');
-  buildCbNavGrid();
-}
-
-function closeCbNavModal() {
-  cbState.navModalOpen = false;
-  $('cbNavModalBackdrop').classList.remove('open');
-}
-
-function handleCbBackdropClick(e) {
-  if (e.target === $('cbNavModalBackdrop')) closeCbNavModal();
-}
-
-function buildCbNavGrid() {
-  const grid = $('cbNavGrid');
-  grid.innerHTML = app.questions.map((_, i) => {
-    let cls = 'cb-nav-grid-btn';
-    if (i === app.qIndex) cls += ' current';
-    else if (app.answers[i]?.selected !== undefined) cls += ' answered';
-    if (cbState.marked[i]) cls += ' marked';
-    return `<button class="${cls}" onclick="cbJumpTo(${i})">${i + 1}</button>`;
-  }).join('');
-}
-
-function cbJumpTo(idx) {
-  if (app.awaitingNext) return;
-  app.qIndex = idx;
-  renderQuestionBlitz();
-  closeCbNavModal();
-}
-
-
-// ─── Question Rendering ───
-function renderLoading(msg) {
-  $('questionContent').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">${msg||'Loading…'}</div></div>`;
-}
-function showError(msg) {
-  $('questionContent').innerHTML = `<div class="error-state"><div class="error-icon">⚠️</div><div class="error-text">${msg}</div><button class="btn btn-primary" onclick="goToDashboard()">Back to Dashboard</button></div>`;
-}
-
-function renderQuestion() {
-  if (app.qIndex >= app.questions.length) { endSession(); return; }
-
-  const q = app.questions[app.qIndex];
-  const total = app.questions.length;
-  const idx = app.qIndex;
-
-  // Header
-  $('qProgress').textContent = `Question ${idx+1} of ${total}`;
-  $('qDomain').textContent = q.domain;
-  $('progressFill').style.width = `${(idx/total)*100}%`;
-
-  // Timer setup — per-question timer for ALL session types
-  const pacing = app.sessionConfig.pacing || 'normal';
-  const timeLimit = PACING_LIMITS[pacing] || 0;
-  app.isTimed = timeLimit > 0;
-  app.timerElapsed = 0; // for untimed daily sessions
-
-  $('qTimer').style.display = '';
-  $('timerOverlay').style.display = app.isTimed ? '' : 'none';
-  $('timerRing').textContent = app.isTimed ? '⏱' : '⏱';
-
-  if (app.isTimed) {
-    // Countdown per question
-    app.timerRemaining = timeLimit;
-    updateTimerDisplay();
-    stopTimer();
-    app.timerInterval = setInterval(() => {
-      app.timerRemaining--;
-      updateTimerDisplay();
-      if (app.timerRemaining <= 0) {
-        clearInterval(app.timerInterval);
-        app.timerInterval = null;
-        app.timerRemaining = 0;
-        updateTimerDisplay();
-        if (!app.awaitingNext) handleTimeout();
-      }
-    }, 1000);
-  } else {
-    // Elapsed per question (daily session pacing)
-    app.timerRemaining = 0;
-    $('qTimer').textContent = formatTime(0);
-    $('timerDisplay').textContent = formatTime(0);
-    $('qTimer').className = 'question-timer';
-    $('timerRing').className = 'timer-ring';
-    stopTimer();
-    app.timerInterval = setInterval(() => {
-      app.timerRemaining++;
-      $('qTimer').textContent = formatTime(Math.ceil(app.timerRemaining));
-      $('timerDisplay').textContent = formatTime(Math.ceil(app.timerRemaining));
-    }, 1000);
-  }
-
-  app.awaitingNext = false;
-
-  // Build content
-  let html = '';
-
-  // Passage / paragraph
-  const para = q.question.paragraph;
-  if (para && para !== 'null' && para.trim()) {
-    html += `<div class="passage">${esc(para)}</div>`;
-  }
-
-  // Question
-  html += `<div class="question-text">${esc(q.question.question)}</div>`;
-
-  // Choices
-  html += '<div class="choices">';
-  for (const letter of ['A','B','C','D']) {
-    const text = q.question.choices[letter];
-    if (!text) continue;
-    html += `<div class="choice" data-letter="${letter}" onclick="selectChoice(this)">
-      <div class="choice-letter">${letter}</div>
-      <div class="choice-text">${esc(text)}</div>
+    grid.innerHTML += `<div class="${cls.join(' ')}" onclick="calGoDay(${day},${month},${year})">
+      <span class="day-num">${day}</span>
+      <div class="cal-events-mini">${dots}</div>
     </div>`;
   }
-  html += '</div>';
-
-  // Footer
-  html += `<div class="question-footer">
-    <span style="font-size:13px;color:var(--text-secondary)">${app.sessionType==='daily'?'Daily':'Blitz'}</span>
-    <button class="btn btn-primary" id="nextBtn" disabled onclick="confirmAnswer()">Next</button>
-  </div>`;
-
-  $('questionContent').innerHTML = html;
-  renderMath();
 }
-
-function formatTime(s) {
-  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+function calGoDay(day, month, year) {
+  calDate = new Date(year, month, day);
+  calSetView('day');
+  calRender();
 }
-
-function selectChoice(el) {
-  if (app.awaitingNext) return;
-  document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  $('nextBtn').disabled = false;
-  app.answers[app.qIndex] = { selected: el.dataset.letter };
-}
-
-function confirmAnswer() {
-  if (app.awaitingNext) return;
-  const selected = app.answers[app.qIndex]?.selected;
-
-  app.awaitingNext = true;
-  stopTimer();
-
-  const q = app.questions[app.qIndex];
-  const correct = selected === q.question.correct_answer;
-
-  // Mark choices
-  document.querySelectorAll('.choice').forEach(c => {
-    c.style.cursor = 'default';
-    if (c.dataset.letter === q.question.correct_answer) c.classList.add('correct');
-    else if (c.dataset.letter === selected && !correct) c.classList.add('incorrect');
-  });
-
-  // Store full answer
-  app.answers[app.qIndex] = {
-    questionIdx: app.qIndex,
-    questionId: q.id,
-    domain: q.domain,
-    difficulty: q.difficulty,
-    selected,
-    correct,
-    correctAnswer: q.question.correct_answer,
-    explanation: q.question.explanation,
-    questionText: q.question.question,
-    choices: q.question.choices,
-    paragraph: q.question.paragraph,
-  };
-
-  // Footer feedback
-  const fb = document.querySelector('.question-footer span');
-  if (fb) {
-    fb.innerHTML = correct
-      ? '<span style="color:var(--success);font-weight:600;">✅ Correct</span>'
-      : '<span style="color:var(--error);font-weight:600;">❌ Incorrect</span>';
-  }
-
-  // Insert explanation area
-  const choicesEl = document.querySelector('.choices');
-  const footer = document.querySelector('.question-footer');
-  if (choicesEl && footer) {
-    const explDiv = document.createElement('div');
-    explDiv.className = 'explanation-area';
-    explDiv.id = 'explanationArea';
-
-    const isDaily = app.sessionType === 'daily';
-    const autoOpen = isDaily; // daily = auto-open, blitz = collapsed
-
-    explDiv.innerHTML = `
-      <div class="explanation-content" ${autoOpen ? '' : 'style="display:none"'}>
-        <div class="explanation-header">
-          <span class="explanation-label">Explanation</span>
-          <span class="explanation-close" onclick="toggleExplanation()">${autoOpen ? '−' : '+'}</span>
-        </div>
-        <div class="explanation-body">${esc(q.question.explanation || 'No explanation available.')}</div>
-      </div>
-      ${!isDaily ? `<button class="btn btn-ghost" style="font-size:13px;padding:6px 12px;margin-top:8px" onclick="toggleExplanation()">💡 Show Explanation</button>` : ''}
-    `;
-
-    footer.parentNode.insertBefore(explDiv, footer);
-  }
-
-  const btn = $('nextBtn');
-  btn.textContent = app.qIndex < app.questions.length - 1 ? 'Continue →' : 'See Results';
-  btn.disabled = false;
-  btn.onclick = advanceQuestion;
-}
-
-function toggleExplanation() {
-  const area = document.getElementById('explanationArea');
-  if (!area) return;
-  const content = area.querySelector('.explanation-content');
-  const btn = area.querySelector('.btn-ghost');
-  if (content) {
-    const open = content.style.display !== 'none';
-    content.style.display = open ? 'none' : 'block';
-    if (btn) btn.textContent = open ? '💡 Show Explanation' : '🔽 Hide Explanation';
-  }
-}
-
-function handleTimeout() {
-  // No answer selected → store as skipped
-  const q = app.questions[app.qIndex];
-  app.awaitingNext = true;
-
-  app.answers[app.qIndex] = {
-    questionIdx: app.qIndex,
-    questionId: q.id,
-    domain: q.domain,
-    difficulty: q.difficulty,
-    selected: null,
-    correct: false,
-    correctAnswer: q.question.correct_answer,
-    explanation: q.question.explanation,
-    questionText: q.question.question,
-    choices: q.question.choices,
-    paragraph: q.question.paragraph,
-  };
-
-  document.querySelectorAll('.choice').forEach(c => {
-    c.style.cursor = 'default';
-    if (c.dataset.letter === q.question.correct_answer) c.classList.add('correct');
-  });
-
-  const fb = document.querySelector('.question-footer span');
-  if (fb) fb.innerHTML = '<span style="color:var(--error);font-weight:600;">⏰ Time’s up!</span>';
-
-  const btn = $('nextBtn');
-  btn.textContent = app.qIndex < app.questions.length - 1 ? 'Continue →' : 'See Results';
-  btn.disabled = false;
-  btn.onclick = advanceQuestion;
-}
-
-function advanceQuestion() {
-  app.awaitingNext = false;
-  app.qIndex++;
-  renderQuestion();
-}
-
-function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen?.() || document.documentElement.webkitRequestFullscreen?.();
-  } else {
-    document.exitFullscreen?.() || document.webkitExitFullscreen?.();
-  }
-}
-
-function exitSession() {
-  if (confirm('End this session and return to dashboard?')) {
-    stopTimer();
-    goToDashboard();
-  }
-}
-
-function stopTimer() {
-  if (app.timerInterval) { clearInterval(app.timerInterval); app.timerInterval = null; }
-}
-
-function updateTimerDisplay() {
-  const s = Math.max(0, Math.ceil(app.timerRemaining));
-  $('timerDisplay').textContent = formatTime(s);
-  $('qTimer').textContent = formatTime(s);
-
-  const pacing = app.sessionConfig.pacing;
-  const total = PACING_LIMITS[pacing] || 60;
-  const pct = total > 0 ? app.timerRemaining / total : 1;
-
-  const ring = $('timerRing');
-  ring.className = 'timer-ring';
-  if (pct < 0.2) ring.classList.add('danger');
-  else if (pct < 0.4) ring.classList.add('warning');
-
-  $('qTimer').className = 'question-timer';
-  if (pct < 0.2) $('qTimer').classList.add('danger');
-  else if (pct < 0.4) $('qTimer').classList.add('warning');
-}
-
-// ─── End Session ───
-function endSession() {
-  stopTimer();
-  showView('viewResults');
-
-  const total = app.questions.length;
-  const correct = app.answers.filter(a => a && a.correct).length;
-
-  $('resultScore').textContent = `${correct}/${total}`;
-  $('resultType').textContent = app.sessionType === 'daily' ? 'Daily Session' : 'Blitz Session';
-
-  // Update DATA
-  const session = {
-    date: todayStr(),
-    type: app.sessionType,
-    score: correct,
-    total,
-    answers: app.answers.filter(Boolean).map(a => ({
-      id: a.questionId, domain: a.domain, difficulty: a.difficulty,
-      correct: a.correct, selected: a.selected, correctAnswer: a.correctAnswer,
-    })),
-  };
-  DATA.history.push(session);
-  DATA.totalQ += total;
-  DATA.totalSessions++;
-
-  // Streak
-  const today = todayStr();
-  if (DATA.lastDate !== today) {
-    const y = new Date(); y.setDate(y.getDate()-1);
-    DATA.streak = DATA.lastDate === y.toISOString().slice(0,10) ? DATA.streak + 1 : 1;
-    DATA.lastDate = today;
-  }
-
-  // Per-domain
-  for (const a of app.answers) {
-    if (!a) continue;
-    if (!DATA.performance[a.domain]) DATA.performance[a.domain] = { correct:0, total:0 };
-    DATA.performance[a.domain].total++;
-    if (a.correct) DATA.performance[a.domain].correct++;
-  }
-
-  // Store missed questions
-  if (!DATA.missedQuestions) DATA.missedQuestions = {};
-  for (const a of app.answers) {
-    if (!a || a.correct || !a.questionId) continue;
-    // Keep the most recent attempt for each question
-    DATA.missedQuestions[a.questionId] = {
-      questionId: a.questionId,
-      domain: a.domain,
-      difficulty: a.difficulty,
-      questionText: a.questionText,
-      choices: a.choices,
-      userAnswer: a.selected,
-      correctAnswer: a.correctAnswer,
-      explanation: a.explanation,
-      paragraph: a.paragraph,
-      date: todayStr(),
-      sessionType: app.sessionType,
-    };
-  }
-
-  saveData(DATA);
-
-  // Render breakdown
-  let html = '';
-  for (let i = 0; i < app.answers.length; i++) {
-    const a = app.answers[i];
-    if (!a) continue;
-    html += `<div class="result-item">
-      <div class="result-question">
-        ${a.correct ? '✅' : '❌'} Question ${i+1}
-        <span class="result-badge ${a.correct?'correct':'incorrect'}">${a.correct?'Correct':'Incorrect'}</span>
-      </div>
-      <div class="result-domain">${esc(a.domain)} · ${esc(a.difficulty)}</div>
-      <div class="result-answer"><strong>Your answer:</strong> ${a.selected ? `${a.selected}. ${esc(a.choices?.[a.selected]||'')}` : 'No answer (time)'}</div>
-      ${!a.correct ? `<div class="result-answer" style="color:var(--success)"><strong>Correct answer:</strong> ${a.correctAnswer}. ${esc(a.choices?.[a.correctAnswer]||'')}</div>` : ''}
-      <div class="result-explanation"><strong>Explanation:</strong> ${esc(a.explanation||'')}</div>
-    </div>`;
-  }
-  $('resultsBreakdown').innerHTML = html;
-  renderMath();
-}
-
-// ─── Dashboard ───
-function renderDashboard() {
-  const h = new Date().getHours();
-  let greet = 'Good evening';
-  if (h < 12) greet = 'Good morning';
-  else if (h < 17) greet = 'Good afternoon';
-
-  $('greeting').textContent = `${greet}, ready to prep?`;
-
+function calRenderDay() {
+  const label = formatDateNice(calDate);
+  document.getElementById('calLabel').textContent = label;
+  const container = document.getElementById('calDayContent');
+  const events = getEventsForDate(calDate);
   const now = new Date();
-  const left = Math.max(0, Math.round((STUDY_END - now) / (1000*60*60*24)));
-  $('daysRemaining').textContent = `${left} days to go`;
+  const isTodayView = isToday(calDate);
+  const currentMin = now.getHours() * 60 + now.getMinutes();
 
-  const elapsed = Math.max(0, Math.round((now - STUDY_START) / (1000*60*60*24)));
-  $('planFill').style.width = `${Math.min(100, (elapsed / TOTAL_DAYS) * 100)}%`;
-  $('sessionsDone').textContent = `${DATA.totalSessions} sessions`;
-
-  $('headerStreak').textContent = DATA.streak > 0 ? `🔥 ${DATA.streak} day streak` : 'Start your streak!';
-
-  // ── Projected SAT Score ──
-  const scoreEl = $('scoreProjectionValue');
-  const scoreBreak = $('scoreProjectionBreakdown');
-  const rwAcc = ENGLISH_DOMAINS.map(d => {
-    const p = DATA.performance[d];
-    return p?.total > 0 ? p.correct / p.total : null;
-  }).filter(x => x !== null);
-  const mathAcc = MATH_DOMAINS.map(d => {
-    const p = DATA.performance[d];
-    return p?.total > 0 ? p.correct / p.total : null;
-  }).filter(x => x !== null);
-
-  if (rwAcc.length > 0 || mathAcc.length > 0) {
-    const avgRW = rwAcc.length > 0 ? rwAcc.reduce((a,b)=>a+b,0) / rwAcc.length : 0;
-    const avgMath = mathAcc.length > 0 ? mathAcc.reduce((a,b)=>a+b,0) / mathAcc.length : 0;
-    const rwScore = Math.round(avgRW * 800);
-    const mathScore = Math.round(avgMath * 800);
-    const totalScore = rwScore + mathScore;
-
-    scoreEl.textContent = totalScore;
-    scoreBreak.innerHTML = `
-      <span style="display:inline-block;margin-right:20px">📖 Reading &amp; Writing: <strong>${rwScore}</strong>/800 ${rwAcc.length > 0 ? `(${Math.round(avgRW*100)}%)` : '(no data)'}</span>
-      <span>🔢 Math: <strong>${mathScore}</strong>/800 ${mathAcc.length > 0 ? `(${Math.round(avgMath*100)}%)` : '(no data)'}</span>
-    `;
-  } else {
-    scoreEl.textContent = '—';
-    scoreBreak.textContent = 'Complete some sessions to see your projected score.';
-  }
-
-  // ── Target Prep: weakest domains ──
-  const missed = DATA.missedQuestions || {};
-  const missedCount = Object.keys(missed).length;
-  const missedCard = $('missedCountCard');
-  const targetCard = $('targetPrepCard');
-
-  if (missedCount > 0) {
-    $('missedCountText').textContent = `You have ${missedCount} question${missedCount>1?'s':''} to review. Click to see explanations and re-learn.`;
-  } else {
-    $('missedCountText').textContent = 'No missed questions yet! Keep up the good work.';
-  }
-
-  // Target prep: show top 3 weakest domains (by accuracy)
-  const allDomains = [...ENGLISH_DOMAINS, ...MATH_DOMAINS];
-  const withData = allDomains
-    .map(dm => {
-      const p = DATA.performance[dm];
-      const c = p?.correct||0, t = p?.total||0;
-      const pct = t > 0 ? Math.round((c/t)*100) : null;
-      const dmMisses = Object.values(missed).filter(m => m.domain === dm).length;
-      return { domain: dm, correct: c, total: t, pct, misses: dmMisses };
-    })
-    .filter(d => d.total > 0 || d.misses > 0)  // only domains with activity
-    .sort((a, b) => {
-      // Sort by misses descending first, then by accuracy ascending
-      if (a.misses !== b.misses) return b.misses - a.misses;
-      return (a.pct ?? 100) - (b.pct ?? 100);
+  let html = `<div class="cal-day-header">${label}</div>`;
+  // Render from 7 AM to 11 PM
+  for (let h = 7; h <= 23; h++) {
+    const slotStart = h * 60;
+    const slotEnd = slotStart + 60;
+    const hourLabel = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h-12} PM`;
+    const slotEvents = events.filter(e => {
+      if (isAllDay(e)) return false;
+      const em = parseTimeToMinutes(e.start);
+      return em >= slotStart && em < slotEnd;
     });
-
-  if (withData.length > 0) {
-    targetCard.style.display = 'block';
-    const top3 = withData.slice(0, 3);
-    $('targetPrepList').innerHTML = top3.map(d => {
-      const pct = d.pct !== null ? d.pct : 0;
-      const label = d.pct !== null
-        ? `${pct}% accuracy · ${d.misses} missed`
-        : `${d.total} attempted · ${d.misses} missed`;
-      return `<div class="performance-item">
-        <div class="performance-domain">🎯 ${d.domain}</div>
-        <div class="performance-bar-wrap"><div class="performance-bar" style="width:${Math.max(5,pct)}%;background:${pct<50?'var(--error)':pct<80?'var(--warning)':'var(--success)'}"></div></div>
-        <div class="performance-pct" style="font-size:12px;color:var(--text-secondary)">${label}</div>
+    const eventsHtml = slotEvents.map(e => {
+      const em = parseTimeToMinutes(e.start);
+      const off = (em - slotStart) / 60 * 40;
+      const dur = (parseTimeToMinutes(e.end) - em) / 60 * 40;
+      return `<div class="cal-event-block" style="margin-top:${off}px;min-height:${Math.max(dur,20)}px">
+        <div class="evt-title">${escHtml(e.title)}</div>
       </div>`;
     }).join('');
+    const isCurrentHour = isTodayView && h === now.getHours();
+    html += `<div class="cal-time-slot">
+      <div class="cal-time-label">${hourLabel}</div>
+      <div class="cal-time-content">
+        ${isCurrentHour ? `<div class="cal-now-line" style="top:${(currentMin - h*60)}px"></div>` : ''}
+        ${eventsHtml}
+      </div>
+    </div>`;
+  }
+  container.innerHTML = html;
+}
+
+/* ═══════════════════ APP: NOTES ═══════════════════ */
+function notesNavigate(delta) {
+  const d = new Date(notesDate);
+  d.setDate(d.getDate() + delta);
+  notesDate = d;
+  notesDateStr = dateToStr(d);
+  notesLoad();
+}
+function notesToday() {
+  notesDate = new Date();
+  notesDateStr = dateToStr(notesDate);
+  notesLoad();
+}
+function notesLoad() {
+  document.getElementById('notesDateLabel').textContent = formatDateNice(notesDate);
+  const key = LS_PREFIX + 'notes_' + notesDateStr;
+  let data;
+  try {
+    data = JSON.parse(localStorage.getItem(key)) || {text:'', todos:[]};
+  } catch(e) { data = {text:'', todos:[]}; }
+  document.getElementById('notesTextarea').value = data.text || '';
+  todoRender(data.todos || []);
+  window._notesData = data;
+}
+function notesAutoSave() {
+  const text = document.getElementById('notesTextarea').value;
+  const key = LS_PREFIX + 'notes_' + notesDateStr;
+  const data = window._notesData || {text:'', todos:[]};
+  data.text = text;
+  window._notesData = data;
+  localStorage.setItem(key, JSON.stringify(data));
+}
+function todoRender(todos) {
+  const list = document.getElementById('todoList');
+  if (!todos) todos = (window._notesData && window._notesData.todos) || [];
+  list.innerHTML = todos.map((t, i) => `
+    <li class="todo-item ${t.done ? 'done' : ''}">
+      <input type="checkbox" ${t.done ? 'checked' : ''} onchange="todoToggle(${i})">
+      <input class="todo-text" value="${escHtml(t.text)}" oninput="todoEdit(${i}, this.value)" placeholder="New task...">
+      <button class="todo-del" onclick="todoDel(${i})">✕</button>
+    </li>
+  `).join('');
+}
+function todoAdd() {
+  const data = window._notesData;
+  if (!data) return;
+  data.todos.push({text:'', done:false});
+  todoRender(data.todos);
+  notesSaveTodos();
+}
+function todoToggle(i) {
+  const data = window._notesData;
+  if (!data) return;
+  data.todos[i].done = !data.todos[i].done;
+  todoRender(data.todos);
+  notesSaveTodos();
+}
+function todoEdit(i, val) {
+  const data = window._notesData;
+  if (!data) return;
+  data.todos[i].text = val;
+  notesSaveTodos();
+}
+function todoDel(i) {
+  const data = window._notesData;
+  if (!data) return;
+  data.todos.splice(i, 1);
+  todoRender(data.todos);
+  notesSaveTodos();
+}
+function notesSaveTodos() {
+  const key = LS_PREFIX + 'notes_' + notesDateStr;
+  localStorage.setItem(key, JSON.stringify(window._notesData));
+}
+
+/* ═══════════════════ APP: POMODORO ═══════════════════ */
+let pomoState = {
+  mode: 'focus',
+  minutes: 25,
+  seconds: 0,
+  totalSeconds: 1500,
+  running: false,
+  interval: null,
+  session: 0,
+  carryOver: 0, // skipped focus minutes carried to next session
+};
+function pomoSyncDisplay() {
+  const m = pomoState.minutes;
+  const s = pomoState.seconds;
+  document.getElementById('pomoTimeDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const total = pomoState.totalSeconds;
+  const elapsed = total - (m * 60 + s);
+  const circ = 722.57;
+  const offset = circ - (elapsed / total) * circ;
+  document.getElementById('pomoProgress').style.strokeDashoffset = offset;
+  const modes = { focus:'Focus', shortBreak:'Short Break', longBreak:'Long Break' };
+  document.getElementById('pomoModeLabel').textContent = modes[pomoState.mode] || 'Focus';
+  document.getElementById('pomoSessionDisplay').textContent = `Session ${pomoState.session}`;
+}
+function pomoToggle() {
+  const btn = document.getElementById('pomoMainBtn');
+  if (pomoState.running) {
+    clearInterval(pomoState.interval);
+    pomoState.running = false;
+    btn.textContent = 'Resume';
+    btn.classList.remove('running');
   } else {
-    targetCard.style.display = 'none';
+    pomoState.running = true;
+    btn.textContent = 'Pause';
+    btn.classList.add('running');
+    pomoState.interval = setInterval(() => {
+      if (pomoState.seconds > 0) { pomoState.seconds--; }
+      else if (pomoState.minutes > 0) { pomoState.minutes--; pomoState.seconds = 59; }
+      else { pomoComplete(); return; }
+      pomoSyncDisplay();
+    }, 1000);
   }
-
-  // ── Session History Preview ──
-  const histPreview = $('sessionHistoryPreview');
-  const sessions = DATA.history || [];
-  if (sessions.length > 0) {
-    const recent = sessions.slice(-3).reverse();
-    histPreview.innerHTML = recent.map(s => {
-      const date = s.date || 'unknown';
-      const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
-      return `<span style="display:inline-block;margin-right:16px;font-size:13px">📅 ${date} · ${s.score}/${s.total} (${pct}%) · ${s.type}</span>`;
-    }).join('<br>') + `<div style="margin-top:8px;font-size:12px;color:var(--blue)">View all ${sessions.length} sessions →</div>`;
-  }
-  // Else: the HTML default text stays ("No sessions yet...")
-
-  // ── Performance ──
-  const container = $('performanceList');
-  const all = allDomains.map(dm => {
-    const p = DATA.performance[dm];
-    const c = p?.correct||0, t = p?.total||0;
-    return { domain: dm, correct: c, total: t, pct: t > 0 ? Math.round((c/t)*100) : null };
-  }).sort((a,b) => (a.pct ?? -1) - (b.pct ?? -1));
-
-  if (all.every(i => i.total === 0)) {
-    container.innerHTML = '<div class="performance-empty">No data yet. Complete a session to see your breakdown.</div>';
-    return;
-  }
-
-  container.innerHTML = all.map(i => {
-    const pct = i.pct !== null ? i.pct : 0;
-    const bar = i.total === 0 ? 'var(--border)' : pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
-    return `<div class="performance-item">
-      <div class="performance-domain">${i.domain}</div>
-      <div class="performance-bar-wrap"><div class="performance-bar" style="width:${i.total>0?pct:5}%;background:${bar}"></div></div>
-      <div class="performance-pct" style="color:${i.total>0?'var(--text)':'var(--text-muted)'}">${i.total>0?pct+'%':'—'}</div>
-    </div>`;
-  }).join('');
 }
-
-// ─── Missed Questions View ───
-function showMissedQuestions() {
-  showView('viewMissedQuestions');
-  renderMissedQuestions();
-}
-
-function renderMissedQuestions(filter) {
-  const missed = DATA.missedQuestions || {};
-  const ids = Object.keys(missed);
-  const container = $('missedQuestionsList');
-
-  // Build domain filter chips
-  const filterBar = $('missedFilter');
-  const domains = [...new Set(ids.map(id => missed[id].domain))].sort();
-  let filterHtml = '<div class="setup-option active" data-value="all" onclick="filterMissed(this)">All</div>';
-  for (const dm of domains) {
-    const count = ids.filter(id => missed[id].domain === dm).length;
-    filterHtml += `<div class="setup-option" data-value="${dm}" onclick="filterMissed(this)">${dm} (${count})</div>`;
+function pomoComplete() {
+  clearInterval(pomoState.interval);
+  pomoState.running = false;
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    [523, 659, 784].forEach((freq, i) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime + i * 0.2);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.3 + 0.1);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(audioCtx.currentTime + i * 0.2); osc.stop(audioCtx.currentTime + i * 0.3 + 0.1);
+    });
+  } catch(e) {}
+  const btn = document.getElementById('pomoMainBtn');
+  btn.textContent = 'Start'; btn.classList.remove('running');
+  if (pomoState.mode === 'focus') {
+    pomoState.session++;
+    if (pomoState.session % 4 === 0) pomoSetMode('longBreak');
+    else pomoSetMode('shortBreak');
+  } else {
+    // Carry over accumulated time to next focus
+    const extra = Math.min(pomoState.carryOver, 20);
+    pomoState.carryOver = 0;
+    pomoSetMode('focus', extra);
   }
-  filterBar.innerHTML = filterHtml;
-
-  if (ids.length === 0) {
-    container.innerHTML = '<div class="performance-empty">No missed questions yet. Keep practicing!</div>';
-    return;
-  }
-
-  let entries = ids.map(id => missed[id]);
-  if (filter && filter !== 'all') entries = entries.filter(m => m.domain === filter);
-  entries.sort((a, b) => b.date?.localeCompare?.(a.date) || 0);
-
-  container.innerHTML = entries.map(m => {
-    const letters = ['A','B','C','D'];
-    return `<div class="result-item">
-      <div class="result-question">
-        ❌ ${esc(m.domain)}
-        <span class="result-badge incorrect">Missed</span>
-        <span style="font-size:12px;color:var(--text-muted)">${m.date || ''}</span>
-      </div>
-      <div style="font-size:14px;font-weight:500;margin:8px 0">${esc(m.questionText)}</div>
-      ${m.paragraph && m.paragraph !== 'null' ? `<div class="passage" style="font-size:13px;margin-bottom:12px">${esc(m.paragraph)}</div>` : ''}
-      <div class="result-answer" style="margin-bottom:4px"><strong>You answered:</strong> ${m.userAnswer ? `${m.userAnswer}. ${esc(m.choices?.[m.userAnswer]||'')}` : 'No answer'}</div>
-      <div class="result-answer" style="color:var(--success);margin-bottom:8px"><strong>Correct answer:</strong> ${m.correctAnswer}. ${esc(m.choices?.[m.correctAnswer]||'')}</div>
-      <div class="result-explanation"><strong>Explanation:</strong> ${esc(m.explanation||'')}</div>
-    </div>`;
-  }).join('');
-
-  renderMath();
 }
-
-function filterMissed(el) {
-  const bar = el.parentElement;
-  bar.querySelectorAll('.setup-option').forEach(o => o.classList.remove('active'));
-  el.classList.add('active');
-  renderMissedQuestions(el.dataset.value);
+function pomoReset() {
+  clearInterval(pomoState.interval);
+  pomoState.running = false;
+  document.getElementById('pomoCompMsg').textContent = '';
+  pomoSetMode(pomoState.mode);
+  document.getElementById('pomoMainBtn').textContent = 'Start';
+  document.getElementById('pomoMainBtn').classList.remove('running');
 }
-
-// ─── Session History ───
-function showSessionHistory() {
-  showView('viewSessionHistory');
-  renderSessionHistory();
-}
-
-function renderSessionHistory() {
-  const container = $('sessionHistoryList');
-  const sessions = DATA.history || [];
-
-  if (sessions.length === 0) {
-    container.innerHTML = '<div class="performance-empty">No sessions yet. Complete a session to see it here.</div>';
-    return;
-  }
-
-  // Group by date, show newest first
-  const sorted = [...sessions].reverse();
-
-  container.innerHTML = sorted.map((s, i) => {
-    const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
-    const barColor = pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
-    const label = s.type === 'daily' ? '📅 Daily Session' : '⚡ Blitz';
-    const detail = s.answers || [];
-
-    // Mini per-question breakdown
-    let detailHtml = '';
-    if (detail.length > 0) {
-      detailHtml = '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-light)">';
-      detail.forEach((a, qi) => {
-        const icon = a.correct ? '✅' : '❌';
-        detailHtml += `<span style="display:inline-block;margin-right:8px;font-size:12px;color:var(--text-secondary)">${icon} Q${qi+1}</span>`;
-      });
-      detailHtml += '</div>';
+function pomoSetMode(mode, extraMin) {
+  pomoState.mode = mode;
+  let min;
+  if (mode === 'focus') {
+    min = parseInt(document.getElementById('pomoFocusMin').value) || 25;
+    min += extraMin || 0;
+    if (extraMin) {
+      document.getElementById('pomoCompMsg').textContent = `+${extraMin} min carried over from skipped session`;
+    } else {
+      document.getElementById('pomoCompMsg').textContent = '';
     }
-
-    return `<div class="result-item" style="cursor:pointer" onclick="toggleSessionDetail(${i})">
-      <div class="result-question">
-        ${label}
-        <span style="font-size:12px;color:var(--text-muted);font-weight:400">${s.date || 'unknown'}</span>
-        <span class="result-badge" style="background:${barColor};color:white">${s.score}/${s.total}</span>
-      </div>
-      <div class="performance-bar-wrap" style="flex:1;margin-top:6px">
-        <div class="performance-bar" style="width:${pct}%;background:${barColor}"></div>
-      </div>
-      <div id="sessionDetail_${i}" style="display:none">
-        ${detailHtml}
+  } else if (mode === 'shortBreak') {
+    min = parseInt(document.getElementById('pomoShortMin').value) || 5;
+    document.getElementById('pomoCompMsg').textContent = '';
+  } else {
+    min = parseInt(document.getElementById('pomoLongMin').value) || 15;
+    document.getElementById('pomoCompMsg').textContent = '';
+  }
+  pomoState.minutes = min;
+  pomoState.seconds = 0;
+  pomoState.totalSeconds = min * 60;
+  document.getElementById('pomoProgress').style.strokeDashoffset = 722.57;
+  pomoSyncDisplay();
+}
+function pomoApplySettings() {
+  if (!pomoState.running) pomoSetMode(pomoState.mode);
+}
+function pomoSkipToBreak() {
+  if (pomoState.mode !== 'focus') return;
+  clearInterval(pomoState.interval);
+  pomoState.running = false;
+  document.getElementById('pomoMainBtn').textContent = 'Start';
+  document.getElementById('pomoMainBtn').classList.remove('running');
+  // Carry over remaining time to next focus (capped at 20 min)
+  const remaining = pomoState.minutes * 60 + pomoState.seconds;
+  const extra = Math.min(Math.round(remaining / 60), 20);
+  pomoState.carryOver += extra;
+  pomoState.session++;
+  document.getElementById('pomoCompMsg').textContent = `Skipped — ${extra} min carried forward`;
+  if (pomoState.session % 4 === 0) pomoSetMode('longBreak');
+  else pomoSetMode('shortBreak');
+}
+/* Pomodoro Tasks */
+function pomoTaskLoad() {
+  const today = dateToStr(new Date());
+  const key = LS_PREFIX + 'pomo_tasks_' + today;
+  try { return JSON.parse(localStorage.getItem(key)) || []; } catch(e) { return []; }
+}
+function pomoTaskSave(tasks) {
+  const today = dateToStr(new Date());
+  const key = LS_PREFIX + 'pomo_tasks_' + today;
+  localStorage.setItem(key, JSON.stringify(tasks));
+}
+function pomoTaskRender() {
+  const tasks = pomoTaskLoad();
+  const list = document.getElementById('pomoTaskList');
+  list.innerHTML = tasks.map((t, i) => `
+    <div class="pomo-task-item ${t.done ? 'done' : ''}">
+      <input type="checkbox" ${t.done ? 'checked' : ''} onchange="pomoTaskToggle(${i})">
+      <span class="task-label">${escHtml(t.text)}</span>
+      <button class="task-del" onclick="pomoTaskDel(${i})">✕</button>
+    </div>
+  `).join('');
+}
+function pomoTaskAdd() {
+  const input = document.getElementById('pomoTaskInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const tasks = pomoTaskLoad();
+  tasks.push({text, done: false});
+  pomoTaskSave(tasks);
+  pomoTaskRender();
+  input.value = '';
+}
+function pomoTaskToggle(i) {
+  const tasks = pomoTaskLoad();
+  tasks[i].done = !tasks[i].done;
+  pomoTaskSave(tasks);
+  pomoTaskRender();
+}
+function pomoTaskDel(i) {
+  const tasks = pomoTaskLoad();
+  tasks.splice(i, 1);
+  pomoTaskSave(tasks);
+  pomoTaskRender();
+}
+/* Mini day view */
+function pomoRenderMiniDay() {
+  const now = new Date();
+  const label = now.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
+  document.getElementById('pomoMiniDayLabel').textContent = label;
+  const body = document.getElementById('pomoMiniDayBody');
+  const events = getEventsForDate(now);
+  const currentMin = now.getHours() * 60 + now.getMinutes();
+  let html = '';
+  for (let h = 7; h <= 23; h++) {
+    const slotStart = h * 60;
+    const slotEnd = slotStart + 60;
+    const hourLabel = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h-12} PM`;
+    const slotEvents = events.filter(e => {
+      if (isAllDay(e)) return false;
+      const em = parseTimeToMinutes(e.start);
+      return em >= slotStart && em < slotEnd;
+    });
+    const eventsHtml = slotEvents.map(e => {
+      return `<div class="cal-event-block" style="font-size:9px;padding:1px 6px"><div class="evt-title">${escHtml(e.title)}</div></div>`;
+    }).join('');
+    const isCurrentHour = h === now.getHours();
+    html += `<div class="cal-time-slot" style="min-height:24px">
+      <div class="cal-time-label">${hourLabel}</div>
+      <div class="cal-time-content">
+        ${isCurrentHour ? `<div class="cal-now-line" style="top:${Math.min(currentMin - h*60, 55)}px"></div>` : ''}
+        ${eventsHtml}
       </div>
     </div>`;
-  }).join('');
+  }
+  body.innerHTML = html;
+}
+/* Sidebar collapse */
+function pomoToggleSidebar() {
+  const body = document.getElementById('pomoMiniDayBody');
+  const btn = document.querySelector('.pomo-day-mini-header button');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    btn.textContent = '−';
+  } else {
+    body.style.display = 'none';
+    btn.textContent = '+';
+  }
+}
+function pomoInit() {
+  pomoSetMode('focus');
+  pomoTaskRender();
+  pomoRenderMiniDay();
+  setInterval(pomoRenderMiniDay, 60000);
 }
 
-function toggleSessionDetail(idx) {
-  const el = $(`sessionDetail_${idx}`);
-  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-// ─── Math Rendering ───
-function renderMath() {
-  if (window.renderMathInElement) {
-    try {
-      renderMathInElement(document.getElementById('questionContent') || document.body, {
-        delimiters: [
-          {left:'$$',right:'$$',display:true},
-          {left:'\\\\[',right:'\\\\]',display:true},
-          {left:'$',right:'$',display:false},
-          {left:'\\(',right:'\\)',display:false},
-        ],
-        throwOnError: false,
-      });
-    } catch (_) {}
+/* ═══════════════════ FULLSCREEN ═══════════════════ */
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen().catch(() => {});
   }
 }
 
-// ─── Boot ───
-document.addEventListener('DOMContentLoaded', () => {
-  renderDashboard();
-  // Pre-fetch all questions (API returns everything per section)
-  fetchAll('english').catch(()=>{});
-  fetchAll('math').catch(()=>{});
-  // Refresh on return
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && app.view === 'dashboard') { DATA = loadData(); renderDashboard(); }
-  });
-});
+/* ═══════════════════ INIT ═══════════════════ */
+function init() {
+  updateGreeting();
+  updateClock();
+  setInterval(updateClock, 1000);
+  setInterval(updateGreeting, 300000);
+  docLoadAll();
+  pomoInit();
+}
+
+/* ═══════════════════ EXPOSE TO GLOBAL ═══════════════════ */
+window.goHome = goHome;
+window.openApp = openApp;
+window.openSAT = openSAT;
+window.filterApps = filterApps;
+window.toggleFullscreen = toggleFullscreen;
+// Documents
+window.docCreate = docCreate;
+window.docOpen = docOpen;
+window.docBackToList = docBackToList;
+window.docDelete = docDelete;
+window.docAutoSave = docAutoSave;
+window.docExec = docExec;
+window.docHeading = docHeading;
+// Calendar
+window.calSetView = calSetView;
+window.calNavigate = calNavigate;
+window.calToday = calToday;
+// Notes
+window.notesNavigate = notesNavigate;
+window.notesToday = notesToday;
+window.notesAutoSave = notesAutoSave;
+window.todoAdd = todoAdd;
+window.todoToggle = todoToggle;
+window.todoEdit = todoEdit;
+window.todoDel = todoDel;
+// Pomodoro
+window.pomoToggle = pomoToggle;
+window.pomoReset = pomoReset;
+window.pomoApplySettings = pomoApplySettings;
+window.pomoSetMode = pomoSetMode;
+window.pomoSkipToBreak = pomoSkipToBreak;
+window.pomoTaskAdd = pomoTaskAdd;
+window.pomoTaskToggle = pomoTaskToggle;
+window.pomoTaskDel = pomoTaskDel;
+window.pomoToggleSidebar = pomoToggleSidebar;
+
+init();
+})();
 </script>
 </body>
 </html>

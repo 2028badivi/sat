@@ -13,6 +13,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// SAT Prep app — serve sat.html with back button
+app.get('/sat', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'sat.html'));
+});
+
 // Testing UI — College Board style test window
 app.get('/test', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'test.html'));
@@ -62,5 +67,5 @@ app.get('/api/questions', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`SAT Prep Suite running at http://localhost:${PORT}`);
+  console.log(`LockedIn running at http://localhost:${PORT}`);
 });

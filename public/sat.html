@@ -1,0 +1,2705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LockedIn — SAT Prep</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root {
+  --navy: #1b3a5c;
+  --blue: #2563eb;
+  --blue-hover: #1d4ed8;
+  --blue-light: #dbeafe;
+  --bg: #f8f9fa;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --success: #059669;
+  --success-bg: #d1fae5;
+  --error: #dc2626;
+  --error-bg: #fee2e2;
+  --warning: #d97706;
+  --warning-bg: #fef3c7;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Header ─── */
+.header {
+  background: var(--navy);
+  color: white;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.header-logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-logo svg { width: 22px; height: 22px; }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+}
+#fullscreenBtn:hover { color: white !important; }
+
+/* ─── Container ─── */
+.container { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* ─── Views ─── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card-header {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Dashboard ─── */
+.dashboard-greeting {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.dashboard-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.study-plan-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.study-plan-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.study-plan-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.action-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+}
+.action-card:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.action-card:active { transform: translateY(0); }
+.action-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+.action-icon.daily { background: var(--blue-light); }
+.action-icon.blitz { background: #fef3c7; }
+.action-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.action-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.performance-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.performance-item:last-child { border-bottom: none; }
+.performance-domain { flex: 1; font-size: 13px; font-weight: 500; }
+.performance-bar-wrap {
+  flex: 0 0 140px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.performance-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.performance-pct {
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+.performance-empty {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ─── Question Screen ─── */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 56px;
+  z-index: 50;
+}
+.question-header .question-progress { flex: 1; text-align: center; }
+.question-header .btn-ghost { flex-shrink: 0; }
+.question-progress { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+.question-domain-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: 2px 10px;
+  border-radius: 100px;
+}
+.question-timer {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+.question-timer.warning { color: var(--warning); }
+.question-timer.danger { color: var(--error); }
+.progress-strip {
+  height: 3px;
+  background: var(--border);
+  position: sticky;
+  top: 100px;
+  z-index: 49;
+}
+.progress-strip-fill {
+  height: 100%;
+  background: var(--blue);
+  transition: width 0.3s ease;
+}
+
+.question-content { padding: 28px 24px; max-width: 720px; margin: 0 auto; }
+
+.passage {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #334155;
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  background: #fafbfc;
+  border-left: 3px solid var(--border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.passage p { margin-bottom: 14px; }
+.passage p:last-child { margin-bottom: 0; }
+
+.question-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.choices { display: flex; flex-direction: column; gap: 10px; }
+
+.choice {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  background: var(--card);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.choice:hover { border-color: var(--blue); background: #f8faff; }
+.choice.selected { border-color: var(--blue); background: var(--blue-light); }
+.choice.correct { border-color: var(--success); background: var(--success-bg); }
+.choice.incorrect { border-color: var(--error); background: var(--error-bg); }
+
+.choice-letter {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  transition: all 0.12s ease;
+}
+.choice.selected .choice-letter { background: var(--blue); color: white; border-color: var(--blue); }
+.choice.correct .choice-letter { background: var(--success); color: white; border-color: var(--success); }
+.choice.incorrect .choice-letter { background: var(--error); color: white; border-color: var(--error); }
+.choice-text { flex: 1; padding-top: 2px; }
+
+.question-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.12s ease;
+  text-decoration: none;
+  line-height: 1;
+}
+.btn-primary { background: var(--blue); color: white; }
+.btn-primary:hover { background: var(--blue-hover); }
+.btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
+.btn-outline { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ─── Results ─── */
+.results-summary { text-align: center; padding: 32px 24px; }
+.results-score { font-size: 48px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+.results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
+.results-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+.results-breakdown { margin-top: 20px; }
+.result-item {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.result-item:last-child { border-bottom: none; }
+.result-question {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.result-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+.result-badge.correct { background: var(--success-bg); color: var(--success); }
+.result-badge.incorrect { background: var(--error-bg); color: var(--error); }
+.result-domain { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+.result-answer { font-size: 13px; color: var(--text-secondary); }
+.result-answer strong { color: var(--text); }
+.result-explanation {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  line-height: 1.6;
+}
+
+/* ─── Blitz Setup ─── */
+.setup-group { margin-bottom: 20px; }
+.setup-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.setup-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.setup-option {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.12s ease;
+  color: var(--text-secondary);
+  user-select: none;
+}
+.setup-option:hover { border-color: var(--blue); color: var(--blue); }
+.setup-option.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.setup-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; }
+.setup-checkbox {
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.12s ease;
+  user-select: none;
+  color: var(--text-secondary);
+}
+.setup-checkbox:hover { border-color: var(--blue); }
+.setup-checkbox.checked { background: var(--blue); color: white; border-color: var(--blue); }
+.setup-actions { margin-top: 24px; display: flex; gap: 12px; }
+
+/* ─── Timer Overlay ─── */
+.timer-overlay {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 200;
+  font-variant-numeric: tabular-nums;
+}
+.timer-overlay .timer-ring {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.timer-overlay .timer-ring.warning { border-color: var(--warning); }
+.timer-overlay .timer-ring.danger { border-color: var(--error); }
+
+/* ─── Explanation Area ─── */
+.explanation-area {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.explanation-content {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.explanation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--border-light);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.explanation-close {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+.explanation-close:hover { color: var(--text); }
+.explanation-body {
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ─── Loading — ─── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+}
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--blue);
+  animation: spin 0.7s linear infinite;
+  margin-bottom: 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: var(--text-secondary); }
+
+.error-state { text-align: center; padding: 40px 24px; }
+.error-icon { font-size: 36px; margin-bottom: 12px; }
+.error-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .container { padding: 20px 16px; }
+  .action-grid { grid-template-columns: 1fr; }
+  .header { padding: 0 16px; }
+  .question-content { padding: 20px 16px; }
+  .question-header { padding: 10px 16px; flex-wrap: wrap; gap: 6px; }
+  .passage { padding: 16px 18px; font-size: 14px; }
+  .choice { padding: 12px 14px; font-size: 14px; }
+  .results-score { font-size: 40px; }
+  .timer-overlay { bottom: 12px; right: 12px; padding: 10px 14px; }
+}
+.katex { font-size: 1.05em; }
+
+/* ─── College Board Style Blitz Testing UI ─── */
+#viewQuestionBlitz {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1.5;
+}
+#viewQuestionBlitz.active {
+  display: flex;
+}
+.cb-top-bar {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 100;
+}
+.cb-top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 160px;
+}
+.cb-directions-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.cb-directions-btn:hover { background: #f3f4f6; }
+.cb-directions-btn svg { width: 14px; height: 14px; }
+
+.cb-top-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.cb-timer-display {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  color: #111827;
+  transition: color 0.3s;
+}
+.cb-timer-display.warning { color: #d97706; }
+.cb-timer-display.danger { color: #dc2626; }
+
+.cb-hide-btn {
+  background: #fff;
+  border: 1.5px solid #9ca3af;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  padding: 3px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.cb-hide-btn:hover { border-color: #4b5563; background: #f9fafb; }
+
+.cb-top-bar-right {
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+.cb-annotate-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.cb-annotate-btn:hover { background: #f3f4f6; }
+.cb-annotate-btn svg { width: 16px; height: 16px; }
+
+.cb-dashed-sep {
+  height: 10px;
+  flex-shrink: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1e3a8a 0px, #1e3a8a 18px,
+    transparent 18px, transparent 22px,
+    #3b82f6 22px, #3b82f6 34px,
+    transparent 34px, transparent 38px,
+    #facc15 38px, #facc15 50px,
+    transparent 50px, transparent 54px,
+    #ef4444 54px, #ef4444 66px,
+    transparent 66px, transparent 70px
+  );
+  background-size: 70px 3px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.cb-main-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+.cb-passage-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 36px 32px 40px;
+  border-right: 1.5px solid #e5e7eb;
+}
+.cb-passage-text {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: 1.85;
+  color: #1f2937;
+  max-width: 540px;
+}
+.cb-passage-text p { margin-bottom: 16px; }
+.cb-passage-text p:last-child { margin-bottom: 0; }
+
+.cb-divider {
+  width: 5px;
+  background: #e5e7eb;
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.cb-divider:hover, .cb-divider.active { background: #3b82f6; }
+
+.cb-question-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cb-question-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+.cb-question-num-badge {
+  width: 28px;
+  height: 28px;
+  background: #111827;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cb-mark-review-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.15s;
+}
+.cb-mark-review-btn:hover { color: #1d4ed8; }
+.cb-mark-review-btn.marked { color: #1d4ed8; }
+.cb-mark-review-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.cb-question-text {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.65;
+}
+.cb-choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cb-choice-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  overflow: hidden;
+  background: #fff;
+}
+.cb-choice-item:hover { border-color: #6b7280; }
+.cb-choice-item.selected { border-color: #2563eb; background: #eff6ff; }
+.cb-choice-item.eliminated { opacity: 0.45; }
+.cb-choice-item.eliminated .cb-choice-text-inner { text-decoration: line-through; }
+.cb-choice-item.correct { border-color: #059669; background: #ecfdf5; }
+.cb-choice-item.incorrect { border-color: #dc2626; background: #fef2f2; }
+.cb-choice-item.correct .cb-choice-letter-area { background: #059669; color: #fff; border-color: #059669; }
+.cb-choice-item.incorrect .cb-choice-letter-area { background: #dc2626; color: #fff; border-color: #dc2626; }
+
+.cb-choice-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+.cb-choice-letter-area {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.15s;
+}
+.cb-choice-item.selected .cb-choice-letter-area {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+.cb-choice-text-inner {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.5;
+}
+.cb-choice-eliminate-btn {
+  flex-shrink: 0;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #9ca3af;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  transition: color 0.15s, background 0.15s;
+}
+.cb-choice-eliminate-btn:hover { color: #374151; background: #f3f4f6; }
+.cb-choice-item.eliminated .cb-choice-eliminate-btn { color: #ef4444; }
+
+.cb-bottom-bar {
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+}
+.cb-bottom-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cb-question-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1f2937;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.cb-question-nav-btn:hover { background: #111827; }
+.cb-question-nav-btn svg { width: 14px; height: 14px; }
+
+.cb-nav-btn {
+  padding: 9px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.cb-nav-btn.back {
+  background: #3b82f6;
+  color: #fff;
+}
+.cb-nav-btn.back:hover { background: #2563eb; }
+.cb-nav-btn.next {
+  background: #3b82f6;
+  color: #fff;
+}
+.cb-nav-btn.next:hover { background: #2563eb; }
+.cb-nav-btn:disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; }
+
+.cb-directions-modal {
+  position: fixed;
+  top: 70px;
+  left: 28px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 20px 24px;
+  width: 320px;
+  z-index: 300;
+  display: none;
+}
+.cb-directions-modal.open { display: block; }
+.cb-directions-modal h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.cb-directions-modal p { font-size: 13px; color: #4b5563; line-height: 1.6; }
+
+.cb-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 70px;
+}
+.cb-modal-backdrop.open { display: flex; }
+.cb-nav-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  padding: 24px;
+  width: 420px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.cb-nav-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cb-modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #6b7280;
+  line-height: 1;
+}
+.cb-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+.cb-nav-grid-btn {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cb-nav-grid-btn:hover { border-color: #3b82f6; color: #3b82f6; }
+.cb-nav-grid-btn.current { border-color: #1f2937; background: #1f2937; color: #fff; }
+.cb-nav-grid-btn.answered { border-color: #2563eb; color: #2563eb; }
+.cb-nav-grid-btn.marked::after {
+  content: '';
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 7px; height: 7px;
+  background: #f59e0b;
+  border-radius: 50%;
+}
+.cb-nav-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-wrap: wrap;
+}
+.cb-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cb-legend-dot {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1.5px solid;
+  flex-shrink: 0;
+}
+.cb-annotation-highlight {
+  background: #fef08a;
+  border-radius: 2px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header class="header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="/" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:20px;display:flex;align-items:center;padding:4px;border-radius:6px;transition:background 0.15s" title="Back to LockedIn home" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">←</a>
+    <div class="header-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+      SAT Prep
+    </div>
+  </div>
+  <div class="header-right">
+    <span id="headerStreak">—</span>
+    <button id="fullscreenBtn" onclick="toggleFullscreen()" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:16px;padding:4px;display:flex;align-items:center" title="Full screen">⛶</button>
+  </div>
+</header>
+
+<!-- ════════════════════ CONTAINER ════════════════════ -->
+<div class="container">
+
+  <!-- VIEW: Dashboard -->
+  <div id="viewDashboard" class="view active">
+    <div class="dashboard-greeting" id="greeting">Good morning</div>
+    <div class="dashboard-sub" id="greetingSub">Your SAT is on August 22nd. Let's get started.</div>
+
+    <div class="study-plan-bar">
+      <span id="daysRemaining">40 days to go</span>
+      <div class="study-plan-track">
+        <div class="study-plan-fill" id="planFill" style="width:0%"></div>
+      </div>
+      <span id="sessionsDone">0 sessions</span>
+    </div>
+
+    <div class="action-grid">
+      <div class="action-card" onclick="startDailySession()">
+        <div class="action-icon daily">📅</div>
+        <div class="action-title">Daily Session</div>
+        <div class="action-desc">10 questions — 9 Reading &amp; Writing, 1 Math. Adapts to your weak areas.</div>
+      </div>
+      <div class="action-card" onclick="showBlitzSetup()">
+        <div class="action-icon blitz">⚡</div>
+        <div class="action-title">Blitz Session</div>
+        <div class="action-desc">Custom intensive run. Pick subject, pace, topics, and length.</div>
+      </div>
+    </div>
+
+    <div class="card" id="scoreProjectionCard">
+      <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+        <span>🏆 Projected SAT Score</span>
+        <span id="scoreProjectionValue" style="font-size:24px;font-weight:800;color:var(--navy)">—</span>
+      </div>
+      <div id="scoreProjectionBreakdown" style="font-size:13px;color:var(--text-secondary)">Complete some sessions to see your projected score.</div>
+    </div>
+
+    <div class="card" id="targetPrepCard" style="display:none">
+      <div class="section-title">🎯 Target Prep — Focus Areas</div>
+      <div id="targetPrepList"></div>
+    </div>
+
+    <div class="card" id="missedCountCard" style="cursor:pointer" onclick="showMissedQuestions()">
+      <div class="section-title">📕 Review Missed Questions</div>
+      <div id="missedCountText" style="font-size:14px;color:var(--text-secondary)"></div>
+    </div>
+
+    <div class="card" id="sessionHistoryCard" style="cursor:pointer" onclick="showSessionHistory()">
+      <div class="section-title">📋 Past Sessions</div>
+      <div id="sessionHistoryPreview" style="font-size:14px;color:var(--text-secondary)">No sessions yet. Complete a daily or blitz session to track progress.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">📊 Performance by Domain</div>
+      <div id="performanceList"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: Missed Questions -->
+  <div id="viewMissedQuestions" class="view">
+    <div class="card">
+      <div class="card-header" style="justify-content:space-between">
+        <span>📕 Missed Questions</span>
+        <button class="btn btn-ghost" onclick="goToDashboard()" style="font-size:13px">← Back</button>
+      </div>
+      <div class="setup-group">
+        <div class="setup-label">Filter by domain</div>
+        <div class="setup-options" id="missedFilter">
+          <div class="setup-option active" data-value="all" onclick="filterMissed(this)">All</div>
+        </div>
+      </div>
+      <div id="missedQuestionsList"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: Session History -->
+  <div id="viewSessionHistory" class="view">
+    <div class="card">
+      <div class="card-header" style="justify-content:space-between">
+        <span>📋 Session History</span>
+        <button class="btn btn-ghost" onclick="goToDashboard()" style="font-size:13px">← Back</button>
+      </div>
+      <div id="sessionHistoryList"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: Question -->
+  <div id="viewQuestion" class="view">
+    <div class="question-header">
+      <button class="btn btn-ghost" onclick="exitSession()" style="font-size:13px;padding:4px 8px;color:rgba(255,255,255,0.7);background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:4px">← Exit</button>
+      <span class="question-progress" id="qProgress">Question 1 of 10</span>
+      <span class="question-domain-badge" id="qDomain">Domain</span>
+      <span class="question-timer" id="qTimer" style="display:none">—</span>
+    </div>
+    <div class="progress-strip">
+      <div class="progress-strip-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div class="question-content" id="questionContent">
+      <div class="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading questions…</div>
+      </div>
+    </div>
+
+    <div class="timer-overlay" id="timerOverlay" style="display:none">
+      <div class="timer-ring" id="timerRing">⏱</div>
+      <span id="timerDisplay">—</span>
+    </div>
+  </div>
+
+  <!-- VIEW: Blitz Question (College Board High-Fidelity UI) -->
+  <div id="viewQuestionBlitz" class="view">
+    <!-- Top Bar -->
+    <div class="cb-top-bar">
+      <div class="cb-top-bar-left">
+        <button class="cb-directions-btn" onclick="toggleCbDirections()">
+          Directions
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cb-top-bar-center">
+        <div class="cb-timer-display" id="cbTimerDisplay">—:—</div>
+        <button class="cb-hide-btn" id="cbHideTimerBtn" onclick="toggleCbTimer()">Hide</button>
+      </div>
+
+      <div class="cb-top-bar-right">
+        <button class="cb-annotate-btn" id="cbAnnotateBtn" onclick="toggleCbAnnotateMode()" title="Highlight text in the passage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Annotate
+        </button>
+        <button class="btn btn-ghost" onclick="exitSession()" style="font-size: 13px; color: #374151;">Exit</button>
+      </div>
+    </div>
+
+    <!-- Directions dropdown modal -->
+    <div class="cb-directions-modal" id="cbDirectionsModal">
+      <h3>Reading and Writing Directions</h3>
+      <p>The questions in this section address a number of important reading and writing skills. Each question includes one or more passages, which may include a table or graph. Read each passage and question carefully, and then choose the best answer to the question based on the passage(s).</p>
+      <p style="margin-top:10px">All questions in this section are multiple-choice with four answer choices. Each question has a single best answer.</p>
+    </div>
+
+    <!-- Color Dash Sep -->
+    <div class="cb-dashed-sep"></div>
+
+    <!-- Main Resizable Split panels -->
+    <div class="cb-main-content" id="cbMainContent">
+      <!-- Left Panel: Passage -->
+      <div class="cb-passage-panel" id="cbPassagePanel">
+        <div class="cb-passage-text" id="cbPassageText">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+
+      <!-- Drag Divider -->
+      <div class="cb-divider" id="cbDivider"></div>
+
+      <!-- Right Panel: Question & choices -->
+      <div class="cb-question-panel" id="cbQuestionPanel">
+        <div class="cb-question-header-row">
+          <div class="cb-question-num-badge" id="cbQuestionNumBadge">1</div>
+          <button class="cb-mark-review-btn" id="cbMarkReviewBtn" onclick="toggleCbMarkForReview()">
+            <svg id="cbBookmarkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+            </svg>
+            Mark for Review
+          </button>
+        </div>
+
+        <div class="cb-question-text" id="cbQuestionText">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <div class="cb-choices-list" id="cbChoicesList">
+          <!-- Choices loaded dynamically -->
+        </div>
+
+        <!-- Explanation Area -->
+        <div class="explanation-area" id="cbExplanationArea" style="display:none">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom sep -->
+    <div class="cb-dashed-sep"></div>
+
+    <!-- Bottom Nav bar -->
+    <div class="cb-bottom-bar">
+      <div></div>
+
+      <div class="cb-bottom-center">
+        <button class="cb-question-nav-btn" onclick="openCbNavModal()">
+          <span id="cbQuestionNavLabel">Question 1 of 10</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cb-bottom-right">
+        <button class="cb-nav-btn back" id="cbBackBtn" onclick="cbGoBack()">Back</button>
+        <button class="cb-nav-btn next" id="cbNextBtn" onclick="cbGoNext()">Next</button>
+      </div>
+    </div>
+
+    <!-- Question Navigator Modal -->
+    <div class="cb-modal-backdrop" id="cbNavModalBackdrop" onclick="handleCbBackdropClick(event)">
+      <div class="cb-nav-modal">
+        <div class="cb-nav-modal-title">
+          <span>Question Navigator</span>
+          <button class="cb-modal-close-btn" onclick="closeCbNavModal()">×</button>
+        </div>
+        <div class="cb-nav-grid" id="cbNavGrid"></div>
+        <div class="cb-nav-legend">
+          <div class="cb-legend-item">
+            <div class="cb-legend-dot" style="border-color:#d1d5db;background:#fff"></div>
+            Unanswered
+          </div>
+          <div class="cb-legend-item">
+            <div class="cb-legend-dot" style="border-color:#2563eb;background:#fff"></div>
+            Answered
+          </div>
+          <div class="cb-legend-item">
+            <div class="cb-legend-dot" style="border-color:#1f2937;background:#1f2937"></div>
+            Current
+          </div>
+          <div class="cb-legend-item" style="align-items:flex-start">
+            <div style="display:flex;align-items:center;gap:4px">
+              <div class="cb-legend-dot" style="border-color:#d1d5db;background:#fff;position:relative">
+                <div style="position:absolute;top:-3px;right:-3px;width:7px;height:7px;background:#f59e0b;border-radius:50%"></div>
+              </div>
+              Marked
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Results -->
+  <div id="viewResults" class="view">
+    <div class="card">
+      <div class="results-summary">
+        <div class="results-score" id="resultScore">0/0</div>
+        <div class="results-label">Score</div>
+        <div class="results-sub" id="resultType">Daily Session</div>
+        <button class="btn btn-primary" onclick="goToDashboard()">Back to Dashboard</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">Review Your Answers</div>
+      <div id="resultsBreakdown"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: Blitz Setup -->
+  <div id="viewBlitzSetup" class="view">
+    <div class="card">
+      <div class="card-header">⚡ Blitz Session</div>
+
+      <div class="setup-group">
+        <div class="setup-label">Subject</div>
+        <div class="setup-options" id="blitzSubject">
+          <div class="setup-option active" data-value="english" onclick="selectBlitzOption('subject', this)">Reading &amp; Writing</div>
+          <div class="setup-option" data-value="math" onclick="selectBlitzOption('subject', this)">Math</div>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <div class="setup-label">Pacing</div>
+        <div class="setup-options" id="blitzPacing">
+          <div class="setup-option active" data-value="normal" onclick="selectBlitzOption('pacing', this)">Normal</div>
+          <div class="setup-option" data-value="fast" onclick="selectBlitzOption('pacing', this)">Fast (45s/q)</div>
+          <div class="setup-option" data-value="blitz" onclick="selectBlitzOption('pacing', this)">Blitz (30s/q)</div>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <div class="setup-label">Questions</div>
+        <div class="setup-options" id="blitzCount">
+          <div class="setup-option active" data-value="10" onclick="selectBlitzOption('count', this)">10</div>
+          <div class="setup-option" data-value="20" onclick="selectBlitzOption('count', this)">20</div>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <div class="setup-label">Topics</div>
+        <div class="setup-checkboxes" id="blitzTopics"></div>
+      </div>
+
+      <div class="setup-actions">
+        <button class="btn btn-primary" onclick="launchBlitz()">Start Blitz</button>
+        <button class="btn btn-outline" onclick="goToDashboard()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   SAT Prep Suite
+   ═══════════════════════════════════════════════════════ */
+
+// ─── Constants ───
+const API_BASE = '/api/questions';
+const STUDY_START = new Date('2026-07-13');
+const STUDY_END   = new Date('2026-08-22');
+const TOTAL_DAYS  = Math.round((STUDY_END - STUDY_START) / (1000*60*60*24));
+
+const ENGLISH_DOMAINS = ['Craft and Structure','Expression of Ideas','Information and Ideas','Standard English Conventions'];
+const MATH_DOMAINS    = ['Algebra','Advanced Math','Problem-Solving and Data Analysis','Geometry and Trigonometry'];
+
+const PACING_LIMITS = { normal: 0, fast: 45, blitz: 30 };
+
+// ─── State ───
+let app = {
+  view: 'dashboard',
+  questions: [],
+  qIndex: 0,
+  answers: [],
+  sessionType: null,
+  sessionConfig: null,
+  timerInterval: null,
+  timerRemaining: Infinity,
+  isTimed: false,
+  awaitingNext: false,
+  blitzConfig: { subject: 'english', pacing: 'normal', count: 10, topics: [] },
+};
+
+// ─── Data ───
+function defaultData() {
+  return { performance: {}, history: [], missedQuestions: {}, streak: 0, lastDate: null, totalQ: 0, totalSessions: 0 };
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem('sat-prep-data');
+    if (raw) {
+      const d = JSON.parse(raw);
+      for (const dm of [...ENGLISH_DOMAINS, ...MATH_DOMAINS]) {
+        if (!d.performance[dm]) d.performance[dm] = { correct: 0, total: 0 };
+      }
+      if (!d.missedQuestions) d.missedQuestions = {};
+      return d;
+    }
+  } catch (_) {}
+  return defaultData();
+}
+function saveData(d) {
+  try { localStorage.setItem('sat-prep-data', JSON.stringify(d)); } catch (_) {}
+}
+let DATA = loadData();
+
+// ─── Helpers ───
+function $(id) { return document.getElementById(id); }
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  return arr;
+}
+function esc(t) {
+  if (!t) return '';
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+// ─── Navigation ───
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  $(id).classList.add('active');
+  app.view = id;
+}
+
+function goToDashboard() {
+  stopTimer();
+  showView('viewDashboard');
+  renderDashboard();
+}
+
+// ─── API ───
+// Note: the remote API ignores `limit` and returns ALL questions for a section.
+let qCache = { english: [], math: [] };
+let loading = { english: false, math: false };
+
+async function fetchAll(section) {
+  if (qCache[section].length > 0) return;
+  if (loading[section]) {
+    while (loading[section]) await new Promise(r => setTimeout(r, 100));
+    return;
+  }
+  loading[section] = true;
+  try {
+    const r = await fetch(`${API_BASE}?section=${section}&limit=999`);
+    if (!r.ok) throw new Error(`API ${r.status}`);
+    const qs = await r.json();
+    if (Array.isArray(qs)) qCache[section] = qs;
+  } finally {
+    loading[section] = false;
+  }
+}
+
+async function ensureLoaded(section) {
+  if (qCache[section].length < 10) await fetchAll(section);
+}
+
+function takeQuestions(section, count, domains) {
+  let pool = qCache[section];
+  if (domains && domains.length) pool = pool.filter(q => domains.includes(q.domain));
+  if (!pool.length) return [];
+  shuffle(pool);
+  const ids = new Set(pool.slice(0, count).map(q => q.id));
+  qCache[section] = qCache[section].filter(q => !ids.has(q.id));
+  return pool.slice(0, count);
+}
+
+async function getQuestions(section, count, domains) {
+  await ensureLoaded(section);
+  return takeQuestions(section, count, domains);
+}
+
+// ─── Adaptive Selection ───
+function domainWeights(section) {
+  const domains = section === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
+  const w = {};
+  for (const dm of domains) {
+    const p = DATA.performance[dm];
+    // Base weight from accuracy
+    let bw = 0.25;
+    if (p && p.total > 0) bw = Math.max(0.15, 1 - p.correct / p.total);
+    // Boost from missed questions in that domain
+    const missed = Object.values(DATA.missedQuestions || {}).filter(m => m.domain === dm).length;
+    const missBoost = Math.min(0.3, missed * 0.05);
+    w[dm] = bw + missBoost;
+  }
+  const total = Object.values(w).reduce((a,b)=>a+b,0);
+  for (const dm of domains) w[dm] /= total;
+  return w;
+}
+
+function pickDomains(section, count) {
+  const w = domainWeights(section);
+  const domains = section === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    const r = Math.random();
+    let cum = 0, chosen = domains[0];
+    for (const dm of domains) { cum += w[dm] || 0; if (r <= cum) { chosen = dm; break; } }
+    result.push(chosen);
+  }
+  return result;
+}
+
+// ─── Daily Session ───
+async function startDailySession() {
+  // Confirm if already done today
+  if (DATA.lastDate === todayStr() && DATA.history.some(h => h.date === todayStr() && h.type === 'daily')) {
+    if (!confirm('You already completed your daily session today. Start another one?')) return;
+  }
+
+  showView('viewQuestionBlitz');
+  $('cbPassageText').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Preparing your daily session…</div></div>`;
+  $('cbQuestionText').innerHTML = '';
+  $('cbChoicesList').innerHTML = '';
+
+  try {
+    const engDomains = pickDomains('english', 9);
+    const [eng, mth] = await Promise.all([
+      getQuestions('english', 9, [...new Set(engDomains)]),
+      getQuestions('math', 1),
+    ]);
+
+    // Interleave: put math question around position 7 (last third)
+    const all = [];
+    eng.forEach((q, i) => {
+      if (i === 7 && mth.length) all.push(mth.shift());
+      all.push(q);
+    });
+    if (mth.length) all.splice(Math.min(7, all.length), 0, ...mth);
+
+    app.questions = all.slice(0, 10);
+    app.qIndex = 0;
+    app.answers = [];
+    app.sessionType = 'daily';
+    app.sessionConfig = { pacing: 'normal' };
+
+    // Initialize College Board UI States
+    cbState = {
+      eliminated: app.questions.map(() => new Set()),
+      marked: app.questions.map(() => false),
+      timerHidden: false,
+      annotateMode: false,
+      directionsOpen: false,
+      navModalOpen: false
+    };
+
+    renderQuestionBlitz();
+    startCbTimer();
+    initCbResize();
+  } catch (e) {
+    console.error(e);
+    $('cbPassageText').innerHTML = `<div class="error-state">Could not load questions. Check your connection and try again. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
+  }
+}
+
+// ─── Blitz Setup ───
+function showBlitzSetup() {
+  refreshBlitzTopics();
+  showView('viewBlitzSetup');
+}
+
+function refreshBlitzTopics() {
+  const container = $('blitzTopics');
+  const subject = app.blitzConfig.subject;
+  const domains = subject === 'english' ? ENGLISH_DOMAINS : MATH_DOMAINS;
+  const w = domainWeights(subject);
+  const sorted = domains.slice().sort((a,b) => (w[b]||0)-(w[a]||0));
+
+  // If no topics selected yet, default to weakest
+  if (!app.blitzConfig.topics.length) {
+    const avg = 1 / domains.length;
+    app.blitzConfig.topics = sorted.filter(d => w[d] > avg);
+    if (!app.blitzConfig.topics.length) app.blitzConfig.topics = [sorted[0]];
+  }
+
+  container.innerHTML = sorted.map(dm => {
+    const checked = app.blitzConfig.topics.includes(dm);
+    return `<div class="setup-checkbox ${checked?'checked':''}" data-value="${dm}" onclick="toggleBlitzTopic(this)">${dm}</div>`;
+  }).join('');
+}
+
+function selectBlitzOption(field, el) {
+  el.parentElement.querySelectorAll('.setup-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  app.blitzConfig[field] = el.dataset.value;
+  if (field === 'subject') { app.blitzConfig.topics = []; refreshBlitzTopics(); }
+}
+
+function toggleBlitzTopic(el) {
+  el.classList.toggle('checked');
+  const val = el.dataset.value;
+  if (app.blitzConfig.topics.includes(val)) {
+    app.blitzConfig.topics = app.blitzConfig.topics.filter(t => t !== val);
+  } else {
+    app.blitzConfig.topics.push(val);
+  }
+}
+
+let cbState = {
+  eliminated: [],
+  marked: [],
+  timerHidden: false,
+  annotateMode: false,
+  directionsOpen: false,
+  navModalOpen: false
+};
+
+async function launchBlitz() {
+  const cfg = app.blitzConfig;
+  const count = parseInt(cfg.count);
+  const topics = cfg.topics.length ? cfg.topics : null;
+
+  showView('viewQuestionBlitz');
+  $('cbPassageText').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Preparing blitz session…</div></div>`;
+  $('cbQuestionText').innerHTML = '';
+  $('cbChoicesList').innerHTML = '';
+
+  try {
+    const qs = await getQuestions(cfg.subject, count, topics);
+    if (!qs.length) {
+      $('cbPassageText').innerHTML = `<div class="error-state">No questions available. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
+      return;
+    }
+    app.questions = qs.slice(0, count);
+    app.qIndex = 0;
+    app.answers = [];
+    app.sessionType = 'blitz';
+    app.sessionConfig = { ...cfg };
+
+    // Initialize College Board UI States
+    cbState = {
+      eliminated: app.questions.map(() => new Set()),
+      marked: app.questions.map(() => false),
+      timerHidden: false,
+      annotateMode: false,
+      directionsOpen: false,
+      navModalOpen: false
+    };
+
+    renderQuestionBlitz();
+    startCbTimer();
+    initCbResize();
+  } catch (e) {
+    console.error(e);
+    $('cbPassageText').innerHTML = `<div class="error-state">Could not load questions. Check your connection and try again. <button class="btn btn-primary" onclick="goToDashboard()">Back</button></div>`;
+  }
+}
+
+// ─── College Board Style Blitz Rendering & Logic ───
+function renderQuestionBlitz() {
+  if (app.qIndex >= app.questions.length) { endSession(); return; }
+
+  const q = app.questions[app.qIndex];
+  const total = app.questions.length;
+  const idx = app.qIndex;
+
+  // Header & navigator info
+  $('cbQuestionNumBadge').textContent = idx + 1;
+  $('cbQuestionNavLabel').textContent = `Question ${idx + 1} of ${total}`;
+
+  // Mark for review button state
+  const markBtn = $('cbMarkReviewBtn');
+  if (cbState.marked[idx]) {
+    markBtn.classList.add('marked');
+    markBtn.setAttribute('aria-pressed', 'true');
+    $('cbBookmarkIcon').setAttribute('fill', '#1d4ed8');
+    $('cbBookmarkIcon').setAttribute('stroke', '#1d4ed8');
+  } else {
+    markBtn.classList.remove('marked');
+    markBtn.setAttribute('aria-pressed', 'false');
+    $('cbBookmarkIcon').setAttribute('fill', 'none');
+    $('cbBookmarkIcon').setAttribute('stroke', 'currentColor');
+  }
+
+  // Passage (paragraph) content
+  const para = q.question.paragraph;
+  if (para && para !== 'null' && para.trim()) {
+    $('cbPassageText').innerHTML = `<p>${esc(para).replace(/\n\n/g, '</p><p>')}</p>`;
+  } else {
+    $('cbPassageText').innerHTML = `<p style="color:var(--text-secondary);font-style:italic">No passage for this question.</p>`;
+  }
+
+  // Question content
+  $('cbQuestionText').innerHTML = `<p>${esc(q.question.question)}</p>`;
+
+  // Render choices
+  const letters = ['A', 'B', 'C', 'D'];
+  const isSubmitted = app.awaitingNext;
+  const selectedAnswer = app.answers[idx]?.selected;
+
+  let choicesHtml = '';
+  for (const letter of letters) {
+    const text = q.question.choices[letter];
+    if (!text) continue;
+
+    const letterIdx = letter.charCodeAt(0) - 65; // A=0, B=1...
+    const isSelected = selectedAnswer === letter;
+    const isEliminated = cbState.eliminated[idx].has(letterIdx);
+
+    let classes = 'cb-choice-item';
+    if (isSelected) classes += ' selected';
+    if (isEliminated) classes += ' eliminated';
+    if (isSubmitted) {
+      if (letter === q.question.correct_answer) classes += ' correct';
+      else if (isSelected && letter !== q.question.correct_answer) classes += ' incorrect';
+    }
+
+    choicesHtml += `
+      <div class="${classes}" onclick="selectChoiceBlitz('${letter}')">
+        <div class="cb-choice-main">
+          <div class="cb-choice-letter-area">${letter}</div>
+          <div class="cb-choice-text-inner">${esc(text)}</div>
+        </div>
+        <button class="cb-choice-eliminate-btn" onclick="eliminateChoiceBlitz(event, ${letterIdx})" title="Cross out answer">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            ${isEliminated
+              ? '<line x1="5" y1="12" x2="19" y2="12"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 2"/>'
+              : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'}
+          </svg>
+        </button>
+      </div>
+    `;
+  }
+  $('cbChoicesList').innerHTML = choicesHtml;
+
+  // Explanation / feedback area
+  const explanationArea = $('cbExplanationArea');
+  if (isSubmitted) {
+    const correct = selectedAnswer === q.question.correct_answer;
+    explanationArea.className = correct ? 'explanation-area success-bg' : 'explanation-area error-bg';
+    explanationArea.style.display = 'block';
+    explanationArea.innerHTML = `
+      <div class="explanation-content" style="border:1px solid ${correct?'#6ee7b7':'#fca5a5'}; padding:14px; border-radius:8px">
+        <div class="explanation-header" style="background:transparent; cursor:default; font-weight:700; padding:0; margin-bottom:6px; color:${correct?'#065f46':'#7f1d1d'}">
+          ${correct ? '✅ Correct!' : '❌ Incorrect.'} Correct answer is ${q.question.correct_answer}.
+        </div>
+        <div class="explanation-body" style="padding:0; color:#374151">${esc(q.question.explanation || 'No explanation available.')}</div>
+      </div>
+    `;
+  } else {
+    explanationArea.style.display = 'none';
+    explanationArea.innerHTML = '';
+  }
+
+  // Footer nav buttons
+  if (app.sessionType === 'daily') {
+    $('cbBackBtn').style.display = '';
+    $('cbBackBtn').disabled = idx === 0;
+    $('cbQuestionNavLabel').parentElement.style.display = '';
+
+    const nextBtn = $('cbNextBtn');
+    nextBtn.textContent = idx === total - 1 ? 'Submit' : 'Next';
+    nextBtn.disabled = false;
+  } else {
+    $('cbBackBtn').style.display = 'none';
+    $('cbQuestionNavLabel').parentElement.style.display = 'none';
+
+    const nextBtn = $('cbNextBtn');
+    if (isSubmitted) {
+      nextBtn.textContent = idx === total - 1 ? 'See Results' : 'Continue →';
+      nextBtn.disabled = false;
+    } else {
+      nextBtn.textContent = 'Submit';
+      nextBtn.disabled = !selectedAnswer;
+    }
+  }
+
+  // Reset scroll
+  $('cbPassagePanel').scrollTop = 0;
+  $('cbQuestionPanel').scrollTop = 0;
+
+  // Render Math equations
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement($('cbMainContent'), {
+        delimiters: [
+          {left:'$$',right:'$$',display:true},
+          {left:'\\\\[',right:'\\\\]',display:true},
+          {left:'$',right:'$',display:false},
+          {left:'\\(',right:'\\)',display:false},
+        ],
+        throwOnError: false,
+      });
+    } catch (_) {}
+  }
+}
+
+function selectChoiceBlitz(letter) {
+  if (app.sessionType === 'blitz' && app.awaitingNext) return;
+  const idx = app.qIndex;
+  const letterIdx = letter.charCodeAt(0) - 65;
+
+  if (app.answers[idx]?.selected === letter) {
+    app.answers[idx] = null;
+  } else {
+    app.answers[idx] = { selected: letter };
+    cbState.eliminated[idx].delete(letterIdx);
+  }
+  renderQuestionBlitz();
+}
+
+function eliminateChoiceBlitz(e, letterIdx) {
+  e.stopPropagation();
+  if (app.sessionType === 'blitz' && app.awaitingNext) return;
+  const idx = app.qIndex;
+
+  if (cbState.eliminated[idx].has(letterIdx)) {
+    cbState.eliminated[idx].delete(letterIdx);
+  } else {
+    cbState.eliminated[idx].add(letterIdx);
+    // Deselect if active
+    const letter = String.fromCharCode(65 + letterIdx);
+    if (app.answers[idx]?.selected === letter) {
+      app.answers[idx] = null;
+    }
+  }
+  renderQuestionBlitz();
+}
+
+function toggleCbMarkForReview() {
+  const idx = app.qIndex;
+  cbState.marked[idx] = !cbState.marked[idx];
+  renderQuestionBlitz();
+}
+
+function cbGoBack() {
+  if (app.sessionType === 'daily') {
+    if (app.qIndex > 0) {
+      app.qIndex--;
+      renderQuestionBlitz();
+    }
+  } else {
+    if (app.qIndex > 0 && !app.awaitingNext) {
+      app.qIndex--;
+      renderQuestionBlitz();
+    }
+  }
+}
+
+function cbGoNext() {
+  const idx = app.qIndex;
+  const total = app.questions.length;
+
+  if (app.sessionType === 'daily') {
+    const q = app.questions[idx];
+    const selected = app.answers[idx]?.selected || null;
+    const correct = selected === q.question.correct_answer;
+
+    app.answers[idx] = {
+      questionIdx: idx,
+      questionId: q.id,
+      domain: q.domain,
+      difficulty: q.difficulty,
+      selected,
+      correct,
+      correctAnswer: q.question.correct_answer,
+      explanation: q.question.explanation,
+      questionText: q.question.question,
+      choices: q.question.choices,
+      paragraph: q.question.paragraph,
+    };
+
+    if (idx === total - 1) {
+      const unanswered = app.questions.filter((_, i) => !app.answers[i] || app.answers[i].selected === null).length;
+      if (unanswered > 0) {
+        if (!confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit session?`)) return;
+      }
+      endSession();
+    } else {
+      app.qIndex++;
+      renderQuestionBlitz();
+    }
+  } else {
+    if (!app.awaitingNext) {
+      // Treat as "Submit"
+      app.awaitingNext = true;
+      stopTimer();
+      const q = app.questions[idx];
+      const selected = app.answers[idx]?.selected;
+      const correct = selected === q.question.correct_answer;
+
+      app.answers[idx] = {
+        questionIdx: idx,
+        questionId: q.id,
+        domain: q.domain,
+        difficulty: q.difficulty,
+        selected,
+        correct,
+        correctAnswer: q.question.correct_answer,
+        explanation: q.question.explanation,
+        questionText: q.question.question,
+        choices: q.question.choices,
+        paragraph: q.question.paragraph,
+      };
+
+      renderQuestionBlitz();
+    } else {
+      app.awaitingNext = false;
+      if (idx === total - 1) {
+        endSession();
+      } else {
+        app.qIndex++;
+        renderQuestionBlitz();
+        startCbTimer();
+      }
+    }
+  }
+}
+
+// ─── College Board Timer ───
+function startCbTimer() {
+  const pacing = app.sessionConfig.pacing || 'normal';
+  const timeLimit = PACING_LIMITS[pacing] || 0;
+  app.isTimed = timeLimit > 0;
+
+  stopTimer();
+  if (app.isTimed) {
+    app.timerRemaining = timeLimit;
+    updateCbTimerDisplay();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining--;
+      updateCbTimerDisplay();
+      if (app.timerRemaining <= 0) {
+        clearInterval(app.timerInterval);
+        app.timerInterval = null;
+        app.timerRemaining = 0;
+        updateCbTimerDisplay();
+        if (!app.awaitingNext) handleCbTimeout();
+      }
+    }, 1000);
+  } else {
+    app.timerRemaining = 0;
+    updateCbTimerDisplay();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining++;
+      updateCbTimerDisplay();
+    }, 1000);
+  }
+}
+
+function updateCbTimerDisplay() {
+  const display = $('cbTimerDisplay');
+  const s = Math.max(0, Math.ceil(app.timerRemaining));
+
+  if (cbState.timerHidden) {
+    display.textContent = 'Hidden';
+    display.className = 'cb-timer-display';
+  } else {
+    display.textContent = formatTime(s);
+    if (app.isTimed) {
+      const pacing = app.sessionConfig.pacing;
+      const total = PACING_LIMITS[pacing] || 60;
+      const pct = total > 0 ? app.timerRemaining / total : 1;
+      display.className = 'cb-timer-display';
+      if (pct < 0.2) display.classList.add('danger');
+      else if (pct < 0.4) display.classList.add('warning');
+    } else {
+      display.className = 'cb-timer-display';
+    }
+  }
+}
+
+function toggleCbTimer() {
+  cbState.timerHidden = !cbState.timerHidden;
+  $('cbHideTimerBtn').textContent = cbState.timerHidden ? 'Show' : 'Hide';
+  updateCbTimerDisplay();
+}
+
+function handleCbTimeout() {
+  // Skipping active choice selection
+  const idx = app.qIndex;
+  const q = app.questions[idx];
+  app.awaitingNext = true;
+
+  app.answers[idx] = {
+    questionIdx: idx,
+    questionId: q.id,
+    domain: q.domain,
+    difficulty: q.difficulty,
+    selected: null,
+    correct: false,
+    correctAnswer: q.question.correct_answer,
+    explanation: q.question.explanation,
+    questionText: q.question.question,
+    choices: q.question.choices,
+    paragraph: q.question.paragraph,
+  };
+
+  renderQuestionBlitz();
+}
+
+// ─── DirectionsDropdown ───
+function toggleCbDirections() {
+  cbState.directionsOpen = !cbState.directionsOpen;
+  $('cbDirectionsModal').classList.toggle('open', cbState.directionsOpen);
+}
+
+// ─── Annotate Mode ───
+function toggleCbAnnotateMode() {
+  cbState.annotateMode = !cbState.annotateMode;
+  const btn = $('cbAnnotateBtn');
+  const panel = $('cbPassagePanel');
+  if (cbState.annotateMode) {
+    btn.style.background = '#dbeafe';
+    btn.style.color = '#1d4ed8';
+    panel.style.cursor = 'text';
+  } else {
+    btn.style.background = '';
+    btn.style.color = '';
+    panel.style.cursor = '';
+  }
+}
+
+// Text selection listener for high-fidelity annotate tool
+document.addEventListener('mouseup', () => {
+  if (app.view !== 'viewQuestionBlitz' || !cbState.annotateMode) return;
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  const range = sel.getRangeAt(0);
+  if (!$('cbPassagePanel').contains(range.commonAncestorContainer)) return;
+
+  try {
+    const mark = document.createElement('mark');
+    mark.className = 'cb-annotation-highlight';
+    mark.title = 'Click to remove highlight';
+    mark.onclick = (e) => { e.stopPropagation(); unwrapCbHighlight(mark); };
+    range.surroundContents(mark);
+    sel.removeAllRanges();
+  } catch (_) {
+    sel.removeAllRanges();
+  }
+});
+
+function unwrapCbHighlight(mark) {
+  const parent = mark.parentNode;
+  while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+  parent.removeChild(mark);
+}
+
+// ─── Panels Resizing ───
+function initCbResize() {
+  const divider = $('cbDivider');
+  const left = $('cbPassagePanel');
+  const right = $('cbQuestionPanel');
+  const main = $('cbMainContent');
+  let dragging = false;
+
+  divider.addEventListener('mousedown', (e) => {
+    dragging = true;
+    divider.classList.add('active');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = main.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const total = rect.width - 5;
+    const pct = Math.min(Math.max(x / total, 0.25), 0.75);
+    left.style.flex = 'none';
+    left.style.width = (pct * total) + 'px';
+    right.style.flex = '1';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    divider.classList.remove('active');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  });
+}
+
+// ─── Navigator Modal ───
+function openCbNavModal() {
+  cbState.navModalOpen = true;
+  $('cbNavModalBackdrop').classList.add('open');
+  buildCbNavGrid();
+}
+
+function closeCbNavModal() {
+  cbState.navModalOpen = false;
+  $('cbNavModalBackdrop').classList.remove('open');
+}
+
+function handleCbBackdropClick(e) {
+  if (e.target === $('cbNavModalBackdrop')) closeCbNavModal();
+}
+
+function buildCbNavGrid() {
+  const grid = $('cbNavGrid');
+  grid.innerHTML = app.questions.map((_, i) => {
+    let cls = 'cb-nav-grid-btn';
+    if (i === app.qIndex) cls += ' current';
+    else if (app.answers[i]?.selected !== undefined) cls += ' answered';
+    if (cbState.marked[i]) cls += ' marked';
+    return `<button class="${cls}" onclick="cbJumpTo(${i})">${i + 1}</button>`;
+  }).join('');
+}
+
+function cbJumpTo(idx) {
+  if (app.awaitingNext) return;
+  app.qIndex = idx;
+  renderQuestionBlitz();
+  closeCbNavModal();
+}
+
+
+// ─── Question Rendering ───
+function renderLoading(msg) {
+  $('questionContent').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">${msg||'Loading…'}</div></div>`;
+}
+function showError(msg) {
+  $('questionContent').innerHTML = `<div class="error-state"><div class="error-icon">⚠️</div><div class="error-text">${msg}</div><button class="btn btn-primary" onclick="goToDashboard()">Back to Dashboard</button></div>`;
+}
+
+function renderQuestion() {
+  if (app.qIndex >= app.questions.length) { endSession(); return; }
+
+  const q = app.questions[app.qIndex];
+  const total = app.questions.length;
+  const idx = app.qIndex;
+
+  // Header
+  $('qProgress').textContent = `Question ${idx+1} of ${total}`;
+  $('qDomain').textContent = q.domain;
+  $('progressFill').style.width = `${(idx/total)*100}%`;
+
+  // Timer setup — per-question timer for ALL session types
+  const pacing = app.sessionConfig.pacing || 'normal';
+  const timeLimit = PACING_LIMITS[pacing] || 0;
+  app.isTimed = timeLimit > 0;
+  app.timerElapsed = 0; // for untimed daily sessions
+
+  $('qTimer').style.display = '';
+  $('timerOverlay').style.display = app.isTimed ? '' : 'none';
+  $('timerRing').textContent = app.isTimed ? '⏱' : '⏱';
+
+  if (app.isTimed) {
+    // Countdown per question
+    app.timerRemaining = timeLimit;
+    updateTimerDisplay();
+    stopTimer();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining--;
+      updateTimerDisplay();
+      if (app.timerRemaining <= 0) {
+        clearInterval(app.timerInterval);
+        app.timerInterval = null;
+        app.timerRemaining = 0;
+        updateTimerDisplay();
+        if (!app.awaitingNext) handleTimeout();
+      }
+    }, 1000);
+  } else {
+    // Elapsed per question (daily session pacing)
+    app.timerRemaining = 0;
+    $('qTimer').textContent = formatTime(0);
+    $('timerDisplay').textContent = formatTime(0);
+    $('qTimer').className = 'question-timer';
+    $('timerRing').className = 'timer-ring';
+    stopTimer();
+    app.timerInterval = setInterval(() => {
+      app.timerRemaining++;
+      $('qTimer').textContent = formatTime(Math.ceil(app.timerRemaining));
+      $('timerDisplay').textContent = formatTime(Math.ceil(app.timerRemaining));
+    }, 1000);
+  }
+
+  app.awaitingNext = false;
+
+  // Build content
+  let html = '';
+
+  // Passage / paragraph
+  const para = q.question.paragraph;
+  if (para && para !== 'null' && para.trim()) {
+    html += `<div class="passage">${esc(para)}</div>`;
+  }
+
+  // Question
+  html += `<div class="question-text">${esc(q.question.question)}</div>`;
+
+  // Choices
+  html += '<div class="choices">';
+  for (const letter of ['A','B','C','D']) {
+    const text = q.question.choices[letter];
+    if (!text) continue;
+    html += `<div class="choice" data-letter="${letter}" onclick="selectChoice(this)">
+      <div class="choice-letter">${letter}</div>
+      <div class="choice-text">${esc(text)}</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  // Footer
+  html += `<div class="question-footer">
+    <span style="font-size:13px;color:var(--text-secondary)">${app.sessionType==='daily'?'Daily':'Blitz'}</span>
+    <button class="btn btn-primary" id="nextBtn" disabled onclick="confirmAnswer()">Next</button>
+  </div>`;
+
+  $('questionContent').innerHTML = html;
+  renderMath();
+}
+
+function formatTime(s) {
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+function selectChoice(el) {
+  if (app.awaitingNext) return;
+  document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  $('nextBtn').disabled = false;
+  app.answers[app.qIndex] = { selected: el.dataset.letter };
+}
+
+function confirmAnswer() {
+  if (app.awaitingNext) return;
+  const selected = app.answers[app.qIndex]?.selected;
+
+  app.awaitingNext = true;
+  stopTimer();
+
+  const q = app.questions[app.qIndex];
+  const correct = selected === q.question.correct_answer;
+
+  // Mark choices
+  document.querySelectorAll('.choice').forEach(c => {
+    c.style.cursor = 'default';
+    if (c.dataset.letter === q.question.correct_answer) c.classList.add('correct');
+    else if (c.dataset.letter === selected && !correct) c.classList.add('incorrect');
+  });
+
+  // Store full answer
+  app.answers[app.qIndex] = {
+    questionIdx: app.qIndex,
+    questionId: q.id,
+    domain: q.domain,
+    difficulty: q.difficulty,
+    selected,
+    correct,
+    correctAnswer: q.question.correct_answer,
+    explanation: q.question.explanation,
+    questionText: q.question.question,
+    choices: q.question.choices,
+    paragraph: q.question.paragraph,
+  };
+
+  // Footer feedback
+  const fb = document.querySelector('.question-footer span');
+  if (fb) {
+    fb.innerHTML = correct
+      ? '<span style="color:var(--success);font-weight:600;">✅ Correct</span>'
+      : '<span style="color:var(--error);font-weight:600;">❌ Incorrect</span>';
+  }
+
+  // Insert explanation area
+  const choicesEl = document.querySelector('.choices');
+  const footer = document.querySelector('.question-footer');
+  if (choicesEl && footer) {
+    const explDiv = document.createElement('div');
+    explDiv.className = 'explanation-area';
+    explDiv.id = 'explanationArea';
+
+    const isDaily = app.sessionType === 'daily';
+    const autoOpen = isDaily; // daily = auto-open, blitz = collapsed
+
+    explDiv.innerHTML = `
+      <div class="explanation-content" ${autoOpen ? '' : 'style="display:none"'}>
+        <div class="explanation-header">
+          <span class="explanation-label">Explanation</span>
+          <span class="explanation-close" onclick="toggleExplanation()">${autoOpen ? '−' : '+'}</span>
+        </div>
+        <div class="explanation-body">${esc(q.question.explanation || 'No explanation available.')}</div>
+      </div>
+      ${!isDaily ? `<button class="btn btn-ghost" style="font-size:13px;padding:6px 12px;margin-top:8px" onclick="toggleExplanation()">💡 Show Explanation</button>` : ''}
+    `;
+
+    footer.parentNode.insertBefore(explDiv, footer);
+  }
+
+  const btn = $('nextBtn');
+  btn.textContent = app.qIndex < app.questions.length - 1 ? 'Continue →' : 'See Results';
+  btn.disabled = false;
+  btn.onclick = advanceQuestion;
+}
+
+function toggleExplanation() {
+  const area = document.getElementById('explanationArea');
+  if (!area) return;
+  const content = area.querySelector('.explanation-content');
+  const btn = area.querySelector('.btn-ghost');
+  if (content) {
+    const open = content.style.display !== 'none';
+    content.style.display = open ? 'none' : 'block';
+    if (btn) btn.textContent = open ? '💡 Show Explanation' : '🔽 Hide Explanation';
+  }
+}
+
+function handleTimeout() {
+  // No answer selected → store as skipped
+  const q = app.questions[app.qIndex];
+  app.awaitingNext = true;
+
+  app.answers[app.qIndex] = {
+    questionIdx: app.qIndex,
+    questionId: q.id,
+    domain: q.domain,
+    difficulty: q.difficulty,
+    selected: null,
+    correct: false,
+    correctAnswer: q.question.correct_answer,
+    explanation: q.question.explanation,
+    questionText: q.question.question,
+    choices: q.question.choices,
+    paragraph: q.question.paragraph,
+  };
+
+  document.querySelectorAll('.choice').forEach(c => {
+    c.style.cursor = 'default';
+    if (c.dataset.letter === q.question.correct_answer) c.classList.add('correct');
+  });
+
+  const fb = document.querySelector('.question-footer span');
+  if (fb) fb.innerHTML = '<span style="color:var(--error);font-weight:600;">⏰ Time’s up!</span>';
+
+  const btn = $('nextBtn');
+  btn.textContent = app.qIndex < app.questions.length - 1 ? 'Continue →' : 'See Results';
+  btn.disabled = false;
+  btn.onclick = advanceQuestion;
+}
+
+function advanceQuestion() {
+  app.awaitingNext = false;
+  app.qIndex++;
+  renderQuestion();
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.() || document.documentElement.webkitRequestFullscreen?.();
+  } else {
+    document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+  }
+}
+
+function exitSession() {
+  if (confirm('End this session and return to dashboard?')) {
+    stopTimer();
+    goToDashboard();
+  }
+}
+
+function stopTimer() {
+  if (app.timerInterval) { clearInterval(app.timerInterval); app.timerInterval = null; }
+}
+
+function updateTimerDisplay() {
+  const s = Math.max(0, Math.ceil(app.timerRemaining));
+  $('timerDisplay').textContent = formatTime(s);
+  $('qTimer').textContent = formatTime(s);
+
+  const pacing = app.sessionConfig.pacing;
+  const total = PACING_LIMITS[pacing] || 60;
+  const pct = total > 0 ? app.timerRemaining / total : 1;
+
+  const ring = $('timerRing');
+  ring.className = 'timer-ring';
+  if (pct < 0.2) ring.classList.add('danger');
+  else if (pct < 0.4) ring.classList.add('warning');
+
+  $('qTimer').className = 'question-timer';
+  if (pct < 0.2) $('qTimer').classList.add('danger');
+  else if (pct < 0.4) $('qTimer').classList.add('warning');
+}
+
+// ─── End Session ───
+function endSession() {
+  stopTimer();
+  showView('viewResults');
+
+  const total = app.questions.length;
+  const correct = app.answers.filter(a => a && a.correct).length;
+
+  $('resultScore').textContent = `${correct}/${total}`;
+  $('resultType').textContent = app.sessionType === 'daily' ? 'Daily Session' : 'Blitz Session';
+
+  // Update DATA
+  const session = {
+    date: todayStr(),
+    type: app.sessionType,
+    score: correct,
+    total,
+    answers: app.answers.filter(Boolean).map(a => ({
+      id: a.questionId, domain: a.domain, difficulty: a.difficulty,
+      correct: a.correct, selected: a.selected, correctAnswer: a.correctAnswer,
+    })),
+  };
+  DATA.history.push(session);
+  DATA.totalQ += total;
+  DATA.totalSessions++;
+
+  // Streak
+  const today = todayStr();
+  if (DATA.lastDate !== today) {
+    const y = new Date(); y.setDate(y.getDate()-1);
+    DATA.streak = DATA.lastDate === y.toISOString().slice(0,10) ? DATA.streak + 1 : 1;
+    DATA.lastDate = today;
+  }
+
+  // Per-domain
+  for (const a of app.answers) {
+    if (!a) continue;
+    if (!DATA.performance[a.domain]) DATA.performance[a.domain] = { correct:0, total:0 };
+    DATA.performance[a.domain].total++;
+    if (a.correct) DATA.performance[a.domain].correct++;
+  }
+
+  // Store missed questions
+  if (!DATA.missedQuestions) DATA.missedQuestions = {};
+  for (const a of app.answers) {
+    if (!a || a.correct || !a.questionId) continue;
+    // Keep the most recent attempt for each question
+    DATA.missedQuestions[a.questionId] = {
+      questionId: a.questionId,
+      domain: a.domain,
+      difficulty: a.difficulty,
+      questionText: a.questionText,
+      choices: a.choices,
+      userAnswer: a.selected,
+      correctAnswer: a.correctAnswer,
+      explanation: a.explanation,
+      paragraph: a.paragraph,
+      date: todayStr(),
+      sessionType: app.sessionType,
+    };
+  }
+
+  saveData(DATA);
+
+  // Render breakdown
+  let html = '';
+  for (let i = 0; i < app.answers.length; i++) {
+    const a = app.answers[i];
+    if (!a) continue;
+    html += `<div class="result-item">
+      <div class="result-question">
+        ${a.correct ? '✅' : '❌'} Question ${i+1}
+        <span class="result-badge ${a.correct?'correct':'incorrect'}">${a.correct?'Correct':'Incorrect'}</span>
+      </div>
+      <div class="result-domain">${esc(a.domain)} · ${esc(a.difficulty)}</div>
+      <div class="result-answer"><strong>Your answer:</strong> ${a.selected ? `${a.selected}. ${esc(a.choices?.[a.selected]||'')}` : 'No answer (time)'}</div>
+      ${!a.correct ? `<div class="result-answer" style="color:var(--success)"><strong>Correct answer:</strong> ${a.correctAnswer}. ${esc(a.choices?.[a.correctAnswer]||'')}</div>` : ''}
+      <div class="result-explanation"><strong>Explanation:</strong> ${esc(a.explanation||'')}</div>
+    </div>`;
+  }
+  $('resultsBreakdown').innerHTML = html;
+  renderMath();
+}
+
+// ─── Dashboard ───
+function renderDashboard() {
+  const h = new Date().getHours();
+  let greet = 'Good evening';
+  if (h < 12) greet = 'Good morning';
+  else if (h < 17) greet = 'Good afternoon';
+
+  $('greeting').textContent = `${greet}, ready to prep?`;
+
+  const now = new Date();
+  const left = Math.max(0, Math.round((STUDY_END - now) / (1000*60*60*24)));
+  $('daysRemaining').textContent = `${left} days to go`;
+
+  const elapsed = Math.max(0, Math.round((now - STUDY_START) / (1000*60*60*24)));
+  $('planFill').style.width = `${Math.min(100, (elapsed / TOTAL_DAYS) * 100)}%`;
+  $('sessionsDone').textContent = `${DATA.totalSessions} sessions`;
+
+  $('headerStreak').textContent = DATA.streak > 0 ? `🔥 ${DATA.streak} day streak` : 'Start your streak!';
+
+  // ── Projected SAT Score ──
+  const scoreEl = $('scoreProjectionValue');
+  const scoreBreak = $('scoreProjectionBreakdown');
+  const rwAcc = ENGLISH_DOMAINS.map(d => {
+    const p = DATA.performance[d];
+    return p?.total > 0 ? p.correct / p.total : null;
+  }).filter(x => x !== null);
+  const mathAcc = MATH_DOMAINS.map(d => {
+    const p = DATA.performance[d];
+    return p?.total > 0 ? p.correct / p.total : null;
+  }).filter(x => x !== null);
+
+  if (rwAcc.length > 0 || mathAcc.length > 0) {
+    const avgRW = rwAcc.length > 0 ? rwAcc.reduce((a,b)=>a+b,0) / rwAcc.length : 0;
+    const avgMath = mathAcc.length > 0 ? mathAcc.reduce((a,b)=>a+b,0) / mathAcc.length : 0;
+    const rwScore = Math.round(avgRW * 800);
+    const mathScore = Math.round(avgMath * 800);
+    const totalScore = rwScore + mathScore;
+
+    scoreEl.textContent = totalScore;
+    scoreBreak.innerHTML = `
+      <span style="display:inline-block;margin-right:20px">📖 Reading &amp; Writing: <strong>${rwScore}</strong>/800 ${rwAcc.length > 0 ? `(${Math.round(avgRW*100)}%)` : '(no data)'}</span>
+      <span>🔢 Math: <strong>${mathScore}</strong>/800 ${mathAcc.length > 0 ? `(${Math.round(avgMath*100)}%)` : '(no data)'}</span>
+    `;
+  } else {
+    scoreEl.textContent = '—';
+    scoreBreak.textContent = 'Complete some sessions to see your projected score.';
+  }
+
+  // ── Target Prep: weakest domains ──
+  const missed = DATA.missedQuestions || {};
+  const missedCount = Object.keys(missed).length;
+  const missedCard = $('missedCountCard');
+  const targetCard = $('targetPrepCard');
+
+  if (missedCount > 0) {
+    $('missedCountText').textContent = `You have ${missedCount} question${missedCount>1?'s':''} to review. Click to see explanations and re-learn.`;
+  } else {
+    $('missedCountText').textContent = 'No missed questions yet! Keep up the good work.';
+  }
+
+  // Target prep: show top 3 weakest domains (by accuracy)
+  const allDomains = [...ENGLISH_DOMAINS, ...MATH_DOMAINS];
+  const withData = allDomains
+    .map(dm => {
+      const p = DATA.performance[dm];
+      const c = p?.correct||0, t = p?.total||0;
+      const pct = t > 0 ? Math.round((c/t)*100) : null;
+      const dmMisses = Object.values(missed).filter(m => m.domain === dm).length;
+      return { domain: dm, correct: c, total: t, pct, misses: dmMisses };
+    })
+    .filter(d => d.total > 0 || d.misses > 0)  // only domains with activity
+    .sort((a, b) => {
+      // Sort by misses descending first, then by accuracy ascending
+      if (a.misses !== b.misses) return b.misses - a.misses;
+      return (a.pct ?? 100) - (b.pct ?? 100);
+    });
+
+  if (withData.length > 0) {
+    targetCard.style.display = 'block';
+    const top3 = withData.slice(0, 3);
+    $('targetPrepList').innerHTML = top3.map(d => {
+      const pct = d.pct !== null ? d.pct : 0;
+      const label = d.pct !== null
+        ? `${pct}% accuracy · ${d.misses} missed`
+        : `${d.total} attempted · ${d.misses} missed`;
+      return `<div class="performance-item">
+        <div class="performance-domain">🎯 ${d.domain}</div>
+        <div class="performance-bar-wrap"><div class="performance-bar" style="width:${Math.max(5,pct)}%;background:${pct<50?'var(--error)':pct<80?'var(--warning)':'var(--success)'}"></div></div>
+        <div class="performance-pct" style="font-size:12px;color:var(--text-secondary)">${label}</div>
+      </div>`;
+    }).join('');
+  } else {
+    targetCard.style.display = 'none';
+  }
+
+  // ── Session History Preview ──
+  const histPreview = $('sessionHistoryPreview');
+  const sessions = DATA.history || [];
+  if (sessions.length > 0) {
+    const recent = sessions.slice(-3).reverse();
+    histPreview.innerHTML = recent.map(s => {
+      const date = s.date || 'unknown';
+      const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
+      return `<span style="display:inline-block;margin-right:16px;font-size:13px">📅 ${date} · ${s.score}/${s.total} (${pct}%) · ${s.type}</span>`;
+    }).join('<br>') + `<div style="margin-top:8px;font-size:12px;color:var(--blue)">View all ${sessions.length} sessions →</div>`;
+  }
+  // Else: the HTML default text stays ("No sessions yet...")
+
+  // ── Performance ──
+  const container = $('performanceList');
+  const all = allDomains.map(dm => {
+    const p = DATA.performance[dm];
+    const c = p?.correct||0, t = p?.total||0;
+    return { domain: dm, correct: c, total: t, pct: t > 0 ? Math.round((c/t)*100) : null };
+  }).sort((a,b) => (a.pct ?? -1) - (b.pct ?? -1));
+
+  if (all.every(i => i.total === 0)) {
+    container.innerHTML = '<div class="performance-empty">No data yet. Complete a session to see your breakdown.</div>';
+    return;
+  }
+
+  container.innerHTML = all.map(i => {
+    const pct = i.pct !== null ? i.pct : 0;
+    const bar = i.total === 0 ? 'var(--border)' : pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+    return `<div class="performance-item">
+      <div class="performance-domain">${i.domain}</div>
+      <div class="performance-bar-wrap"><div class="performance-bar" style="width:${i.total>0?pct:5}%;background:${bar}"></div></div>
+      <div class="performance-pct" style="color:${i.total>0?'var(--text)':'var(--text-muted)'}">${i.total>0?pct+'%':'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── Missed Questions View ───
+function showMissedQuestions() {
+  showView('viewMissedQuestions');
+  renderMissedQuestions();
+}
+
+function renderMissedQuestions(filter) {
+  const missed = DATA.missedQuestions || {};
+  const ids = Object.keys(missed);
+  const container = $('missedQuestionsList');
+
+  // Build domain filter chips
+  const filterBar = $('missedFilter');
+  const domains = [...new Set(ids.map(id => missed[id].domain))].sort();
+  let filterHtml = '<div class="setup-option active" data-value="all" onclick="filterMissed(this)">All</div>';
+  for (const dm of domains) {
+    const count = ids.filter(id => missed[id].domain === dm).length;
+    filterHtml += `<div class="setup-option" data-value="${dm}" onclick="filterMissed(this)">${dm} (${count})</div>`;
+  }
+  filterBar.innerHTML = filterHtml;
+
+  if (ids.length === 0) {
+    container.innerHTML = '<div class="performance-empty">No missed questions yet. Keep practicing!</div>';
+    return;
+  }
+
+  let entries = ids.map(id => missed[id]);
+  if (filter && filter !== 'all') entries = entries.filter(m => m.domain === filter);
+  entries.sort((a, b) => b.date?.localeCompare?.(a.date) || 0);
+
+  container.innerHTML = entries.map(m => {
+    const letters = ['A','B','C','D'];
+    return `<div class="result-item">
+      <div class="result-question">
+        ❌ ${esc(m.domain)}
+        <span class="result-badge incorrect">Missed</span>
+        <span style="font-size:12px;color:var(--text-muted)">${m.date || ''}</span>
+      </div>
+      <div style="font-size:14px;font-weight:500;margin:8px 0">${esc(m.questionText)}</div>
+      ${m.paragraph && m.paragraph !== 'null' ? `<div class="passage" style="font-size:13px;margin-bottom:12px">${esc(m.paragraph)}</div>` : ''}
+      <div class="result-answer" style="margin-bottom:4px"><strong>You answered:</strong> ${m.userAnswer ? `${m.userAnswer}. ${esc(m.choices?.[m.userAnswer]||'')}` : 'No answer'}</div>
+      <div class="result-answer" style="color:var(--success);margin-bottom:8px"><strong>Correct answer:</strong> ${m.correctAnswer}. ${esc(m.choices?.[m.correctAnswer]||'')}</div>
+      <div class="result-explanation"><strong>Explanation:</strong> ${esc(m.explanation||'')}</div>
+    </div>`;
+  }).join('');
+
+  renderMath();
+}
+
+function filterMissed(el) {
+  const bar = el.parentElement;
+  bar.querySelectorAll('.setup-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  renderMissedQuestions(el.dataset.value);
+}
+
+// ─── Session History ───
+function showSessionHistory() {
+  showView('viewSessionHistory');
+  renderSessionHistory();
+}
+
+function renderSessionHistory() {
+  const container = $('sessionHistoryList');
+  const sessions = DATA.history || [];
+
+  if (sessions.length === 0) {
+    container.innerHTML = '<div class="performance-empty">No sessions yet. Complete a session to see it here.</div>';
+    return;
+  }
+
+  // Group by date, show newest first
+  const sorted = [...sessions].reverse();
+
+  container.innerHTML = sorted.map((s, i) => {
+    const pct = s.total > 0 ? Math.round((s.score / s.total) * 100) : 0;
+    const barColor = pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+    const label = s.type === 'daily' ? '📅 Daily Session' : '⚡ Blitz';
+    const detail = s.answers || [];
+
+    // Mini per-question breakdown
+    let detailHtml = '';
+    if (detail.length > 0) {
+      detailHtml = '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-light)">';
+      detail.forEach((a, qi) => {
+        const icon = a.correct ? '✅' : '❌';
+        detailHtml += `<span style="display:inline-block;margin-right:8px;font-size:12px;color:var(--text-secondary)">${icon} Q${qi+1}</span>`;
+      });
+      detailHtml += '</div>';
+    }
+
+    return `<div class="result-item" style="cursor:pointer" onclick="toggleSessionDetail(${i})">
+      <div class="result-question">
+        ${label}
+        <span style="font-size:12px;color:var(--text-muted);font-weight:400">${s.date || 'unknown'}</span>
+        <span class="result-badge" style="background:${barColor};color:white">${s.score}/${s.total}</span>
+      </div>
+      <div class="performance-bar-wrap" style="flex:1;margin-top:6px">
+        <div class="performance-bar" style="width:${pct}%;background:${barColor}"></div>
+      </div>
+      <div id="sessionDetail_${i}" style="display:none">
+        ${detailHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSessionDetail(idx) {
+  const el = $(`sessionDetail_${idx}`);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// ─── Math Rendering ───
+function renderMath() {
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement(document.getElementById('questionContent') || document.body, {
+        delimiters: [
+          {left:'$$',right:'$$',display:true},
+          {left:'\\\\[',right:'\\\\]',display:true},
+          {left:'$',right:'$',display:false},
+          {left:'\\(',right:'\\)',display:false},
+        ],
+        throwOnError: false,
+      });
+    } catch (_) {}
+  }
+}
+
+// ─── Boot ───
+document.addEventListener('DOMContentLoaded', () => {
+  renderDashboard();
+  // Pre-fetch all questions (API returns everything per section)
+  fetchAll('english').catch(()=>{});
+  fetchAll('math').catch(()=>{});
+  // Refresh on return
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && app.view === 'dashboard') { DATA = loadData(); renderDashboard(); }
+  });
+});
+</script>
+</body>
+</html>
