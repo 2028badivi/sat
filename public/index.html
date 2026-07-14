@@ -854,66 +854,109 @@ input, textarea { font-family: var(--font); }
   border-radius: 3px;
 }
 
-/* Day view */
+/* Day view — Google Calendar style */
 .cal-day-view {
   background: var(--card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
-  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
 }
 .cal-day-view .cal-day-header {
-  padding: 12px 16px;
+  padding: 14px 20px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
+  color: var(--text);
   border-bottom: 1px solid var(--border-light);
+  background: var(--card);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.cal-day-scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+  position: relative;
 }
 .cal-time-slot {
   display: flex;
-  border-bottom: 1px solid var(--border-light);
-  min-height: 40px;
+  min-height: 60px;
+  position: relative;
 }
-.cal-time-slot:last-child { border-bottom: none; }
+.cal-time-slot::after {
+  content: '';
+  position: absolute;
+  left: 72px;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--border-light);
+}
+.cal-time-slot:last-child::after { display: none; }
 .cal-time-label {
-  width: 60px;
-  padding: 6px 10px;
-  font-size: 11px;
+  width: 70px;
+  padding: 0 10px;
+  font-size: 10px;
   color: var(--text-muted);
   flex-shrink: 0;
   text-align: right;
   border-right: 1px solid var(--border-light);
+  position: relative;
+  top: -6px;
+  height: 0;
+  font-weight: 500;
+  letter-spacing: 0.2px;
 }
 .cal-time-content {
   flex: 1;
-  padding: 2px 8px;
+  padding: 0 8px;
   position: relative;
+  min-height: 60px;
 }
 .cal-event-block {
+  position: absolute;
+  left: 8px;
+  right: 8px;
   padding: 4px 8px;
-  margin: 2px 0;
   border-radius: 4px;
   font-size: 12px;
-  background: var(--accent-light);
-  border-left: 3px solid var(--accent);
+  background: #e8f0fe;
+  border-left: 3px solid #1a73e8;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
 }
-.cal-event-block .evt-time { font-size: 10px; color: var(--text-secondary); }
-.cal-event-block .evt-title { font-weight: 500; }
+.cal-event-block .evt-time {
+  font-size: 10px;
+  color: #5f6368;
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+.cal-event-block .evt-title {
+  font-weight: 600;
+  font-size: 12px;
+  color: #1d1d1f;
+  line-height: 1.3;
+}
 .cal-now-line {
   position: absolute;
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--error);
-  z-index: 1;
+  background: #ea4335;
+  z-index: 3;
+  pointer-events: none;
 }
 .cal-now-line::before {
   content: '';
   position: absolute;
-  left: -4px;
-  top: -4px;
-  width: 10px;
-  height: 10px;
+  left: -5px;
+  top: -5px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: var(--error);
+  background: #ea4335;
+  z-index: 3;
 }
 
 /* ─── APP: Notes ─── */
@@ -1520,7 +1563,7 @@ function minutesToTime(min) {
   else if (h > 12) h -= 12;
   return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
 }
-function isAllDay(evt) { return evt[0] === 'All day'; }
+function isAllDay(evt) { return evt.start === 'All day'; }
 function dayOfWeek(d) { return d.getDay(); }
 function isToday(d) {
   const t = new Date();
@@ -1786,22 +1829,41 @@ function calRenderDay() {
   const isTodayView = isToday(calDate);
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
-  let html = `<div class="cal-day-header">${label}</div>`;
-  // Render from 7 AM to 11 PM
+  // Separate all-day events (monthly schedule items) from time-based events
+  const allDayEvents = events.filter(e => isAllDay(e));
+  const timeEvents = events.filter(e => !isAllDay(e));
+
+  // All-day events banner
+  let allDayHtml = '';
+  if (allDayEvents.length) {
+    allDayHtml = allDayEvents.map(e =>
+      `<div style="padding:8px 16px;background:#fef7e0;border-left:3px solid #f9ab00;margin:4px 12px;border-radius:4px;font-size:13px;font-weight:500">
+        📌 ${escHtml(e.title)}</div>`
+    ).join('');
+    allDayHtml = `<div style="border-bottom:1px solid var(--border-light);padding:4px 0">${allDayHtml}</div>`;
+  }
+
+  let html = `<div class="cal-day-header">${label}</div>${allDayHtml}<div class="cal-day-scroll">`;
+  // Render from 7 AM to 11 PM (Google Calendar style — 60px per hour)
   for (let h = 7; h <= 23; h++) {
     const slotStart = h * 60;
     const slotEnd = slotStart + 60;
     const hourLabel = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h-12} PM`;
-    const slotEvents = events.filter(e => {
-      if (isAllDay(e)) return false;
+
+    // Get events that start in this hour
+    const slotEvents = timeEvents.filter(e => {
       const em = parseTimeToMinutes(e.start);
       return em >= slotStart && em < slotEnd;
     });
+
     const eventsHtml = slotEvents.map(e => {
       const em = parseTimeToMinutes(e.start);
-      const off = (em - slotStart) / 60 * 40;
-      const dur = (parseTimeToMinutes(e.end) - em) / 60 * 40;
-      return `<div class="cal-event-block" style="margin-top:${off}px;min-height:${Math.max(dur,20)}px">
+      const ee = parseTimeToMinutes(e.end);
+      const off = (em - slotStart) / 60 * 60; // offset in px within the slot
+      const dur = Math.max((ee - em) / 60 * 60, 20); // duration in px
+      const timeStr = `${e.start} – ${e.end}`;
+      return `<div class="cal-event-block" style="top:${off}px;height:${dur}px">
+        <div class="evt-time">${escHtml(timeStr)}</div>
         <div class="evt-title">${escHtml(e.title)}</div>
       </div>`;
     }).join('');
@@ -1814,6 +1876,7 @@ function calRenderDay() {
       </div>
     </div>`;
   }
+  html += '</div>';
   container.innerHTML = html;
 }
 
@@ -2065,18 +2128,19 @@ function pomoRenderMiniDay() {
   const body = document.getElementById('pomoMiniDayBody');
   const events = getEventsForDate(now);
   const currentMin = now.getHours() * 60 + now.getMinutes();
+  const timeEvents = events.filter(e => !isAllDay(e));
   let html = '';
   for (let h = 7; h <= 23; h++) {
     const slotStart = h * 60;
     const slotEnd = slotStart + 60;
     const hourLabel = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h-12} PM`;
-    const slotEvents = events.filter(e => {
-      if (isAllDay(e)) return false;
+    const slotEvents = timeEvents.filter(e => {
       const em = parseTimeToMinutes(e.start);
       return em >= slotStart && em < slotEnd;
     });
     const eventsHtml = slotEvents.map(e => {
-      return `<div class="cal-event-block" style="font-size:9px;padding:1px 6px"><div class="evt-title">${escHtml(e.title)}</div></div>`;
+      const timeStr = `${e.start} – ${e.end}`;
+      return `<div class="cal-event-block" style="font-size:9px;padding:1px 6px"><div class="evt-time" style="font-size:8px;color:var(--text-muted)">${escHtml(timeStr)}</div><div class="evt-title">${escHtml(e.title)}</div></div>`;
     }).join('');
     const isCurrentHour = h === now.getHours();
     html += `<div class="cal-time-slot" style="min-height:24px">
