@@ -1528,7 +1528,8 @@ function isToday(d) {
 }
 function getEventsForDate(date) {
   const dow = date.getDay();
-  const ds = dateToStr(date);
+  // Match MONTHLY_SCHEDULE key format: YYYY-M-D (no leading zeros)
+  const ds = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
   const events = [];
   for (const s of DAILY_SCHEDULE) {
     events.push({start:s[0], end:s[1], title:s[2], type:'daily'});
@@ -1544,7 +1545,8 @@ function getEventsForDate(date) {
 }
 function getEventsForMonthView(date) {
   const dow = date.getDay();
-  const ds = dateToStr(date);
+  // Match MONTHLY_SCHEDULE key format: YYYY-M-D (no leading zeros)
+  const ds = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
   const events = [];
   // Only show weekly recurring + monthly schedule in month cells (not daily routine)
   const weekly = WEEKLY_RECURRING[dow] || [];
