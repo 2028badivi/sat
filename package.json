@@ -2,12 +2,14 @@
   "name": "sat-prep",
   "version": "1.0.0",
   "description": "SAT Preparation Suite — Daily sessions, blitz sessions, adaptive learning",
+  "homepage": "https://2028badivi.github.io/sat-prep",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
     "build": "next build",
-    "export": "next export"
+    "export": "next export",
+    "deploy": "npm run build && npm run export"
   },
   "dependencies": {
     "express": "^4.18.2",

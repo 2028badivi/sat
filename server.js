@@ -66,6 +66,6 @@ app.get('/api/questions', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, 'localhost', () => {
   console.log(`LockedIn running at http://localhost:${PORT}`);
 });

@@ -35,6 +35,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+      
+      - name: Configure Pages
+        run: |
+          echo "Configuring GitHub Pages for /sat-prep subpath"
 
   deploy:
     needs: build
